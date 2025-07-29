@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guangzhou Red History and Architectural Culture Tour</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /* 新增语言切换按钮容器样式 */
+      .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100; /* 确保在导航栏上方显示 */
+        }
+        /* 返回链接样式 */
+       .back-link {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 100;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+       .back-link:hover {
+            color: #45a049;
+            text-decoration: underline;
+        }
+        /* 返回链接图标样式 */
+       .back-link::before {
+            content: "←";
+            margin-right: 5px;
+            font-size: 18px;
+        }
+      .lang-btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+      .lang-btn:hover {
+            background-color: #f0f0f0;
+            border-color: #999;
+        }
+      .nav-tabs {
+            display: flex;
+            background-color: #333;
+            padding: 10px;
+            gap: 5px;
+            overflow-x: auto;
+            white-space: nowrap;
+            /* 为语言按钮和返回链接留出空间 */
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+      .nav-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+      .nav-tab:hover {
+            background-color: #ff4d4d;
+        }
+      .nav-tab.active {
+            background-color: #ff0000;
+        }
+      .content-area {
+            flex-grow: 1;
+            margin: 10px;
+            padding: 0;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 60px); 
+            border: none;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+          .nav-tabs {
+                padding: 5px;
+                gap: 2px;
+                padding-left: 70px;
+                padding-right: 70px;
+            }
+          .nav-tab {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+          .content-area {
+                margin: 5px;
+            }
+            iframe {
+                height: calc(100vh - 40px); 
+            }
+        }
+        
+      .route-button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        /* 新增板块卡片样式 */
+      .section-card {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+      .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #ff0000; /* 悬停时边框变红 */
+        }
+    </style>
+</head>
+<body>
+    <a href="../hahaha（英）.html" class="back-link">返回</a>
+    <!-- 语言切换按钮 -->
+    <div class="language-switch">
+        <button class="lang-btn" onclick="window.location.href='haha.html'">中文</button>
+    </div>
+    
+    <div class="nav-tabs">
+        <div class="nav-tab active" data-tab="home">Home</div>
+        <div class="nav-tab" data-tab="routes">Tour Routes</div>
+        <div class="nav-tab" data-tab="buildings">Architectural Introduction</div>
+    </div>
+    
+    <div class="content-area">
+        <!-- 首页内容 -->
+        <div id="home-content" style="padding: 20px; display: block;">
+            <h1>Guangzhou Red History and Architectural Culture Tour</h1>
+            <p>This platform integrates the historical context of modern revolutionary history and colonial-era architectural heritage in Guangzhou, guiding you through key nodes and cultural landmarks in the city's memory.</p>
+            
+            <div class="featured-content" style="margin: 20px 0; padding: 15px; background-color: #ffe6e6; border-radius: 5px;">
+                <h2>Featured Tours</h2>
+                <p>Four themed routes connect key sites from modern resistance struggles to colonial history. Click the button below to view detailed itineraries.</p>
+                <!-- 按钮点击事件绑定iframe.src -->
+                <button class="route-button" onclick="loadIframe('routes')">
+                    View Complete Routes
+                </button>
+            </div>
+            
+            <div class="site-sections" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <!-- 历史建筑巡礼 -->
+                <div class="section-card" data-target="buildings">
+                    <h3>Historical Architecture Tour</h3>
+                    <p>· Sacred Heart Cathedral: A fully stone Gothic structure completed in 1863, blending Chinese and Western craftsmanship.<br>
+                       · Shamian Island Complex: Over 150 European-style buildings from the late 19th century, including Gothic and Neoclassical styles.<br>
+                       · Whampoa Military Academy: The cradle of the 1924 Kuomintang-Communist cooperation, witnessing the Northern Expedition and War of Resistance.</p>
+                </div>
+                
+                <!-- 红色旅游路线 -->
+                <div class="section-card" data-target="routes">
+                    <h3>Red Tourism Routes</h3>
+                    <p>· <strong>Modern Resistance Route</strong>: Sun Yat-sen Memorial Hall (Two Protection Movements) → Huanghuagang 72 Martyrs' Cemetery (1911 Uprising)<br>
+                       · <strong>Workers' Movement Route</strong>: Former Site of the All-China Federation of Trade Unions (Hong Kong-Canton Strike) → Peasant Movement Institute (Mao Zedong trained peasant movement leaders)<br>
+                       · <strong>Revolutionary Uprising Route</strong>: Guangzhou Uprising Memorial Hall (1927 Soviet Regime) → Whampoa Military Academy<br>
+                       · <strong>Colonial History Route</strong>: Sacred Heart Cathedral → Shamian Island (British and French Concession Buildings)</p>
+                </div>
+                
+                <!-- 历史事件速览 -->
+                <div class="section-card" data-target="buildings">
+                    <h3>Historical Events</h3>
+                    <p>· Sanyuanli Anti-British Movement (1841): China's first large-scale victory against foreign aggression in modern history<br>
+                       · Hong Kong-Canton Strike (1925-1926): A 16-month anti-imperialist workers' movement<br>
+                       · Guangzhou Uprising (1927): An attempt to establish China's first urban Soviet regime<br>
+                       · Shaji Massacre (1925): A colonial violence incident during an anti-imperialist demonstration</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- iframe容器 -->
+        <iframe id="content-iframe" style="display: none;"></iframe>
+    </div>
+
+    <script>
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const contentIframe = document.getElementById('content-iframe');
+        const homeContent = document.getElementById('home-content');
+        const sectionCards = document.querySelectorAll('.section-card');
+
+        // 选项卡点击事件
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                navTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const tabId = tab.getAttribute('data-tab');
+                loadContent(tabId);
+            });
+        });
+
+        // 按钮点击事件处理函数
+        function loadIframe(tabId) {
+            navTabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.classList.add('active');
+                    loadContent(tabId);
+                }
+            });
+        }
+
+        // 板块卡片点击事件
+        sectionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const target = card.getAttribute('data-target');
+                loadIframe(target);
+            });
+        });
+
+        // 加载内容函数
+        function loadContent(tabId) {
+            homeContent.style.display = 'none';
+            contentIframe.style.display = 'block';
+            
+            switch(tabId) {
+                case 'routes':
+                    contentIframe.src = "新旅游路径（英）.html";
+                    break;
+                case 'buildings':
+                    contentIframe.src = "建筑介绍（英）.html";
+                    
+                    break;
+                default:
+                    contentIframe.src = "";
+                    homeContent.style.display = 'block';
+            }
+        }
+
+        // 初始化显示首页
+        loadContent('home');
+
+        // 窗口Resize时调整iframe高度
+        window.addEventListener('resize', () => {
+            contentIframe.style.height = `calc(100vh - ${document.querySelector('.nav-tabs').offsetHeight + 20}px)`;
+        });
+    </script>
+</body>
+</html>

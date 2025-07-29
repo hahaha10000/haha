@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州特色文化旅游路线总览</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            background-image: url('图片/背景.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        /* 新增语言切换按钮容器样式 */
+      .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100; /* 确保在导航栏上方显示 */
+        }
+        
+      .lang-btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+      .lang-btn:hover {
+            background-color: #f0f0f0;
+            border-color: #999;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+        .intro {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .routes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .route-card {
+            width: 280px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .route-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .route-img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .route-info {
+            padding: 20px;
+        }
+        .route-title {
+            font-size: 1.4rem;
+            color: #d32f2f;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 8px;
+        }
+        .route-desc {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .route-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            background-color: #d32f2f;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        .route-btn:hover {
+            background-color: #b71c1c;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switch">
+        <button class="lang-btn" onclick="window.location.href='hahaha（英）.html'">English</button>
+    </div>
+    <div class="container">
+        <header>
+            <h1>广州四大特色文化旅游路线</h1>
+            <p class="intro">探索广州千年历史文脉与现代创新活力，四条主题路线带您领略不同维度的城市魅力，点击下方路线卡片开启专属旅程</p>
+        </header>
+        
+        <div class="routes-container">
+            <!-- 海上丝绸之路路线 -->
+            <div class="route-card">
+                <img src="图片/海上丝绸之路.jpg" alt="海上丝绸之路" class="route-img">
+                <div class="route-info">
+                    <h2 class="route-title">海上丝绸之路</h2>
+                    <p class="route-desc">从秦汉古港到现代邮轮母港，穿越两千年历史，探访南海神庙、黄埔古港、十三行等见证中外文明交汇的地标。</p>
+                    <a href="广州海上丝绸之路旅游路线/haha.html" class="route-btn">立即探索</a>
+                </div>
+            </div>
+            
+            <!-- 岭南文化路线 -->
+            <div class="route-card">
+                <img src="图片/岭南文化.jpg" alt="岭南文化" class="route-img">
+                <div class="route-info">
+                    <h2 class="route-title">岭南文化</h2>
+                    <p class="route-desc">品味广府文化精髓，漫步陈家祠、余荫山房等岭南建筑瑰宝，欣赏粤剧艺术，体验沙湾古镇民俗与泮溪酒家传统早茶。</p>
+                    <a href="广州岭南文化旅游路线/haha.html" class="route-btn">立即探索</a>
+                </div>
+            </div>
+            
+            <!-- 创新文化路线 -->
+            <div class="route-card">
+                <img src="图片/创新文化.jpg" alt="创新文化" class="route-img">
+                <div class="route-info">
+                    <h2 class="route-title">创新文化</h2>
+                    <p class="route-desc">见证改革开放与城市发展奇迹，从白天鹅宾馆到广州塔，从永庆坊微改造到大学城智慧园区，感受广州的创新基因。</p>
+                    <a href="广州创新文化旅游路线/haha.html" class="route-btn">立即探索</a>
+                </div>
+            </div>
+            
+            <!-- 红色历史路线 -->
+            <div class="route-card">
+                <img src="图片/红色路线.jpg" alt="红色历史" class="route-img">
+                <div class="route-info">
+                    <h2 class="route-title">红色历史</h2>
+                    <p class="route-desc">追溯近代革命足迹，参观黄花岗烈士陵园、农讲所、广州起义纪念馆等遗址，重温广州在近代中国抗争史上的重要篇章。</p>
+                    <a href="点开/haha.html" class="route-btn">立即探索</a>
+                </div>
+            </div>
+        </div>
+        
+        <!--<footer>
+            <p>© 2024 广州文化旅游指南 | 探索千年商都的多元魅力</p>
+        </footer>-->
+    </div>
+    <!-- Default Statcounter code for 广州红色旅游
+    https://hahaha10000.github.io/haha/ -->
+<script type="text/javascript">
+var sc_project=13152188; 
+var sc_invisible=0; 
+var sc_security="3eced788"; 
+var scJsHost = "https://";
+document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="web statistics"
+href="https://statcounter.com/" target="_blank"><img class="statcounter"
+src="https://c.statcounter.com/13152188/0/3eced788/0/" alt="web statistics"
+referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+<!-- End of Statcounter Code -->
+<a href="https://statcounter.com/p13152188/?guest=1">View My Stats</a>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guangzhou Innovation Culture Theme Tour</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /* 新增语言切换按钮容器样式 */
+      .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100; /* 确保在导航栏上方显示 */
+        }
+        /* 返回链接样式 */
+       .back-link {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 100;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+       .back-link:hover {
+            color: #45a049;
+            text-decoration: underline;
+        }
+        /* 返回链接图标样式 */
+       .back-link::before {
+            content: "←";
+            margin-right: 5px;
+            font-size: 18px;
+        }
+      .lang-btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+      .lang-btn:hover {
+            background-color: #f0f0f0;
+            border-color: #999;
+        }
+      .nav-tabs {
+            display: flex;
+            background-color: #333;
+            padding: 10px;
+            gap: 5px;
+            overflow-x: auto;
+            white-space: nowrap;
+            /* 为语言按钮和返回链接留出空间 */
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+      .nav-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+      .nav-tab:hover {
+            background-color: #ff4d4d;
+        }
+      .nav-tab.active {
+            background-color: #ff0000;
+        }
+      .content-area {
+            flex-grow: 1;
+            margin: 10px;
+            padding: 0;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 60px); 
+            border: none;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+          .nav-tabs {
+                padding: 5px;
+                gap: 2px;
+                padding-left: 70px;
+                padding-right: 70px;
+            }
+          .nav-tab {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+          .content-area {
+                margin: 5px;
+            }
+            iframe {
+                height: calc(100vh - 40px); 
+            }
+        }
+        
+      .route-button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        /* 新增板块卡片样式 */
+      .section-card {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+      .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #ff0000; /* 悬停时边框变红 */
+        }
+    </style>
+</head>
+<body>
+    <a href="../hahaha（英）.html" class="back-link">返回</a>
+    <div class="language-switch">
+        <button class="lang-btn" onclick="window.location.href='haha.html'">中文</button>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="nav-tab active" data-tab="home">Home</div>
+        <div class="nav-tab" data-tab="routes">Tour Routes</div>
+        <div class="nav-tab" data-tab="buildings">Architecture Introduction</div>
+    </div>
+    
+    <div class="content-area">
+        <div id="home-content" style="padding: 20px; display: block;">
+            <h1>Guangzhou Innovation Culture Theme Tour</h1>
+            <p>As a frontier of China's reform and opening-up, Guangzhou has nurtured rich innovative achievements in institutional reform, urban construction, and cultural inheritance. This one-day route will take you through Guangzhou's innovative footprint from the early reform era to the present, showcasing the city's vitality and creativity.</p>
+            
+            <div class="featured-content" style="margin: 20px 0; padding: 15px; background-color: #ffe6e6; border-radius: 5px;">
+                <h2>Featured Attractions</h2>
+                <p>A one-day journey covering institutional breakthroughs, industrial transformation, urban construction, and cultural inheritance. Click below to explore detailed itineraries.</p>
+                <button class="route-button" onclick="loadIframe('routes')">
+                    View Full Route
+                </button>
+            </div>
+            
+            <div class="site-sections" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <!-- Innovation Landmarks -->
+                <div class="section-card" data-target="buildings">
+                    <h3>Innovation Landmarks</h3>
+                    <p>· White Swan Hotel: China's first Sino-foreign cooperative five-star hotel, pioneering "open lobby" design and public access<br>
+                       · Canton Tower: Modern landmark with "slim waist" aesthetics, solving wind resistance challenges with global's highest Ferris wheel<br>
+                       · Haixin Bridge: World's widest curved-beam arch bridge, using 3D imaging and BIM for millimeter-level precision</p>
+                </div>
+                
+                <!-- Innovation Route -->
+                <div class="section-card" data-target="routes">
+                    <h3>Innovation Culture Itinerary</h3>
+                    <p>· <strong>Morning: Institutional & Industrial Innovation</strong>: White Swan Hotel → "Pioneer" Statue (Development Zone)<br>
+                       · <strong>Afternoon: Urban Construction Innovation</strong>: Tianhe CBD Twin Towers → Canton Tower → Haixin Bridge<br>
+                       · <strong>Evening: Cultural Heritage Innovation</strong>: Yongqing Fang → Beijing Road → Guangzhou Higher Education Mega Center</p>
+                </div>
+                
+                <!-- Innovation Highlights -->
+                <div class="section-card" data-target="buildings">
+                    <h3>Innovation Highlights</h3>
+                    <p>· 1983: White Swan Hotel opens as China's first Sino-foreign five-star hotel, breaking elitist service norms<br>
+                       · 1984: Guangzhou Economic and Technological Development Zone established, "Pioneer" statue symbolizes tech-industry integration<br>
+                       · 2016-2022: Yongqing Fang's "micro-renovation" revives arcades, merging tradition with modern commerce<br>
+                       · 2021: Haixin Bridge opens as smart pedestrian bridge, using 5G and BIM technology for safety and experience</p>
+                </div>
+            </div>
+        </div>
+
+        <iframe id="content-iframe" style="display: none;"></iframe>
+    </div>
+
+    <script>
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const contentIframe = document.getElementById('content-iframe');
+        const homeContent = document.getElementById('home-content');
+        const sectionCards = document.querySelectorAll('.section-card');
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                navTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const tabId = tab.getAttribute('data-tab');
+                loadContent(tabId);
+            });
+        });
+
+        function loadIframe(tabId) {
+            navTabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.classList.add('active');
+                    loadContent(tabId);
+                }
+            });
+        }
+
+        sectionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const target = card.getAttribute('data-target');
+                loadIframe(target);
+            });
+        });
+
+        function loadContent(tabId) {
+            homeContent.style.display = 'none';
+            contentIframe.style.display = 'block';
+            
+            switch(tabId) {
+                case 'routes':
+                    contentIframe.src = "新旅游路径（英）.html";
+                    break;
+                case 'buildings':
+                    contentIframe.src = "建筑介绍（英）.html";
+                    break;
+                default:
+                    contentIframe.src = "";
+                    homeContent.style.display = 'block';
+            }
+        }
+
+        loadContent('home');
+
+        window.addEventListener('resize', () => {
+            contentIframe.style.height = `calc(100vh - ${document.querySelector('.nav-tabs').offsetHeight + 20}px)`;
+        });
+    </script>
+    
+</body>
+</html>

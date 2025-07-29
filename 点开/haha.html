@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州红色历史与建筑文化之旅</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /* 新增语言切换按钮容器样式 */
+      .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100; /* 确保在导航栏上方显示 */
+        }
+        /* 返回链接样式 */
+       .back-link {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 100;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+       .back-link:hover {
+            color: #45a049;
+            text-decoration: underline;
+        }
+        /* 返回链接图标样式 */
+       .back-link::before {
+            content: "←";
+            margin-right: 5px;
+            font-size: 18px;
+        }
+      .lang-btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+      .lang-btn:hover {
+            background-color: #f0f0f0;
+            border-color: #999;
+        }
+      .nav-tabs {
+            display: flex;
+            background-color: #333;
+            padding: 10px;
+            gap: 5px;
+            overflow-x: auto;
+            white-space: nowrap;
+            /* 为语言按钮和返回链接留出空间 */
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+      .nav-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+      .nav-tab:hover {
+            background-color: #ff4d4d;
+        }
+      .nav-tab.active {
+            background-color: #ff0000;
+        }
+      .content-area {
+            flex-grow: 1;
+            margin: 10px;
+            padding: 0;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 60px); 
+            border: none;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+          .nav-tabs {
+                padding: 5px;
+                gap: 2px;
+                padding-left: 70px;
+                padding-right: 70px;
+            }
+          .nav-tab {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+          .content-area {
+                margin: 5px;
+            }
+            iframe {
+                height: calc(100vh - 40px); 
+            }
+        }
+        
+      .route-button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        /* 新增板块卡片样式 */
+      .section-card {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+      .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #ff0000; /* 悬停时边框变红 */
+        }
+    </style>
+</head>
+<body>
+    <a href="../hahaha.html" class="back-link">返回</a>
+
+    <!-- 语言切换按钮 -->
+    <div class="language-switch">
+        <button class="lang-btn" onclick="window.location.href='点这个（英）.html'">English</button>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="nav-tab active" data-tab="home">首页</div>
+        <div class="nav-tab" data-tab="routes">旅游路径</div>
+        <div class="nav-tab" data-tab="buildings">建筑介绍</div>
+    </div>
+    
+    <div class="content-area">
+        <!-- 首页内容 -->
+        <div id="home-content" style="padding: 20px; display: block;">
+            <h1>广州红色历史与建筑文化之旅</h1>
+            <p>这里整合了广州近代革命历史脉络与殖民时期建筑遗产，带您深度探索城市记忆中的关键节点与文化地标。</p>
+            
+            <div class="featured-content" style="margin: 20px 0; padding: 15px; background-color: #ffe6e6; border-radius: 5px;">
+                <h2>核心游览推荐</h2>
+                <p>四条主题路线串联起从近代抗争到殖民历史的关键遗址，点击下方按钮查看详细行程</p>
+                <button class="route-button" onclick="loadIframe('routes')">
+                    查看完整路线
+                </button>
+            </div>
+            
+            <div class="site-sections" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <!-- 历史建筑巡礼 -->
+                <div class="section-card" data-target="buildings">
+                    <h3>历史建筑巡礼</h3>
+                    <p>· 圣心大教堂：1863年建成的全石构哥特式建筑，融合中西方工艺<br>
+                       · 沙面岛建筑群：150余座19世纪末欧式建筑，涵盖哥特式、新古典主义等风格<br>
+                       · 黄埔军校旧址：1924年国共合作的军事摇篮，见证北伐与抗战历程</p>
+                </div>
+                
+                <!-- 红色旅游路线 -->
+                <div class="section-card" data-target="routes">
+                    <h3>红色旅游路线</h3>
+                    <p>· <strong>近代抗争线</strong>：中山纪念堂（两次护法运动）→黄花岗七十二烈士墓园（1911年起义）<br>
+                       · <strong>工运浪潮线</strong>：中华全国总工会旧址（省港大罢工）→农讲所（毛泽东培养农运骨干）<br>
+                       · <strong>革命起义线</strong>：广州起义纪念馆（1927年苏维埃政权）→黄埔军校<br>
+                       · <strong>殖民历史线</strong>：圣心大教堂→沙面岛（英法租界建筑群）</p>
+                </div>
+                
+                <!-- 历史事件速览 -->
+                <div class="section-card" data-target="buildings">
+                    <h3>历史事件速览</h3>
+                    <p>· 三元里抗英（1841年）：中国近代首次大规模反侵略胜利<br>
+                       · 省港大罢工（1925-1926年）：持续16个月的反帝工运壮举<br>
+                       · 广州起义（1927年）：建立首个城市苏维埃政权的尝试<br>
+                       · 沙基惨案（1925年）：反帝游行中发生的殖民暴力事件</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- iframe容器 -->
+        <iframe id="content-iframe" style="display: none;"></iframe>
+    </div>
+
+    <script>
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const contentIframe = document.getElementById('content-iframe');
+        const homeContent = document.getElementById('home-content');
+        const sectionCards = document.querySelectorAll('.section-card');
+
+        // 选项卡点击事件
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                navTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const tabId = tab.getAttribute('data-tab');
+                loadContent(tabId);
+            });
+        });
+
+        // 按钮点击事件处理函数
+        function loadIframe(tabId) {
+            navTabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.classList.add('active');
+                    loadContent(tabId);
+                }
+            });
+        }
+
+        // 板块卡片点击事件
+        sectionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const target = card.getAttribute('data-target');
+                loadIframe(target);
+            });
+        });
+
+        // 加载内容函数
+        function loadContent(tabId) {
+            homeContent.style.display = 'none';
+            contentIframe.style.display = 'block';
+            
+            switch(tabId) {
+                case 'routes':
+                    contentIframe.src = "新旅游路径.html";
+                    break;
+                case 'buildings':
+                    contentIframe.src = "建筑介绍（中）.html";
+                    
+                    break;
+                default:
+                    contentIframe.src = "";
+                    homeContent.style.display = 'block';
+            }
+        }
+
+        // 初始化显示首页
+        loadContent('home');
+
+        // 窗口Resize时调整iframe高度
+        window.addEventListener('resize', () => {
+            contentIframe.style.height = `calc(100vh - ${document.querySelector('.nav-tabs').offsetHeight + 20}px)`;
+        });
+    </script>
+    
+</body>
+</html>

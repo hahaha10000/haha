@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guangzhou Cultural Tourist Routes Overview</title>
+    <style>
+        body {
+            font-family: Arial, "Microsoft YaHei", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            background-image: url('图片/背景.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        /* Language switch button container */
+      .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+        }
+        
+      .lang-btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+      .lang-btn:hover {
+            background-color: #f0f0f0;
+            border-color: #999;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+        .intro {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .routes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .route-card {
+            width: 280px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .route-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .route-img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .route-info {
+            padding: 20px;
+        }
+        .route-title {
+            font-size: 1.4rem;
+            color: #d32f2f;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 8px;
+        }
+        .route-desc {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .route-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            background-color: #d32f2f;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        .route-btn:hover {
+            background-color: #b71c1c;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switch">
+        <button class="lang-btn" onclick="window.location.href='hahaha.html'">中文</button>
+    </div>
+    <div class="container">
+        <header>
+            <h1>Four Featured Cultural Tourist Routes in Guangzhou</h1>
+            <p class="intro">Explore Guangzhou's thousand-year historical context and modern innovative vitality. Four themed routes allow you to experience the city's charm from different dimensions. Click on the route cards below to start your exclusive journey</p>
+        </header>
+        
+        <div class="routes-container">
+            <!-- Maritime Silk Road Route -->
+            <div class="route-card">
+                <img src="图片/海上丝绸之路.jpg" alt="Maritime Silk Road" class="route-img">
+                <div class="route-info">
+                    <h2 class="route-title">Maritime Silk Road</h2>
+                    <p class="route-desc">From the ancient ports of the Qin and Han dynasties to the modern cruise home port, traverse 2,000 years of history and visit landmarks such as Nanhai God Temple, Huangpu Ancient Port, and Thirteen Hongs that witnessed the exchange of Chinese and foreign civilizations.</p>
+                    <a href="广州海上丝绸之路旅游路线/点这个（英）.html" class="route-btn">Explore Now</a>
+                </div>
+            </div>
+            
+            <!-- Lingnan Culture Route -->
+            <div class="route-card">
+                <img src="图片/岭南文化.jpg" alt="Lingnan Culture" class="route-img">
+                <div class="route-info">
+                    <h2 class="route-title">Lingnan Culture</h2>
+                    <p class="route-desc">Taste the essence of Cantonese culture, stroll through Lingnan architectural treasures such as Chen Clan Ancestral Hall and Yuyin Shanfang, enjoy Cantonese opera, and experience Shawan Ancient Town folk customs and traditional morning tea at Panxi Restaurant.</p>
+                    <a href="广州岭南文化旅游路线/点这个（英）.html" class="route-btn">Explore Now</a>
+                </div>
+            </div>
+            
+            <!-- Innovative Culture Route -->
+            <div class="route-card">
+                <img src="图片/创新文化.jpg" alt="Innovative Culture" class="route-img">
+                <div class="route-info">
+                    <h2 class="route-title">Innovative Culture</h2>
+                    <p class="route-desc">Witness the miracle of reform and opening up and urban development. From White Swan Hotel to Canton Tower, from Yongqingfang micro-renovation to University Town smart park, feel Guangzhou's innovative genes.</p>
+                    <a href="广州创新文化旅游路线/点这个（英）.html" class="route-btn">Explore Now</a>
+                </div>
+            </div>
+            
+            <!-- Red History Route -->
+            <div class="route-card">
+                <img src="图片/红色路线.jpg" alt="Red History" class="route-img">
+                <div class="route-info">
+                    <h2 class="route-title">Red History</h2>
+                    <p class="route-desc">Trace the footsteps of modern revolutions, visit sites such as Huanghuagang Martyrs' Cemetery, Peasant Movement Institute, and Guangzhou Uprising Memorial Hall, and revisit Guangzhou's important chapter in modern China's resistance history.</p>
+                    <a href="点开/点这个（英）.html" class="route-btn">Explore Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <!--<footer>
+            <p>© 2024 Guangzhou Cultural Tourism Guide | Explore the diverse charm of the millennium commercial city</p>
+        </footer>-->
+    </div>
+    <!-- Default Statcounter code for 广州红色旅游
+    https://hahaha10000.github.io/haha/ -->
+<script type="text/javascript">
+var sc_project=13152188; 
+var sc_invisible=0; 
+var sc_security="3eced788"; 
+var scJsHost = "https://";
+document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="web statistics"
+href="https://statcounter.com/" target="_blank"><img class="statcounter"
+src="https://c.statcounter.com/13152188/0/3eced788/0/" alt="web statistics"
+referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+<!-- End of Statcounter Code -->
+<a href="https://statcounter.com/p13152188/?guest=1">View My Stats</a>
+</body>
+</html>
