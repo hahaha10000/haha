@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>北京旅游行程规划</title>
+    <title>广州红色旅游行程规划</title>
     <style>
         * {
             margin: 0;
@@ -35,7 +35,7 @@
         .header h1 {
             font-size: 2rem;
             font-weight: bold;
-            color: #1f2937;
+            color: #991b1b;
             margin-bottom: 0.5rem;
         }
 
@@ -62,7 +62,7 @@
         }
 
         .date-selector h2::before {
-            content: '📅';
+            content: '🛣️';
             margin-right: 0.5rem;
         }
 
@@ -84,10 +84,10 @@
         }
 
         .date-btn.active {
-            background: #ef4444;
+            background: #dc2626;
             color: white;
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3);
         }
 
         .date-btn:hover {
@@ -95,7 +95,7 @@
         }
 
         .date-btn.active:hover {
-            background: #dc2626;
+            background: #b91c1c;
         }
 
         .date-btn .day {
@@ -121,12 +121,69 @@
         .current-day h3 {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #1f2937;
+            color: #991b1b;
             margin-bottom: 0.5rem;
         }
 
         .current-day p {
             color: #6b7280;
+        }
+
+        /* 路线版本选择器 */
+        .version-selector {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .version-selector h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .version-selector h2::before {
+            content: '🗺️';
+            margin-right: 0.5rem;
+        }
+
+        .version-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .version-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #f3f4f6;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .version-btn.active {
+            background: #dc2626;
+            color: white;
+            box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3);
+        }
+
+        .version-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .version-btn.active:hover {
+            background: #b91c1c;
         }
 
         /* 鱼骨图容器 */
@@ -142,7 +199,7 @@
             position: relative;
             width: 100%;
             min-height: 280px;
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
             border-radius: 0.5rem;
             overflow: hidden;
         }
@@ -158,9 +215,21 @@
         }
 
         .fishbone-point:hover {
-            stroke: #dc2626;
+            stroke: #b91c1c;
             stroke-width: 3;
             transform: scale(1.05);
+        }
+        
+        /* 鱼骨图上的点 */
+        .fishbone-point.fishbone-1 {
+            fill: #dc2626;
+            stroke: #b91c1c;
+        }
+        
+        .fishbone-point.fishbone-0 {
+            fill: #ef4444;
+            stroke: #dc2626;
+            opacity: 0.7;
         }
 
         .fishbone-text {
@@ -170,18 +239,43 @@
             pointer-events: none;
         }
 
-        /* 景点列表 */
-        .attractions-overview {
+        /* 景点列表容器 */
+        .attractions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 景点列表 - 精华和拓展分开的框 */
+        .attractions-section {
             background: white;
             border-radius: 0.5rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             padding: 1.5rem;
         }
+        
+        /* 精华景点标题带有特殊标记 */
+        .attractions-section.highlight h3 {
+            display: flex;
+            align-items: center;
+        }
+        
+        .attractions-section.highlight h3::after {
+            content: "★ 推荐体验";
+            margin-left: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #dc2626;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+        }
 
-        .attractions-overview h3 {
+        .attractions-section h3 {
             font-size: 1.25rem;
             font-weight: 600;
-            color: #1f2937;
+            color: #991b1b;
             margin-bottom: 1rem;
         }
 
@@ -201,6 +295,37 @@
             flex-direction: column;
         }
         
+        /* 鱼骨图关联标记样式 */
+        .attraction-card.fishbone-1 {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+        }
+        
+        .attraction-card.fishbone-0 {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+            opacity: 0.9;
+        }
+        
+        .fishbone-marker {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        
+        .fishbone-marker-1 {
+            background-color: #dc2626;
+            color: white;
+        }
+        
+        .fishbone-marker-0 {
+            background-color: #ef4444;
+            color: white;
+        }
+        
         .attraction-image {
             width: 100%;
             height: 160px;
@@ -210,7 +335,7 @@
         }
 
         .attraction-card:hover {
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
             transform: translateY(-2px);
         }
 
@@ -218,6 +343,8 @@
             font-weight: 600;
             color: #1f2937;
             margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
         }
 
         .attraction-card p {
@@ -241,7 +368,7 @@
             gap: 0.25rem;
         }
 
-        /* 详情页面 - 重点优化部分 */
+        /* 详情页面 */
         .detail-page {
             display: none;
             min-height: 100vh;
@@ -261,14 +388,14 @@
         .back-btn {
             display: flex;
             align-items: center;
-            color: #ef4444;
+            color: #dc2626;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
         }
 
         .back-btn:hover {
-            color: #dc2626;
+            color: #b91c1c;
         }
 
         .back-btn::before {
@@ -288,7 +415,7 @@
         }
 
         .detail-hero {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
             color: white;
             padding: 2rem;
         }
@@ -321,10 +448,10 @@
             padding: 1.5rem;
         }
 
-        /* 地址信息 - 放在最前面展示 */
+        /* 地址信息 */
         .location-info {
             background: #fee2e2;
-            border-left: 4px solid #ef4444;
+            border-left: 4px solid #dc2626;
             padding: 1rem;
             margin-bottom: 2rem;
             border-radius: 0 0.5rem 0.5rem 0;
@@ -332,7 +459,7 @@
 
         .location-info h2 {
             font-size: 1.25rem;
-            color: #1f2937;
+            color: #991b1b;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
@@ -357,7 +484,7 @@
         }
         
         .copy-btn {
-            background: #c7bebe;
+            background: #dc2626;
             color: white;
             border: none;
             border-radius: 0.25rem;
@@ -368,7 +495,7 @@
         }
         
         .copy-btn:hover {
-            background: #dc2626;
+            background: #b91c1c;
         }
         
         .copy-success {
@@ -384,7 +511,7 @@
         .detail-section h2 {
             font-size: 1.25rem;
             font-weight: 600;
-            color: #1f2937;
+            color: #991b1b;
             margin-bottom: 1rem;
         }
 
@@ -454,7 +581,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: #ef4444;
+            background: #dc2626;
             color: white;
             border: none;
             border-radius: 0.5rem;
@@ -464,13 +591,13 @@
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px -1px rgba(153, 27, 27, 0.2);
         }
 
         .wiki-btn:hover {
-            background: #dc2626;
+            background: #b91c1c;
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(153, 27, 27, 0.2);
         }
 
         .wiki-btn::before {
@@ -492,6 +619,15 @@
             
             .date-buttons {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .version-buttons {
+                flex-direction: column;
+            }
+            
+            .version-btn {
+                width: 100%;
+                justify-content: center;
             }
             
             .fishbone-diagram {
@@ -531,37 +667,37 @@
         <div class="header">
             <div class="container">
                 <h1>广州红色旅游行程规划</h1>
-                <p>选择不同日期，查看精心安排的旅游景点</p>
+                <p>选择不同路线，查看精心安排的旅游景点</p>
             </div>
         </div>
 
         <div class="container">
             <!-- 日期选择器 -->
             <div class="date-selector">
-                <h2>选择游览日期</h2>
+                <h2>选择游览路线</h2>
                 <div class="date-buttons">
                     <button class="date-btn active" data-day="1">
-                        <div class="day">第1天</div>
-                        <div class="theme">近代抗争与辛亥革命（1840-1911）</div>
+                        <div class="day">近代抗争与辛亥革命（1840-1911）</div>
+                        
                     </button>
                     <button class="date-btn" data-day="2">
-                        <div class="day">第2天</div>
-                        <div class="theme">国共合作与工运浪潮（1920-1927）</div>
+                        <div class="day">国共合作与工运浪潮（1920-1927）</div>
+                        
                     </button>
                     <button class="date-btn" data-day="3">
-                        <div class="day">第3天</div>
-                        <div class="theme">革命起义与军事摇篮（1927-1949）</div>
+                        <div class="day">革命起义与军事摇篮（1927-1949）</div>
+                        
                     </button>
                     <button class="date-btn" data-day="4">
-                        <div class="day">第4天</div>
-                        <div class="theme">殖民历史与宗教建筑</div>
+                        <div class="day">殖民历史与宗教建筑</div>
+                        
                     </button>
                 </div>
             </div>
 
             <!-- 当前日期信息 -->
             <div class="current-day">
-                <h3 id="currentTitle">第一天 - 近代抗争与辛亥革命（1840-1911）</h3>
+                <h3 id="currentTitle">近代抗争与辛亥革命（1840-1911）</h3>
                 <p>点击鱼骨图中的景点图标，查看详细介绍</p>
             </div>
 
@@ -570,31 +706,63 @@
                 <div class="fishbone-diagram">
                     <svg class="fishbone-svg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
                         <!-- 主骨干 -->
-                        <line x1="80" y1="150" x2="720" y2="150" stroke="#ef4444" stroke-width="4" />
+                        <line x1="80" y1="150" x2="720" y2="150" stroke="#dc2626" stroke-width="4" />
                         <!-- 鱼头 -->
-                        <polygon points="720,160 720,140 740,150" fill="#ef4444" />
+                        <polygon points="720,160 720,140 740,150" fill="#dc2626" />
                     </svg>
                 </div>
             </div>
 
+            <!-- 路线版本选择器 -->
+            <div class="version-selector">
+                <h2>选择路线版本</h2>
+                <div class="version-buttons">
+                    <button class="version-btn active" data-version="highlight">
+                        <span>⭐</span> 精华版
+                    </button>
+                    <button class="version-btn" data-version="full">
+                        <span>📋</span> 完整版
+                    </button>
+                </div>
+            </div>
+
             <!-- 景点概览 -->
-            <div class="attractions-overview">
-                <h3>今日景点概览</h3>
-                <div class="attractions-grid" id="attractionsGrid">
-                    <!-- 景点卡片将通过JavaScript动态生成 -->
+            <div class="attractions-container" id="attractionsContainer">
+                <!-- 精华景点 -->
+                <div class="attractions-section highlight" id="highlightSection">
+                    <h3>精华景点</h3>
+                    <div class="attractions-grid" id="highlightAttractionsGrid">
+                        <!-- 精华景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 拓展景点 -->
+                <div class="attractions-section" id="extendedSection">
+                    <h3>拓展景点</h3>
+                    <div class="attractions-grid" id="extendedAttractionsGrid">
+                        <!-- 拓展景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 完整版景点容器 -->
+                <div class="attractions-section" id="fullSection" style="display: none;">
+                    <h3>路线景点预览</h3>
+                    <div class="attractions-grid" id="fullAttractionsGrid">
+                        <!-- 完整版景点卡片将通过JavaScript动态生成 -->
+                    </div>
                 </div>
             </div>
 
             <!-- 主页面底部添加跳转按钮 -->
             <div style="text-align: center; margin: 3rem 0; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
-                <button class="wiki-btn" onclick="window.location.href='交通方式备注.html'">
+                <button class="wiki-btn" id="transportBtn">
                     交通方式备注
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- 详情页面 - 重点优化部分 -->
+    <!-- 详情页面 -->
     <div id="detailPage" class="detail-page">
         <div class="detail-header">
             <div class="container">
@@ -646,17 +814,6 @@
                             </div>
                         </div>
                         
-                        <!-- 游览建议 
-                        <div class="tips-box">
-                            <h3>游览建议</h3>
-                            <ul>
-                                <li>建议游览时间：2-3小时</li>
-                                <li>最佳游览时间：上午9:00-11:00</li>
-                                <li>建议携带：相机、水杯、舒适的鞋子</li>
-                                <li>注意事项：请遵守景区规定，保护文物古迹</li>
-                            </ul>
-                        </div>-->
-
                         <!-- 高亮的跳转按钮 -->
                         <div class="wiki-links">
                             <a href="#" class="wiki-btn baidu-btn" id="baiduLink" target="_blank">查看百度百科</a>
@@ -668,11 +825,12 @@
         </div>
     </div>
 
-    <script>
+    
+<script>
         // 景点数据 - 分离地址信息
         const dayData = {
             1: {
-                title: "第一天 - 近代抗争与辛亥革命（1840-1911）",
+                title: "近代抗争与辛亥革命（1840-1911）",
                 attractions: [
                     {
                         id: 1,
@@ -683,9 +841,10 @@
                         details: `相关历史事件为两次护法运动。背景：（1）袁世凯夺取革命果实后，1913年8月11日龙济光出任广东都督兼署民政长。统治期间，邓铿、朱执信、钟明光等义士的讨龙斗争接连失败。直到1916年，北京政府在广东各界的压力下，被迫更改龙济光任命，陆荣廷进入广州，龙济光统治结束，进入桂系军阀据粤时期。<br><br>（2）1916年袁世凯病死后，发生府院之争；1917年7月，张勋复辟；7月6日，段祺瑞“再造共和”，却拒绝恢复《中华民国临时约法》和召开国会。<br><br>过程：（1）1917年7月17日，孙中山到达广州。7月22日，程璧光率海军从上海奔赴广州进行护法。海军的到来，为护法增添了重要的有生力量。<br><br>（2）8月上旬，赞成护法的国会议员陆续来到广州。因不足法定人数，乃效法法国大革命前夕第三等级代表举行国民会议的先例，取名"国会非常会议"，俗称非常国会。9月1日，孙中山当选为军政府大元帅，陆荣廷、唐继尧当选为元帅。9月10日，孙中山宣誓就任大元帅职，军政府正式成立。<br><br>（3）桂、直、滇系军阀勾结，西南军阀步步紧逼，排斥孙中山，使他被迫于1918年5月4日辞大元帅职，第一次护法运动失败。<br><br>（4）1920年，孙中山确定“联系段祺瑞扫除桂在广东统治，再图统一”的方针，陈炯明率粤军结束了桂系军阀在广东统治，军政府成立。<br><br>（5）重开非常国会，撤销军政府，设总统府，护法政府第二次组建。<br><br>（6）1921年8月，扫清桂系军阀，两广统一，准备北伐。陈炯明却借机公然兵变，第二次护法运动失败。`,
                         openTime: "开放时间信息待补充",
                         rating: 4.8,
-                        images: ["图片/1.png", "图片/2.jpg", "图片/4.jpg"],
+                        images: ["图片/中山纪念堂.png"],
                         baiduUrl: "https://baike.baidu.com/item/中山纪念堂",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/广州中山纪念堂"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/广州中山纪念堂",
+                        fishbone: 1
                     },
                     {
                         id: 2,
@@ -698,7 +857,8 @@
                         rating: 4.9,
                         images: ["旧址外观", "内部陈列", "历史照片", "起义地图"],
                         baiduUrl: "https://baike.baidu.com/item/三二九起义指挥部旧址",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/三二九起义指挥部旧址"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/三二九起义指挥部旧址",
+                        fishbone: 0
                     },
                     {
                         id: 3,
@@ -711,7 +871,8 @@
                         rating: 4.7,
                         images: ["墓园全景", "烈士墓碑", "纪念碑", "纪念雕塑"],
                         baiduUrl: "https://baike.baidu.com/item/黄花岗七十二烈士墓园",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/黄花岗七十二烈士墓园"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/黄花岗七十二烈士墓园",
+                        fishbone: 1
                     },
                     {
                         id: 4,
@@ -724,16 +885,16 @@
                         rating: 4.6,
                         images: ["纪念馆外观", "内部展览", "抗英浮雕", "历史图片"],
                         baiduUrl: "https://baike.baidu.com/item/三元里人民抗英斗争纪念馆",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/三元里抗英斗争"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/三元里抗英斗争",
+                        fishbone: 0
                     }
                 ]
             },
 
 
-
             // 景点数据 - 分离地址信息
             2: {
-                title: "第二天 - 国共合作与工运浪潮（1920-1927）",
+                title: "国共合作与工运浪潮（1920-1927）",
                 attractions: [
                     {
                         id: 5,
@@ -746,7 +907,8 @@
                         rating: 4.7,
                         images: ["总工会旧址外观", "内部展厅", "历史照片", "相关文物"],
                         baiduUrl: "https://baike.baidu.com/item/中华全国总工会旧址",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/中华全国总工会旧址"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/中华全国总工会旧址",
+                        fishbone: 1
                     },
                     {
                         id: 6,
@@ -759,7 +921,8 @@
                         rating: 4.6,
                         images: ["纪念馆外观", "罢工场景复原", "历史文献", "东园旧址"],
                         baiduUrl: "https://baike.baidu.com/item/省港罢工纪念馆",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/省港罢工纪念馆"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/省港罢工纪念馆",
+                        fishbone: 0
                     },
                     {
                         id: 7,
@@ -772,7 +935,8 @@
                         rating: 4.8,
                         images: ["旧址外貌", "周恩来工作场景", "陈延年事迹展", "历史资料"],
                         baiduUrl: "https://baike.baidu.com/item/中共广东区委旧址纪念馆",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/中共广东区委旧址"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/中共广东区委旧址",
+                        fishbone: 0
                     },
                     {
                         id: 8,
@@ -785,7 +949,8 @@
                         rating: 4.9,
                         images: ["杨家祠外观", "杨匏安塑像", "旧居内景", "历史文献"],
                         baiduUrl: "https://baike.baidu.com/item/杨匏安旧居陈列馆",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/杨匏安"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/杨匏安",
+                        fishbone: 0
                     },
                     {
                         id: 9,
@@ -796,9 +961,10 @@
                         details: `毛泽东同志主办农民运动讲习所旧址有着重要的历史意义。1926年5月—9月，毛泽东在此（番禺学宫）举办第六届农民运动讲习所，他还给学生讲授《中国农民问题》《农村教育》《地理》三门课程；并主编了一套《农民问题丛刊》，一共出版了26种，为推动农民运动发展提供理论指导，毛泽东为该丛刊撰写了序言《国民运动与农民运动》，对农民运动理论作出了开拓性探索。<br><br>第六届农民运动讲习所共培养800多名学员，学员们毕业后，奔赴各省、区开展革命工作，大多数人担任农民运动特派员，在各地宣传发动农民，组织农民协会，建立农民革命武装，参加东征、南讨和北伐，开展反对帝国主义和封建主义的斗争。在广州农讲所的影响下，中国各地相继开办了40多个农讲所和农训班，培养了大批革命干部，为中国农民运动的发展和革命事业的推进奠定了坚实的基础。`,
                         openTime: "开放时间信息待补充",
                         rating: 4.7,
-                        images: ["农讲所大门", "番禺学宫古建筑", "毛泽东办公旧址", "学员宿舍"],
+                        images: ["图片/农讲所.jpg", "图片/精彩照片/农讲所.jpg", "图片/精彩照片/农讲所2.jpg", "图片/精彩照片/农讲所3.jpg", "图片/精彩照片/农讲所4.jpg"],
                         baiduUrl: "https://baike.baidu.com/item/毛泽东同志主办农民运动讲习所旧址",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/广州农民运动讲习所"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/广州农民运动讲习所",
+                        fishbone: 1
                     },
                     {
                         id: 10,
@@ -809,17 +975,17 @@
                         details: `中共三大会址纪念馆相关历史事件为中共三大在广州召开。<br><br>背景：（1）孙中山大元帅府大本营的建立，为中国共产党在广州从事革命活动提供了有利条件。（2）共产国际第二次代表大会通过了列宁起草的《关于民族与殖民地问题的决议》，指出共产党应帮助各国的革命解放运动。（3）1922年4-5月间和8月底先后召开了广州和杭州西湖两次重要会议，初步确定了国共合作的方向。（4）1923年1月1日，共产国际执委会又通过了由布哈林等人起草的《关于中国共产党与国民党关系问题的决议》。5月24日，共产国际还专门发出一项《对中国共产党第三次代表大会的指示》。（5）为了统一全党思想，确定国共合作的方针、政策和策略。<br><br>内容：（1）出现两种倾向——共产党员应全体加入国民党，并应在工人群众中发展国民党组织和反对全体共产党员加入国民党，尤其反对在工人群众中发展国民党的组织。最后认为两种倾向都是错误的。（2）通过了《关于国民运动及国民党问题的决议案》，决定共产党员以个人身份加入国民党，但仍旧保存组织，并努力从工人团体中，从国民党左派中，吸收有阶级觉悟的革命分子，渐渐扩大共产党。（3）通过了《中国共产党第三次全国代表大会宣言》和党纲、党章草案、党员人政界决议等，改选了中央委员会。<br><br>意义：正式确定了国共合作的方针，对促进中国反帝反封建革命统一战线的形成和革命形势的发展具有重大意义。此后，在中国共产党和共产国际的帮助下，国民党加快了改组步伐。<br><br>后续影响：国民党一大召开，第一次国共合作正式建立，开始准备北伐战争。`,
                         openTime: "开放时间信息待补充",
                         rating: 4.8,
-                        images: ["会址纪念馆外观", "中共三大会议场景复原", "历史照片", "展览内容"],
+                        images: ["图片/中共三大会址纪念馆.png"],
                         baiduUrl: "https://baike.baidu.com/item/中共三大会址纪念馆",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/中国共产党第三次全国代表大会"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/中国共产党第三次全国代表大会",
+                        fishbone: 1
                     }
                 ]
             },
 
 
-
             3: {
-                title: "第三天 - 革命起义与军事摇篮（1927 - 1949）",
+                title: "革命起义与军事摇篮（1927 - 1949）",
                 attractions: [
                     {
                         id: 11,
@@ -832,7 +998,8 @@
                         rating: 4.8,
                         images: ["纪念馆外观", "起义场景复原", "历史文物", "苏维埃政府办公场景"],
                         baiduUrl: "https://baike.baidu.com/item/广州起义纪念馆",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/广州起义纪念馆"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/广州起义纪念馆",
+                        fishbone: 0
                     },
                     {
                         id: 12,
@@ -843,9 +1010,10 @@
                         details: `该陵园是为纪念1927年广州起义牺牲烈士而建，园内包含广东革命历史博物馆。广州起义背景：（1）1927年，蒋介石四一二反革命政变，李济深广州四一五反革命政变，汪精卫武汉发动七一五反革命政变。（2）1927年8月7日汉口紧急会议。<br><br>过程：（1）1927年8月20日决定组织广州暴动委员会并部署。（2）1927年9月宁汉合流后汪精卫返回广州。（3）1927年10月29日汪企图重新控制国民党中央，张发奎拥护。（4）11月26日李济深等赴沪出席国民党四中全会预备会。（5）11月17日凌晨爆发张黄事变。（6）11月26日议决发动武装暴动夺取广州政权。（7）12月6日张太雷召开省委常委紧急会议。（8）12月7日张秘密召开工农兵代表大会正式决定于12月12日举行起义。（9）12月10日广州形势危急，12月11日凌晨张太雷、叶挺等誓师。（10）12日上午八点各路起义军同时发动进攻。<br><br>结果：12日下午广州苏维埃政府和工农红军总指挥部所所在地被迫撤离，广州起义失败。<br><br>广东革命历史博物馆致力于革命遗址、文物资料的收藏保护、展览展示、宣传教育和科学研究，能让人们深入了解广州近代革命历史。`,
                         openTime: "开放时间信息待补充",
                         rating: 4.7,
-                        images: ["烈士陵园全景", "烈士纪念碑", "墓冢", "博物馆内景"],
+                        images: ["图片/广州起义烈士陵园.png", "图片/精彩照片/广州起义烈士陵园.jpg", "图片/精彩照片/广州起义烈士陵园1.jpg"],
                         baiduUrl: "https://baike.baidu.com/item/广州起义烈士陵园",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/广州起义烈士陵园"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/广州起义烈士陵园",
+                        fishbone: 1
                     },
                     {
                         id: 13,
@@ -856,17 +1024,17 @@
                         details: `历史背景：1924年孙中山在苏联和中国共产党的支持下改组国民党，推行“联俄容共”政策。为推翻北洋军阀、统一中国，孙中山决定建立一支革命军队培养军事骨干。<br><br>过程：1924年5月，黄埔军校在广州黄埔长洲岛正式成立（苏联提供资金、武器和军事顾问）；1925 - 1927年，黄埔学生军参与平定广州商团叛乱，两次东征，成为国民革命军核心力量（叶挺独立团）；1927年蒋介石发动“清党”，黄埔军校成为国民党专属机构，部分学生转向中共参与武装斗争（南昌起义、秋收起义）；抗日战争时期，黄埔师生在正面战场（淞沪会战、台儿庄战役）和敌后游击战中均发挥重要作用。<br><br>广州时期（1924 - 1927）初创时期，后因国共分裂停办；<br><br>南京时期（1928 - 1949）迁至南京，改名“中央陆军军官学校”成为国民党嫡系军事教育中心；<br><br>台湾时期（1950至今）1950迁台湾高雄，改称“陆军军官学校”，延续黄埔精神，但影响力减弱。<br><br>精神象征：黄埔精神（爱国、团结、牺牲）被视为中华民族抵御外侮的象征。`,
                         openTime: "开放时间信息待补充",
                         rating: 4.9,
-                        images: ["军校大门", "校本部", "孙中山纪念碑", "东征阵亡烈士墓园"],
+                        images: ["图片/黄埔军校纪念馆.jpg", "图片/精彩照片/黄埔军校1.jpg", "图片/精彩照片/黄埔军校2.jpg", "图片/精彩照片/黄埔军校3.jpg"],
                         baiduUrl: "https://baike.baidu.com/item/黄埔军校旧址纪念馆",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/黄埔军校旧址"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/黄埔军校旧址",
+                        fishbone: 1
                     }
                 ]
             },
 
-
             
              4: {
-                title: "第四天 - 殖民历史与宗教建筑",
+                title: "殖民历史与宗教建筑",
                 attractions: [
                     {
                         id: 14,
@@ -877,9 +1045,10 @@
                         details: `圣心大教堂建于1863年，是全球四大全石构哥特式教堂之一。教堂以其宏伟的建筑规模和精美的哥特式建筑风格闻名，整个建筑采用花岗岩砌筑，外观庄严肃穆，内部装饰华丽，展现了19世纪西方宗教建筑的精湛技艺。<br><br>参观提示：需注意开放时间，5点之前可进入，周日可能有弥撒活动，建议避开弥撒时间参观以获得更好的体验。作为广州重要的历史文化地标和宗教建筑，圣心大教堂见证了近代广州的殖民历史与中西文化交融，是了解广州近代建筑史和宗教史的重要窗口。`,
                         openTime: "开放时间信息待补充（5点之前可进入，周日可能有弥撒）",
                         rating: 4.7,
-                        images: ["圣心大教堂全景", "哥特式尖顶", "内部穹顶", "石雕细节"],
+                        images: ["图片/圣心大教堂.jpg", "图片/精彩照片/圣心大教堂1.jpg", "图片/精彩照片/圣心大教堂2.jpg", "图片/精彩照片/圣心大教堂3.jpg",, "图片/精彩照片/圣心大教堂4.jpg"],
                         baiduUrl: "https://baike.baidu.com/item/广州圣心大教堂",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/聖心大教堂_(廣州)"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/聖心大教堂_(廣州)",
+                        fishbone: 1
                     },
                     {
                         id: 15,
@@ -890,9 +1059,10 @@
                         details: `沙面堂由英国圣公会于1861年筹建，1865年前后建成，位于当时广州沙面的英国租界内。分别在1931年和1938年经历两次较大的损坏，但经过多次修缮，主体建筑结构和外观风貌得以保存至今。<br><br>最初的建筑除了教堂主堂外，西侧还有一栋两层的牧师楼。1904年，英国伦敦的Walker风琴公司为沙面堂设计制造并安装了一套精美的双人手动管风琴，成为当时广州的第一台管风琴。<br><br>沙面堂最初被称为广州英国圣公会教堂，由英国圣公会牧师主持，主要为英国船员和侨民提供礼拜服务。1919年后，除了自用外，还租借给其他基督新教宗派的外籍来穗人员组织崇拜聚会。从清末民初到抗日战争年间，沙面堂一直是广州地区唯一供外籍基督徒崇拜聚会的教堂。`,
                         openTime: "开放时间信息待补充",
                         rating: 4.5,
-                        images: ["沙面堂外观", "管风琴", "教堂内部", "历史老照片"],
+                        images: ["图片/沙面堂.png", "图片/精彩照片/沙面堂1.jpg"],
                         baiduUrl: "https://baike.baidu.com/item/沙面堂",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/沙面堂"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/沙面堂",
+                        fishbone: 1
                     },
                     {
                         id: 16,
@@ -905,7 +1075,8 @@
                         rating: 4.4,
                         images: ["绿色外墙建筑", "红窗框细节", "建筑立面", "沙面街景中的洋行"],
                         baiduUrl: "https://baike.baidu.com/item/泰和洋行旧址",
-                        wikiUrl: "https://en.wikipedia.org/wiki/泰和洋行旧址"
+                        wikiUrl: "https://en.wikipedia.org/wiki/泰和洋行旧址",
+                        fishbone: 0
                     },
                     {
                         id: 17,
@@ -916,9 +1087,10 @@
                         details: `沙面露德圣母堂创建于光绪十六年（1890年），占地面积839.75平方米。因该堂花园南连建筑一座圣母山安放露德圣母像而得名。<br><br>这座教堂为哥特式风格，由法国传教士修建，原是法国驻穗领事馆的教友过宗教生活而设立的。建国前，本堂神父多由外籍传教士担任，中国籍神父在此任职较少。建国前夕由中国神父陈惠民任本堂神父。<br><br>作为沙面岛上重要的宗教建筑，露德圣母堂体现了19世纪末法国在广州的宗教影响和哥特式建筑风格在华南地区的传播，是研究近代中西文化交流和宗教传播的重要实物遗存。`,
                         openTime: "开放时间信息待补充",
                         rating: 4.6,
-                        images: ["露德圣母堂全景", "哥特式尖顶", "圣母山", "内部祭坛"],
+                        images: ["图片/露德圣母堂.png", "图片/精彩照片/露德圣母堂.jpg", "图片/精彩照片/露德圣母堂2.jpg"],
                         baiduUrl: "https://baike.baidu.com/item/沙面露德圣母堂",
-                        wikiUrl: "https://zh.wikipedia.org/wiki/沙面露德聖母堂"
+                        wikiUrl: "https://zh.wikipedia.org/wiki/沙面露德聖母堂",
+                        fishbone: 1
                     },
                     {
                         id: 18,
@@ -931,7 +1103,8 @@
                         rating: 4.5,
                         images: ["新古典主义立面", "柱廊细节", "建筑铭牌", "沙面金融建筑群"],
                         baiduUrl: "https://baike.baidu.com/item/汇丰银行广州旧址",
-                        wikiUrl: "https://zh.wikipedia.org/wiki"
+                        wikiUrl: "https://zh.wikipedia.org/wiki",
+                        fishbone: 1
                     },
                     {
                         id: 19,
@@ -942,15 +1115,19 @@
                         details: `英国领事馆旧址建于20世纪10年代，采用中西合璧的折衷主义风格，融合了西方建筑元素与东方装饰细节，是沙面岛上极具特色的历史建筑之一。<br><br>该建筑在历史上曾作为英国驻广州领事馆，见证了英国在广州的殖民外交活动。如今，该旧址已改造为广东外事博物馆，展示广东地区对外交往的历史文物和资料，成为人们了解广东外事发展历程的重要场所。<br><br>其建筑本身也是研究近代中西建筑文化融合的重要实例，体现了殖民时期建筑风格的多样性与适应性。`,
                         openTime: "开放时间信息待补充（广东外事博物馆开放时间）",
                         rating: 4.6,
-                        images: ["领事馆建筑外观", "中西合璧装饰", "博物馆展厅", "庭院"],
+                        images: ["图片/英国领事馆.jpg"],
                         baiduUrl: "https://baike.baidu.com/item/英国驻广州领事馆旧址",
-                        wikiUrl: "https://zh.wikipedia.org/wiki"
+                        wikiUrl: "https://zh.wikipedia.org/wiki",
+                        fishbone: 1
                     }
                 ]
             }
         };
 
+
+
         let currentDay = 1;
+        let currentVersion = 'highlight'; // 默认是精华版
         let currentAttraction = null;
 
         // 初始化页面
@@ -965,11 +1142,30 @@
 
         // 绑定事件
         function bindEvents() {
+            // 日期按钮事件
             document.querySelectorAll('.date-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const day = parseInt(this.dataset.day);
                     updateDay(day);
                 });
+            });
+            
+            // 版本选择按钮事件
+            document.querySelectorAll('.version-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const version = this.dataset.version;
+                    updateVersion(version);
+                });
+            });
+            
+            // 交通方式按钮点击事件
+            document.getElementById('transportBtn').addEventListener('click', function() {
+                // 根据当前版本跳转到不同页面
+                if (currentVersion === 'highlight') {
+                    window.location.href = '交通方式备注精华版.html';
+                } else {
+                    window.location.href = '交通方式备注.html';
+                }
             });
         }
 
@@ -989,8 +1185,46 @@
             // 更新鱼骨图
             updateFishboneDiagram(day);
             
-            // 更新景点列表
-            updateAttractionsGrid(day);
+            // 根据当前版本更新景点列表
+            updateAttractionsByVersion(currentVersion);
+        }
+        
+        // 更新版本显示
+        function updateVersion(version) {
+            currentVersion = version;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.version-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-version="${version}"]`).classList.add('active');
+            
+            // 根据选择的版本更新景点列表
+            updateAttractionsByVersion(version);
+        }
+        
+        // 根据版本更新景点列表
+        function updateAttractionsByVersion(version) {
+            const data = dayData[currentDay];
+            
+            // 显示/隐藏对应板块
+            if (version === 'highlight') {
+                // 精华版 - 显示区分的两个板块
+                document.getElementById('highlightSection').style.display = 'block';
+                document.getElementById('extendedSection').style.display = 'block';
+                document.getElementById('fullSection').style.display = 'none';
+                
+                // 更新精华和拓展景点
+                updateHighlightAttractions(data);
+            } else {
+                // 完整版 - 显示不区分的一个板块
+                document.getElementById('highlightSection').style.display = 'none';
+                document.getElementById('extendedSection').style.display = 'none';
+                document.getElementById('fullSection').style.display = 'block';
+                
+                // 更新完整景点列表
+                updateFullAttractions(data);
+            }
         }
 
         // 更新鱼骨图
@@ -1002,6 +1236,9 @@
             svg.querySelectorAll('.fishbone-bone, .fishbone-point, .fishbone-text, .fishbone-clickarea').forEach(el => el.remove());
             
             const totalAttractions = data.attractions.length;
+            
+            if (totalAttractions === 0) return;
+            
             const spacing = (720 - 80) / (totalAttractions + 1);
             const isMobile = window.innerWidth < 768; // 检测移动设备
 
@@ -1009,7 +1246,7 @@
                 const isUpper = index % 2 === 0;
                 const xPosition = 80 + (index + 1) * spacing;
 
-                const boneLength = isMobile ? 150 : 120; // 移动设备上缩短鱼刺长度
+                const boneLength = isMobile ? 150 : 120;
                 const boneAngle = isUpper ? -45 : 45;
                 const radians = (boneAngle * Math.PI) / 180;
                 const endX = xPosition + Math.cos(radians) * boneLength;
@@ -1021,14 +1258,14 @@
                 bone.setAttribute('y1', 150);
                 bone.setAttribute('x2', endX);
                 bone.setAttribute('y2', endY);
-                bone.setAttribute('stroke', '#FCA5A5');
-                bone.setAttribute('stroke-width', '2');
+                bone.setAttribute('stroke', attraction.fishbone === 1 ? '#dc2626' : '#ef4444');
+                bone.setAttribute('stroke-width', attraction.fishbone === 1 ? '3' : '2');
                 bone.classList.add('fishbone-bone');
                 svg.appendChild(bone);
 
                 // 文本换行处理
                 const name = attraction.name;
-                const maxCharsPerLine = isMobile ? 4 : 4; // 移动设备每行显示更少字符
+                const maxCharsPerLine = isMobile ? 4 : 4;
                 const lines = [];
                 
                 for (let i = 0; i < name.length; i += maxCharsPerLine) {
@@ -1038,13 +1275,13 @@
                 // 基础参数设置
                 const baseFontSize = isMobile ? 25 : 12;
                 const fontSize = baseFontSize;
-                const lineHeight = fontSize * 1.2; // 行高
-                const padding = 6; // 文本与圆圈边缘的间距
+                const lineHeight = fontSize * 1.2;
+                const padding = 6;
                 
-                // 计算圆的半径（基于文本尺寸）
+                // 计算圆的半径
                 const maxLineLength = Math.max(...lines.map(line => line.length));
-                const textWidth = maxLineLength * fontSize * 0.6; // 估算文本宽度
-                const textHeight = lines.length * lineHeight; // 文本总高度
+                const textWidth = maxLineLength * fontSize * 0.6;
+                const textHeight = lines.length * lineHeight;
                 const radius = 1.5*Math.ceil(Math.max(textWidth, textHeight) / 2 + padding);
                 
                 // 创建景点圆圈
@@ -1052,14 +1289,12 @@
                 point.setAttribute('cx', endX);
                 point.setAttribute('cy', endY);
                 point.setAttribute('r', radius);
-                point.setAttribute('fill', '#ef4444');
-                point.setAttribute('stroke', '#ef4444');
                 point.setAttribute('stroke-width', '2');
-                point.classList.add('fishbone-point');
+                point.classList.add('fishbone-point', `fishbone-${attraction.fishbone}`);
                 point.addEventListener('click', () => showAttractionDetail(attraction));
                 svg.appendChild(point);
 
-                // 创建景点标签（支持多行文本）
+                // 创建景点标签
                 const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 label.setAttribute('x', endX);
                 label.setAttribute('y', endY);
@@ -1067,7 +1302,7 @@
                 label.setAttribute('font-size', fontSize);
                 label.setAttribute('class', 'fishbone-text');
                 
-                // 计算第一行的垂直偏移量，实现居中显示
+                // 计算第一行的垂直偏移量
                 const firstLineOffset = -(lines.length - 1) * lineHeight / 2;
                 
                 lines.forEach((line, lineIndex) => {
@@ -1092,15 +1327,59 @@
             });
         }
 
-        // 更新景点列表
-        function updateAttractionsGrid(day) {
-            const data = dayData[day];
-            const grid = document.getElementById('attractionsGrid');
-            grid.innerHTML = '';
+        // 更新精华和拓展景点列表
+        function updateHighlightAttractions(data) {
+            const highlightGrid = document.getElementById('highlightAttractionsGrid');
+            const extendedGrid = document.getElementById('extendedAttractionsGrid');
+            
+            // 清空现有内容
+            highlightGrid.innerHTML = '';
+            extendedGrid.innerHTML = '';
             
             data.attractions.forEach(attraction => {
+                // 创建景点卡片
                 const card = document.createElement('div');
-                card.className = 'attraction-card';
+                card.className = `attraction-card fishbone-${attraction.fishbone}`;
+                
+                // 获取景点的第一张图片
+                const firstImage = attraction.images && attraction.images.length > 0 ? attraction.images[0] : '';
+                
+                card.innerHTML = `
+                    <img src="${firstImage}" alt="${attraction.name}" class="attraction-image">
+                    <h4>
+                        <span class="fishbone-marker fishbone-marker-${attraction.fishbone}">
+                            ${attraction.fishbone === 1 ? '精华景点' : '拓展景点'}
+                        </span>
+                        ${attraction.name}
+                    </h4>
+                    <p>${attraction.description}</p>
+                    <div class="attraction-meta">
+                        <span>⭐ ${attraction.rating}</span>
+                        <span>🕒 ${attraction.openTime}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => showAttractionDetail(attraction));
+                
+                // 根据类型添加到不同的网格
+                if (attraction.fishbone === 1) {
+                    highlightGrid.appendChild(card);
+                } else {
+                    extendedGrid.appendChild(card);
+                }
+            });
+        }
+        
+        // 更新完整版景点列表（不区分精华和拓展）
+        function updateFullAttractions(data) {
+            const fullGrid = document.getElementById('fullAttractionsGrid');
+            
+            // 清空现有内容
+            fullGrid.innerHTML = '';
+            
+            data.attractions.forEach(attraction => {
+                // 创建景点卡片（不显示精华/拓展标记）
+                const card = document.createElement('div');
+                card.className = `attraction-card`;
                 
                 // 获取景点的第一张图片
                 const firstImage = attraction.images && attraction.images.length > 0 ? attraction.images[0] : '';
@@ -1115,11 +1394,12 @@
                     </div>
                 `;
                 card.addEventListener('click', () => showAttractionDetail(attraction));
-                grid.appendChild(card);
+                
+                fullGrid.appendChild(card);
             });
         }
 
-        // 显示景点详情 - 重点优化部分
+        // 显示景点详情
         function showAttractionDetail(attraction) {
             currentAttraction = attraction;
             
@@ -1137,7 +1417,7 @@
             document.getElementById('addressSuccess').style.display = 'none';
             document.getElementById('transportSuccess').style.display = 'none';
             
-            // 详细介绍使用HTML格式显示，优化阅读体验
+            // 详细介绍使用HTML格式显示
             document.getElementById('detailDetails').innerHTML = attraction.details;
             
             // 更新图片
@@ -1146,7 +1426,6 @@
             
             attraction.images.forEach(imgFileName => {
                 const imgContainer = document.createElement('div');
-                // 创建img标签，src指向同一目录下的图片文件
                 imgContainer.innerHTML = `<img src="${imgFileName}" alt="${imgFileName}" style="width:100%; height:100%; object-fit:cover; border-radius:0.5rem;">`;
                 imagesGrid.appendChild(imgContainer);
             });
@@ -1192,3 +1471,4 @@
     </script>
 </body>
 </html>
+    
