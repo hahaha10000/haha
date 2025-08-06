@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guangzhou Transportation Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        header {
+            background-color: #c41e3a;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section-title {
+            color: #c41e3a;
+            border-bottom: 2px solid #c41e3a;
+            padding-bottom: 10px;
+            margin: 30px 0 20px;
+        }
+        .note-box {
+            background-color: #fff5f5;
+            border-left: 4px solid #c41e3a;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .day-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .day-title {
+            color: #c41e3a;
+            margin-top: 0;
+            border-bottom: 1px dashed #c41e3a;
+            padding-bottom: 8px;
+        }
+        .route-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .route-item:last-child {
+            border-bottom: none;
+        }
+        .transport {
+            color: #c41e3a;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+        }
+        .map-link {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .map-button {
+            background-color: #c41e3a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .map-button:hover {
+            background-color: #a31a31;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="新旅游路径（英）.html" class="back-button">Back to Home</a>
+        <h1>Guangzhou Transportation Plan</h1>
+    </header>
+    
+    <div class="container">
+        <div class="note-box">
+            <h2 class="section-title">Transportation Notes</h2>
+            <ul>
+                <li>Walking and cycling are the primary modes of transportation. Firstly, they reduce communication costs for foreign visitors, and secondly, they allow you to better appreciate the charm of Guangzhou. For longer distances between tourist destinations, road transportation such as taxis is recommended.</li>
+                <li>The subway lines 1 and 6 are the main ones. The nearest subway exits will be marked at relevant locations.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-title">Transportation Plan</h2>
+        
+        <div class="day-card">
+            <h3 class="day-title">Day 1</h3>
+            <div class="route-item">
+                (1) Sun Yat-sen Memorial Hall → March 29 Uprising Headquarters Site <span class="transport">(6-minute bike ride)</span>
+            </div>
+            <div class="route-item">
+                (2) March 29 Uprising Headquarters Site → Huanghuagang Martyrs’ Cemetery <span class="transport">(8-minute drive)</span>
+            </div>
+            <div class="route-item">
+                (3) Huanghuagang Martyrs’ Cemetery → Sanyuanli Anti-British Museum <span class="transport">(12-minute drive)</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <h3 class="day-title">Day 2</h3>
+            <div class="route-item">
+                (1) All-China Federation of Trade Unions Building → Provincial-Hong Kong Strike Memorial Hall <span class="transport">(3-minute walk)</span>
+            </div>
+            <div class="route-item">
+                (2) Provincial-Hong Kong Strike Memorial Hall → CPC Guangdong Regional Committee Memorial <span class="transport">(4-minute bike ride)</span>
+            </div>
+            <div class="route-item">
+                (3) CPC Guangdong Regional Committee Memorial → Yang Pao’an Former Residence <span class="transport">(8-minute bike ride)</span>
+            </div>
+            <div class="route-item">
+                (4) Yang Pao’an Former Residence → Peasant Movement Training Institute <span class="transport">(7-minute bike ride)</span>
+            </div>
+            <div class="route-item">
+                (5) Peasant Movement Training Institute → CPC Third National Congress Site <span class="transport">(14-minute bike ride)</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <h3 class="day-title">Day 3</h3>
+            <div class="route-item">
+                (1) Guangzhou Uprising Memorial Hall → Guangzhou Uprising Martyrs’ Cemetery <span class="transport">(13-minute bike ride)</span>
+            </div>
+            <div class="route-item">
+                (2) Guangzhou Uprising Martyrs’ Cemetery → Whampoa Military Academy <span class="transport">(38-minute drive)</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <h3 class="day-title">Day 4</h3>
+            <div class="route-item">
+                (1) Sacred Heart Cathedral → Shamian Island <span class="transport">(12-minute bike ride)</span>
+            </div>
+            <div class="route-item">
+                [Shamian Island includes:
+                <ul style="padding-left: 20px; margin: 5px 0;">
+                    <li>Former Tait & Co. Site</li>
+                    <li>Our Lady of Lourdes Chapel</li>
+                    <li>Former HSBC Building</li>
+                    <li>Former German Consulate</li>
+                    <li>Former British Consulate</li>
+                    <li>Former French Police Station</li>
+                    <li>Losee & Co., Anderson, Meyer & Co., and Butterfield & Swire</li>
+                    <li>Former Bank of Taiwan and Sassoon House</li>
+                </ul>
+                </div>
+            <div class="route-item">
+                (2) Shamian Island exploration: Walk between sites as listed.
+            </div>
+        </div>
+        
+        <div class="note-box">
+            <p><strong>Note:</strong> Historical details are cross-referenced with official records and architectural studies to ensure accuracy.</p>
+        </div>
+        <div class="map-link">
+            <p>Refer to the turn-by-turn map</p>
+            <a href="https://www.pitravel.cn/web/journey/detail/5294444?source=copyLink" target="_blank" class="map-button">View the navigation map</a>
+        </div>
+    </div>
+    
+    <footer>
+        Guangzhou Red Tourism Transportation Plan &copy; 2025
+    </footer>
+</body>
+</html>
+    

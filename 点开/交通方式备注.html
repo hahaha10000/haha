@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州出行交通规划</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        header {
+            background-color: #c41e3a;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section-title {
+            color: #c41e3a;
+            border-bottom: 2px solid #c41e3a;
+            padding-bottom: 10px;
+            margin: 30px 0 20px;
+        }
+        .note-box {
+            background-color: #fff5f5;
+            border-left: 4px solid #c41e3a;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .day-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .day-title {
+            color: #c41e3a;
+            margin-top: 0;
+            border-bottom: 1px dashed #c41e3a;
+            padding-bottom: 8px;
+        }
+        .route-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .route-item:last-child {
+            border-bottom: none;
+        }
+        .transport {
+            color: #c41e3a;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+        }
+        .map-link {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .map-button {
+            background-color: #c41e3a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .map-button:hover {
+            background-color: #a31a31;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="新旅游路径.html" class="back-button">返回首页</a>
+        <h1>广州出行交通规划</h1>
+    </header>
+    
+    <div class="container">
+        <div class="note-box">
+            <h2 class="section-title">交通方式备注</h2>
+            <ul>
+                <li>交通上遵循步行和骑行为主，第一是降低外国人的出行沟通成本，其二也是更好的领略广州城市本身的魅力。旅游目的地相距较远时以出租等公路交通为主</li>
+                <li>地铁上以1号线和6号线为主，在相关地点附上最近地铁口</li>
+            </ul>
+        </div>
+
+        <h2 class="section-title">出行交通规划</h2>
+        
+        <div class="day-card">
+            <h3 class="day-title">近代抗争与辛亥革命（1840-1911）</h3>
+            <div class="route-item">
+                1. 中山纪念堂——三·二九起义指挥部旧址 <span class="transport">（骑行6分钟）</span>
+            </div>
+            <div class="route-item">
+                2. 三·二九起义指挥部旧址——黄花岗七十二烈士墓园 <span class="transport">（驾车8分钟）</span>
+            </div>
+            <div class="route-item">
+                3. 黄花岗七十二烈士墓园——三元里人民抗英斗争纪念馆 <span class="transport">（驾车12分钟）</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <h3 class="day-title">国共合作与工运浪潮（1920-1927）</h3>
+            <div class="route-item">
+                1. 中华全国总工会旧址——省港罢工纪念馆（东园） <span class="transport">（步行3分钟）</span>
+            </div>
+            <div class="route-item">
+                2. 省港罢工纪念馆（东园）——中共广东区委旧址纪念馆 <span class="transport">（骑行4分钟）</span>
+            </div>
+            <div class="route-item">
+                3. 中共广东区委旧址纪念馆——杨匏安旧居陈列馆（杨家祠） <span class="transport">（骑行8分钟）</span>
+            </div>
+            <div class="route-item">
+                4. 杨匏安旧居陈列馆（杨家祠）——毛泽东同志主办农民运动讲习所旧址 <span class="transport">（骑行7分钟）</span>
+            </div>
+            <div class="route-item">
+                5. 毛泽东同志主办农民运动讲习所旧址——中共三大会址纪念馆 <span class="transport">（骑行14分钟）</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <h3 class="day-title">革命起义与军事摇篮（1927-1949）</h3>
+            <div class="route-item">
+                1. 广州起义纪念馆（广州公社旧址）——广州起义烈士陵园 <span class="transport">（骑行13分钟）</span>
+            </div>
+            <div class="route-item">
+                2. 广州起义烈士陵园——黄埔军校旧址纪念馆 <span class="transport">（驾车38分钟）</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <h3 class="day-title">殖民历史与宗教建筑</h3>
+            <div class="route-item">
+                1. 圣心大教堂——沙面岛 <span class="transport">（骑行十二分钟）</span>
+            </div>
+            <div class="route-item">
+                2. 沙面岛内部各个目的地大体距离相近，因此遵循路线顺序进行步行即可
+            </div>
+        </div>
+        <div class="map-link">
+            <p>参考路线导航地图：圆周游记</p>
+            <a href="https://www.pitravel.cn/web/journey/detail/5294444?source=copyLink" target="_blank" class="map-button">查看导航地图</a>
+        </div>
+    </div>
+    
+    <footer>
+        广州红色旅游交通规划 &copy; 2025
+    </footer>
+</body>
+</html>
