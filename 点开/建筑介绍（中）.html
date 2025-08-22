@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州近代建筑遗产</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ef4444', // 深红色（主色调）
+                        secondary: '#e63946', // 中红色
+                        accent: '#f97316', // 橙色（保留作为辅助色）
+                        neutral: '#f8f0f0', // 浅红色调背景
+                        dark: '#370617', // 深暗红色
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-transform-opacity {
+                transition-property: transform, opacity;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                transition-duration: 300ms;
+            }
+            .flow-item {
+                @apply relative bg-white rounded-lg shadow-md p-4 mb-4 border-l-4 transition-all duration-300;
+            }
+            .flow-item:hover {
+                @apply shadow-lg transform -translate-y-1;
+            }
+            .flow-connector {
+                @apply absolute left-5 top-full h-8 w-0.5 bg-gray-300 z-0;
+            }
+            .tab-btn-active {
+                @apply bg-primary text-white;
+            }
+            .tab-content-active {
+                @apply block;
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-gray-800">
+    <header class="bg-gradient-to-r from-primary to-secondary text-white shadow-lg">
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-center text-shadow">广州近代建筑遗产</h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-center mt-2 opacity-90">近代历史与建筑艺术的交融</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+        <aside class="w-full md:w-64 shrink-0">
+            <nav class="bg-white rounded-xl shadow-md overflow-hidden">
+                <ul class="divide-y divide-gray-100">
+                    <li>
+                        <a href="#shamian" class="nav-link flex items-center gap-3 px-6 py-4 hover:bg-gray-50 transition-colors" onclick="toggleContent('shamian', this)">
+                            <i class="fa fa-map-marker text-primary"></i>
+                            <span>沙面岛</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#sacred-heart" class="nav-link flex items-center gap-3 px-6 py-4 hover:bg-gray-50 transition-colors" onclick="toggleContent('sacred-heart', this)">
+                            <i class="fa fa-university text-primary"></i>
+                            <span>圣心大教堂</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#history-events" class="nav-link flex items-center gap-3 px-6 py-4 hover:bg-gray-50 transition-colors" onclick="toggleContent('history-events', this)">
+                            <i class="fa fa-history text-primary"></i>
+                            <span>历史事件</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="flex-1">
+            <!-- 沙面岛内容 -->
+            <div id="shamian" class="content-card bg-white rounded-xl shadow-md p-6 hidden">
+                <h2 class="text-2xl font-bold text-primary mb-6">沙面岛</h2>
+                <div class="tab-nav flex flex-wrap gap-2 mb-6">
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('background', 'shamian', this)">历史背景</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('architecture', 'shamian', this)">建筑风格</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('protection', 'shamian', this)">保护现状</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('value', 'shamian', this)">文化价值</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('summary', 'shamian', this)">总结</button>
+                </div>
+
+                <div id="background-shamian" class="tab-content hidden">
+                    <div class="prose max-w-none">
+                        <h3 class="text-xl font-semibold text-primary mb-4">一、历史背景与形成</h3>
+                        <p class="mb-4">1. 租界起源<br>沙面岛原为珠江冲积沙洲，第二次鸦片战争后(1859 年)，英法通过《天津条约》强迫清政府租借沙面，将其填土筑基为人工岛，并开挖沙基涌与陆地分隔。1861 年《沙面租界条约》签订后，西部4/5 划为英租界，东部1/5 为法租界。<br>租界内设有领事馆、银行、洋行等，成为列强在华经济与政治活动的据点，如英国汇丰银行、太古洋行、法国东方汇理银行等均在此设立机构。</p>
+                        <p>2. 历史事件<br>沙面见证了多起重大历史事件，如1925 年的“沙基惨案”，英法军队向反帝游行队伍开枪，造成严重伤亡。这些事件使其成为近代中国民族运动的象征地之一。</p>
+                    </div>
+                </div>
+
+                <div id="architecture-shamian" class="tab-content hidden">
+                    <div class="prose max-w-none">
+                        <h3 class="text-xl font-semibold text-primary mb-4">二、建筑风格与代表性案例</h3>
+                        <p class="mb-4">沙面岛现存150 余座欧式建筑，涵盖19 世纪末至20 世纪初的多种艺术风格，被称为“露天建筑博物馆”。</p>
+                        <ul class="list-disc pl-6 mb-4 space-y-2">
+                            <li>领事馆与行政建筑：如原英国领事馆(已拆除)、法国领事馆等，多为新古典主义风格，注重对称与柱式结构。</li>
+                            <li>金融与商业建筑：如汇丰银行旧址(沙面大街54 号)，采用西方古典复兴风格，穹窿顶亭子与通柱设计彰显庄重。</li>
+                            <li>宗教建筑：露德天主教圣母堂(沙面大街14 号)，入口仿哥特式尖拱与玫瑰窗，规模虽小但工艺精致。</li>
+                            <li>公共设施：包括邮局、电报局、俱乐部(如红楼，沙面大街2-6 号)，融合英国浪漫主义风格，红砖砌筑与尖顶阁楼是其特色。</li>
+                        </ul>
+                        <p class="mb-4">建筑风格分类：<br>新巴洛克式：装饰繁复，常见于银行与领事馆，如法国东方汇理银行旧址的动态曲线设计。<br>券廊式：适应岭南气候，以沙面大街48 号为例，四周环绕券拱形走廊，兼具实用与美学价值。<br>中西合璧：部分建筑融合中式元素，如外廊木门与岭南灰塑装饰。</p>
+                    </div>
+                </div>
+
+                <div id="protection-shamian" class="tab-content hidden">
+                    <div class="prose max-w-none">
+                        <h3 class="text-xl font-semibold text-primary mb-4">三、保护现状与挑战</h3>
+                        <p class="mb-4">1. 文物保护历程<br>1996 年，沙面建筑群被列为全国重点文物保护单位，53 栋建筑获重点保护。政府实施“修旧如旧”政策，修复了红楼、汇丰银行等代表性建筑，并限制现代商业开发。</p>
+                        <p>2. 保护中的问题<br>历史破坏：20 世纪50 年代后，部分建筑因居住超负荷被改建，如原英国领事馆因相邻宿舍楼挤压而拆除。<br>开发性破坏：租户擅自改造(如拆除金库铁门、木地板更换)，导致建筑原貌受损。</p>
+                    </div>
+                </div>
+
+                <div id="value-shamian" class="tab-content hidden">
+                    <div class="prose max-w-none">
+                        <h3 class="text-xl font-semibold text-primary mb-4">四、文化价值与现状</h3>
+                        <p class="mb-4">1. 旅游与艺术功能<br>沙面现为广州著名文化旅游区，融合历史遗迹与现代休闲。岛上绿树成荫，150 余株古树与欧式建筑相映成趣，成为婚纱摄影、艺术创作的热门地。</p>
+                        <p>2. 外事与商业延续<br>部分建筑仍承担外事功能，如波兰驻广州领事馆，白天鹅宾馆(中国首家中外合作五星级酒店)则成为改革开放的象征。</p>
+                    </div>
+                </div>
+
+                <div id="summary-shamian" class="tab-content hidden">
+                    <div class="prose max-w-none">
+                        <h3 class="text-xl font-semibold text-primary mb-4">五、总结</h3>
+                        <p>沙面岛建筑群是近代中国半殖民地历史的缩影，其建筑风格多样性与保护复杂性反映了文化遗产的多重价值。作为“广州的欧洲建筑博物馆”，它不仅承载着历史记忆，更通过活化利用延续了文化生命力。未来需平衡保护与开发，避免过度商业化对历史原真性的侵蚀。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 圣心大教堂内容 -->
+            <div id="sacred-heart" class="content-card bg-white rounded-xl shadow-md p-6 hidden">
+                <h2 class="text-2xl font-bold text-primary mb-6">圣心大教堂</h2>
+                <div class="tab-nav flex flex-wrap gap-2 mb-6">
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('history', 'sacred-heart', this)">历史沿革</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('features', 'sacred-heart', this)">建筑特色</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('cultural', 'sacred-heart', this)">文化价值</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('summary', 'sacred-heart', this)">总结</button>
+                </div>
+
+                <div id="history-sacred-heart" class="tab-content hidden">
+                    <div class="prose max-w-none">
+                        <h3 class="text-xl font-semibold text-primary mb-4">一、历史沿革</h3>
+                        <p class="mb-4">1. 建造背景与殖民烙印<br>圣心大教堂的建造与第二次鸦片战争密切相关。1856 年，英法联军攻陷广州，焚毁两广总督行署。法国传教士明稽章借机要求在原址建造教堂，遭拒后通过法军司令施压，最终在1861 年《中法条约》的支持下强行取得土地。教堂于1861 年动工，1863 年12 月8 日圣心瞻礼日奠基，1888 年竣工，历时25 年，由法国设计师VONUTRIN 和HUMBERT 主持设计，中国工匠蔡孝负责施工。</p>
+                        <p class="mb-4">2. 建造中的中西协作<br>教堂建造中融入了中国智慧。蔡孝采用糯米桐油替代水泥黏合石材，穹顶石块以铁枝穿连加固，排水口改为中式石狮造型，地板使用防潮的广东大阶砖，门饰融入广式木雕，体现了本土工艺与西方设计的结合。</p>
+                        <p>3. 历史劫难与修复<br>抗日战争：1940 年代，一架日机撞击教堂塔尖避雷针，导致部分拿破仑时期的彩色玻璃震碎。<br>文革破坏：宗教油画被毁，剩余彩色玻璃、花窗、经书及跪椅遭焚毁，石柱爆裂，狮头排水口被砸碎，教堂一度沦为垃圾场。<br>修复重生：1979 年恢复宗教活动，2004 年耗资2000 万元大修，更换菲律宾定制的圣经故事彩色玻璃，修复机械钟，重现历史原貌。</p>
+                    </div>
+                </div>
+
+                <div id="features-sacred-heart" class="tab-content hidden">
+                    <div class="prose max-w-none">
+                        <h3 class="text-xl font-semibold text-primary mb-4">二、建筑特色解析</h3>
+                        <p class="mb-4">1. 哥特式风格的主体结构<br>平面布局：教堂呈拉丁十字形，坐北朝南，长78.69 米，宽35 米，高58.5 米，双尖塔直插云霄，与巴黎圣母院齐名，被誉为“远东巴黎圣母院”。<br>外部设计：正立面三层结构，底层为三座尖拱门，中层设直径6 米的玫瑰花窗，顶层为八角形钟楼，飞扶壁与尖拱强化垂直线条，体现哥特式升腾感。<br>内部空间：中厅以10 根束柱支撑尖肋拱顶，束柱装饰麦穗纹样，地面至祭坛形成纵深延伸的宗教氛围；三面玫瑰花窗以红、蓝、紫黄玻璃镶嵌，原绘圣经故事。</p>
+                        <p class="mb-4">2. 技术与材料的创新<br>全石结构：墙体与柱子均用花岗岩砌筑，为全球四座全石哥特式教堂之一，坚固耐用。<br>排水系统：飞扶壁引导雨水经石狮排水口排出，适应广州多雨气候。</p>
+                        <p>3. 中西合璧的细节<br>宗教象征融合本土文化：门框雕刻中式石狮，束柱柱础象征“坚如磐石”，玫瑰花窗玻璃采用国产蓝绿色修补。<br>朝向调整：传统天主教堂面西，石室教堂改为面南，顺应广州城市布局。</p>
+                    </div>
+                </div>
+
+                <div id="cultural-sacred-heart" class="tab-content hidden">
+                    <div class="prose max-w-none">
+                        <h3 class="text-xl font-semibold text-primary mb-4">三、文化价值与现状</h3>
+                        <p class="mb-4">1. 历史意义<br>作为中国近代半殖民地历史的见证，石室教堂承载了殖民侵略、文化冲突与融合的多重叙事，其建造过程反映了西方宗教势力借助不平等条约的扩张。</p>
+                        <p class="mb-4">2. 建筑地位<br>被列为全国重点文物保护单位(1996 年)，是东南亚最大石结构哥特教堂，兼具宗教、艺术与工程学价值。</p>
+                        <p>3. 现代功能<br>现为开放景点与宗教场所，每日钟声悠扬，彩色玻璃光影交织，吸引游客与信徒，成为广州文化地标之一。</p>
+                    </div>
+                </div>
+
+                <div id="summary-sacred-heart" class="tab-content hidden">
+                    <div class="prose max-w-none">
+                        <h3 class="text-xl font-semibold text-primary mb-4">四、总结</h3>
+                        <p>广州石室圣心大教堂是殖民历史与建筑艺术的复杂载体。其哥特式骨架与岭南工艺的糅合，既彰显了西方宗教的强势渗透，也记录了中国工匠的智慧适应。作为活化的文化遗产，它在修复中延续了宗教功能与历史记忆，成为广州“中西交融”的象征性符号。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 历史事件内容 -->
+            <div id="history-events" class="content-card bg-white rounded-xl shadow-md p-6 hidden">
+                <h2 class="text-2xl font-bold text-primary mb-6">历史事件</h2>
+                <div class="tab-nav flex flex-wrap gap-2 mb-6">
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('shamian-rent', 'history-events', this)">沙面租界形成</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('shamian-strike', 'history-events', this)">沙面罢工</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('provincial-hong-kong', 'history-events', this)">省港大罢工</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary hover:text-white transition-colors" onclick="showTab('guangzhou-uprising', 'history-events', this)">1927年广州起义</button>
+                </div>
+
+                <!-- 沙面租界形成流程图 -->
+                <div id="shamian-rent-history-events" class="tab-content hidden">
+                    <h3 class="text-xl font-semibold text-primary mb-6">沙面租界的形成</h3>
+                    
+                    <div class="flow-chart relative pl-10 mb-8">
+                        <!-- 背景 -->
+                        <div class="flow-item bg-blue-50 border-l-blue-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-blue-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-info-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">背景</h4>
+                                    <p>第一次鸦片战争</p>
+                                    <p class="mt-2">1843年1月：英国要求扩大租品地</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 过程 -->
+                        <div class="flow-item bg-yellow-50 border-l-yellow-500">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-yellow-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-history"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">过程</h4>
+                                    
+                                    <div class="timeline pl-6 mt-4">
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-yellow-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1856</span>
+                                                <div>
+                                                    <p class="font-medium">12月</p>
+                                                    <p>十三行洋人商馆区被烧</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-yellow-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1857</span>
+                                                <div>
+                                                    <p class="font-medium">12月</p>
+                                                    <p>英法联军攻陷广州后急迫寻找新居留地</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-yellow-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1858</span>
+                                                <div>
+                                                    <p>英法联军选准位于十三行西南面珠江白鹅潭的沙面</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-yellow-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1859</span>
+                                                <div>
+                                                    <p class="font-medium">5月</p>
+                                                    <p>英法要求租借沙面</p>
+                                                    <p class="font-medium mt-2">7月</p>
+                                                    <p>劳崇光被迫答应英法租界沙面，并由广东负责将沙面筑成一个小岛</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-yellow-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1865</span>
+                                                <div>
+                                                    <p>英国领事搬入沙面，美葡德日相继搬入沙面</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-yellow-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1888</span>
+                                                <div>
+                                                    <p>法国建筑的圣心天主教堂竣工</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-yellow-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1889</span>
+                                                <div>
+                                                    <p class="font-medium">10月</p>
+                                                    <p>法国政府拍卖沙面土地</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-yellow-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1890</span>
+                                                <div>
+                                                    <p>法国搬入沙面</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 沙面罢工流程图 -->
+                <div id="shamian-strike-history-events" class="tab-content hidden">
+                    <h3 class="text-xl font-semibold text-primary mb-6">沙面罢工</h3>
+                    
+                    <div class="flow-chart relative pl-10 mb-8">
+                        <!-- 背景 -->
+                        <div class="flow-item bg-blue-50 border-l-blue-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-blue-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-info-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">背景</h4>
+                                    <ul class="list-disc pl-6 mt-2 space-y-2">
+                                        <li>第一次国共合作建立，孙中山联俄、联共、扶助农工三大政策为广州工入运动的开展提供有利条件</li>
+                                        <li>1924年5月1日的广州工人代表大会选举产生了以共产党员为主，并负责领导职务的执行委员会。从此广州工会组织走向统一，工人运动逐渐转入正轨。</li>
+                                        <li>1924年6月19日，沙面英法租界当局以越南革命志士范鸿泰在沙面刺杀法国驻印度支那总督麦尔林（未遂）事件为借口，颁布“新警律”，限制中国人出入沙面和禁止居住。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 过程 -->
+                        <div class="flow-item bg-green-50 border-l-green-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-green-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-play-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">过程</h4>
+                                    
+                                    <div class="timeline pl-6 mt-4">
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1924</span>
+                                                <div>
+                                                    <p class="font-medium">7月25日</p>
+                                                    <p>有3000工人参加的沙面罢工开始了。</p>
+                                                    <p class="font-medium mt-2">次日</p>
+                                                    <p>租界的中国巡捕也加入罢工行列。</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0"></span>
+                                                <div>
+                                                    <p>英法领事馆当局对罢工人实施种种威吓，但在中共广州地委和广州工人代表会的支持下，罢工工人们毫不退缩。</p>
+                                                    <p class="mt-2">英国领事馆与法国领事馆分别求助于孙中山和蔼仲恺，两人的中国义正词严。这迫使英法领事馆除了向罢工工人妥协外别无选择。</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 结果 -->
+                        <div class="flow-item bg-purple-50 border-l-purple-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-purple-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">结果</h4>
+                                    <p class="mt-2">1924年8月19日，英法终于被迫答应取消“新警律”和不得开除罢工工人等复工条件，坚持一个多月的沙面罢工斗争胜利结束。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 影响 -->
+                        <div class="flow-item bg-indigo-50 border-l-indigo-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-indigo-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-bullhorn"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">影响</h4>
+                                    <ul class="list-disc pl-6 mt-2 space-y-2">
+                                        <li>1925年5月1日在广州召开了全国第二次劳动大会，成立了中华全国总工会。这是中国工人运动史上的一件大事，从此中国工人有了全国统一的组织，有了指挥工人斗争的总机关，对于中国工人运动的发展具有重大影响。</li>
+                                        <li>中华全国总工会成立后不久，上海发生五卅惨案，中共广东区委和中华全国总工会随即领导了震惊中外的省港大罢工。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 意义 -->
+                        <div class="flow-item bg-pink-50 border-l-pink-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-pink-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-lightbulb-o"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">意义</h4>
+                                    <p class="mt-2">1924年7月开始的沙面工人罢工是中国工人运动从二十罢工失败后由低潮转向复苏的起点。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 相关建筑 -->
+                        <div class="flow-item bg-teal-50 border-l-teal-500">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-teal-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-building"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">相关建筑</h4>
+                                    <p class="mt-2">沙面大街</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 省港大罢工流程图 -->
+                <div id="provincial-hong-kong-history-events" class="tab-content hidden">
+                    <h3 class="text-xl font-semibold text-primary mb-6">1925年省港大罢工</h3>
+                    
+                    <div class="flow-chart relative pl-10 mb-8">
+                        <!-- 背景 -->
+                        <div class="flow-item bg-blue-50 border-l-blue-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-blue-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-info-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">背景</h4>
+                                    <ul class="list-disc pl-6 mt-2 space-y-2">
+                                        <li>沙面罢工后中华全国总工会成立，中国工人运动由低潮转向复苏。</li>
+                                        <li>1925年5月30日，上海五卅惨案。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 过程 -->
+                        <div class="flow-item bg-green-50 border-l-green-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-green-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-play-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">过程</h4>
+                                    
+                                    <div class="timeline pl-6 mt-4">
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1925</span>
+                                                <div>
+                                                    <p class="font-medium">6月2日</p>
+                                                    <p>广州各界群众万余人在广东大学操场举行援助沪察示威大会，全国总工会决定当平定刘、杨叛乱后，即行号召罢工以响应上海。</p>
+                                                    <p class="font-medium mt-2">6月上旬</p>
+                                                    <p>中共广东区委以中华全国总工会名义，派刘中夏、杨殷、杨匏安为代表赴香港联系和发动香港工人罢工，而冯菊坡、刘东松、周文辉等则负责组织发动广州工人罢工，以促成香港联合大罢工的强大声势。“全港工团联合会”成立。</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0"></span>
+                                                <div>
+                                                    <p class="font-medium">6月21日</p>
+                                                    <p>广州沙面租界工人在中华全国总工会领导下，宣布罢工，广州市英、日、美洋行及私人住宅雇佣的中国工人纷纷加入罢工行列。香港罢工工人纷纷离港回到广州，与广州的罢工斗争合流。</p>
+                                                    <p class="font-medium mt-2">6月23日</p>
+                                                    <p>省港罢工工人和广州的工友商学兵各界共十万人集会东战场，提出收回租界、海关和取消一切不平等条约等要求。下午一时半，举行反帝大游行。</p>
+                                                    <p class="mt-2">当游行队伍的前队转入内街，后队行至沙基大桥口的时候，沙面罢国军警突然向游行队伍排枪射击，停泊在白鹳潭的英、法、葡等国军舰也发炮轰击，造成震惊中外的“沙基惨案”。</p>
+                                                    <p class="mt-2">广东省长公署于当日照会英、法、葡三国领事，提出严重抗议，并提出严惩肇事者、撤退外国兵舰、收回沙面租界、赔偿伤亡华人等项条件。广东各界纷纷召开各种会议，谴责帝国主义的是忍暴行，一致支援罢工。</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0"></span>
+                                                <div>
+                                                    <p>为加强对罢工斗争的领导，使之能够长期坚持，1925年7月3日，在广州东园成立了省港罢工委员会，这是省港罢工斗争的最高领导机关，负责处理有关罢工、封锁香港、审判工贼等事宜，具有一定的行政职能。</p>
+                                                    <p class="font-medium mt-2">15日</p>
+                                                    <p>又选举产生了由八百余名代表组成的省港罢工最高议事决策机构省港罢工工人代表大会。</p>
+                                                    <p class="mt-2">为了孤立和打击港英帝国主义，罢工委员会组织了一千多人（最多时达五千多人）的工人武装纠察队，抵制外资，随后又把全国封锁抵制外资的办法，改变为单纯对英封锁的策略，这一新策略，迅速取得预期效果。</p>
+                                                    <p class="mt-2">北伐战争胜利进行，原来罢工封锁的策略已经不能适应斗争形势的变化，不利于对北伐战争的支援。</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 结果 -->
+                        <div class="flow-item bg-purple-50 border-l-purple-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-purple-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">结果</h4>
+                                    <p class="mt-2">1926年10月10日，省港罢工委员会在广东革命政府决定增加25％的关税附加税以安置罢工工人的条件下，发表关于停止封锁香港的布告，历时16个月之久的省港大罢工至此宣告结束。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 意义 -->
+                        <div class="flow-item bg-pink-50 border-l-pink-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-pink-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-lightbulb-o"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">意义</h4>
+                                    <p class="mt-2">是大革命中中国工人运动达到高潮的重要标志。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 相关建筑 -->
+                        <div class="flow-item bg-teal-50 border-l-teal-500">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-teal-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-building"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">相关建筑</h4>
+                                    <ul class="list-disc pl-6 mt-2 space-y-2">
+                                        <li>沙基马路即六二三路。</li>
+                                        <li>“沙基惨案”毋忘此日纪念碑。</li>
+                                        <li>省港罢工委员会旧址。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1927年广州起义流程图 -->
+                <div id="guangzhou-uprising-history-events" class="tab-content hidden">
+                    <h3 class="text-xl font-semibold text-primary mb-6">1927年广州起义</h3>
+                    
+                    <div class="flow-chart relative pl-10 mb-8">
+                        <!-- 背景 -->
+                        <div class="flow-item bg-blue-50 border-l-blue-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-blue-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-info-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">背景</h4>
+                                    <ul class="list-disc pl-6 mt-2 space-y-2">
+                                        <li>1927年：蒋介石四一二反革命政变、李济深广州四一五反革命政变、汪精卫武汉发动起义。</li>
+                                        <li>1927年8月7日汉口紧急会议。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 过程 -->
+                        <div class="flow-item bg-green-50 border-l-green-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-green-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-play-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">过程</h4>
+                                    
+                                    <div class="timeline pl-6 mt-4">
+                                        <div class="timeline-item">
+                                            <div class="flex items-start gap-3">
+                                                <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0">1927</span>
+                                                <div>
+                                                    <p class="font-medium">8月20日</p>
+                                                    <p>决定组织广州暴动委员会并部署。</p>
+                                                    <p class="font-medium mt-2">9月</p>
+                                                    <p>宁汉合流后汪精卫返广州。</p>
+                                                    <p class="font-medium mt-2">10月29日</p>
+                                                    <p>汪企图从新控制国民党中央，张发奎拥护。</p>
+                                                    <p class="font-medium mt-2">11月17日凌晨</p>
+                                                    <p>爆发张贵事变。</p>
+                                                    <p class="font-medium mt-2">11月26日</p>
+                                                    <p>李济深等赴沪出席国民党四中全会预备会；议决发动武装暴动夺取广州政权。</p>
+                                                    <p class="font-medium mt-2">12月6日</p>
+                                                    <p>张太雷召开省委常委紧急会议。</p>
+                                                    <p class="font-medium mt-2">12月7日</p>
+                                                    <p>张秘密召开工农兵代表大会正式决定于12月12日举行起义。</p>
+                                                    <p class="font-medium mt-2">12月10日</p>
+                                                    <p>广州形势危急，12月11日凌晨张、叶、恽代表誓师。</p>
+                                                    <p class="font-medium mt-2">12月12日上午八点</p>
+                                                    <p>各路反对军队向起义军同时发动进攻。</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 结果 -->
+                        <div class="flow-item bg-purple-50 border-l-purple-500 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-purple-500 text-white p-2 rounded-full shrink-0">
+                                    <i class="fa fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">结果</h4>
+                                    <p class="mt-2">12月12日下午，广州苏维埃政府和工农红军总指挥部所在地被迫撤离。广州起义失败。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+
+    <script>
+        function toggleContent(id, element) {
+            // 隐藏所有内容卡片
+            const contentCards = document.querySelectorAll('.content-card');
+            contentCards.forEach(card => {
+                card.classList.add('hidden');
+                card.classList.remove('active');
+            });
+            
+            // 显示选中的内容卡片
+            const activeCard = document.getElementById(id);
+            activeCard.classList.remove('hidden');
+            activeCard.classList.add('active');
+            
+            // 更新导航链接的活动状态
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('tab-btn-active');
+            });
+            element.classList.add('tab-btn-active');
+            
+            // 自动展开第一个子选项卡
+            const firstTab = id === 'shamian' ? 'background' :
+                             id === 'sacred-heart' ? 'history' :
+                             'shamian-rent';
+            showTab(firstTab, id);
+        }
+
+        function showTab(tabName, parentId, element) {
+            // 只选择当前内容区域内的子选项卡
+            const parentElement = document.getElementById(parentId);
+            const tabs = parentElement.querySelectorAll('.tab-content');
+            
+            // 隐藏所有子选项卡
+            tabs.forEach(tab => {
+                tab.classList.add('hidden');
+                tab.classList.remove('tab-content-active');
+            });
+            
+            // 显示选中的子选项卡
+            const activeTab = document.getElementById(`${tabName}-${parentId}`);
+            if (activeTab) {
+                activeTab.classList.remove('hidden');
+                activeTab.classList.add('tab-content-active');
+            }
+            
+            // 更新选项卡按钮的活动状态
+            const tabButtons = parentElement.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => {
+                btn.classList.remove('tab-btn-active');
+            });
+            if (element) {
+                element.classList.add('tab-btn-active');
+            }
+        }
+
+        // 初始化显示沙面岛内容
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleContent('shamian', document.querySelector('.nav-link'));
+            showTab('background', 'shamian', document.querySelector('.tab-btn'));
+        });
+    </script>
+</body>
+</html>    

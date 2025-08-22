@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州红色旅游行程规划</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f9fafb;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* 头部样式 */
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        /* 日期选择器 */
+        .date-selector {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .date-selector h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .date-selector h2::before {
+            content: '🛣️';
+            margin-right: 0.5rem;
+        }
+
+        .date-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .date-btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #f3f4f6;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .date-btn.active {
+            background: #dc2626;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3);
+        }
+
+        .date-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .date-btn.active:hover {
+            background: #b91c1c;
+        }
+
+        .date-btn .day {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .date-btn .theme {
+            font-size: 1.2rem;
+            opacity: 1;
+            margin-top: 0.5rem;
+        }
+
+        /* 当前日期信息 */
+        .current-day {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-day h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+        }
+
+        .current-day p {
+            color: #6b7280;
+        }
+
+        /* 路线版本选择器 */
+        .version-selector {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .version-selector h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .version-selector h2::before {
+            content: '🗺️';
+            margin-right: 0.5rem;
+        }
+
+        .version-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .version-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #f3f4f6;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .version-btn.active {
+            background: #dc2626;
+            color: white;
+            box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3);
+        }
+
+        .version-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .version-btn.active:hover {
+            background: #b91c1c;
+        }
+
+        /* 鱼骨图容器 */
+        .fishbone-container {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .fishbone-diagram {
+            position: relative;
+            width: 100%;
+            min-height: 280px;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .fishbone-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .fishbone-point {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .fishbone-point:hover {
+            stroke: #b91c1c;
+            stroke-width: 3;
+            transform: scale(1.05);
+        }
+        
+        /* 鱼骨图上的点 */
+        .fishbone-point.fishbone-1 {
+            fill: #dc2626;
+            stroke: #b91c1c;
+        }
+        
+        .fishbone-point.fishbone-0 {
+            fill: #ef4444;
+            stroke: #dc2626;
+            opacity: 0.7;
+        }
+
+        .fishbone-text {
+            font-weight: 500;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            pointer-events: none;
+        }
+
+        /* 景点列表容器 */
+        .attractions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 景点列表 - 精华和拓展分开的框 */
+        .attractions-section {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+        }
+        
+        /* 精华景点标题带有特殊标记 */
+        .attractions-section.highlight h3 {
+            display: flex;
+            align-items: center;
+        }
+        
+        .attractions-section.highlight h3::after {
+            content: "★ Recommended experience";
+            margin-left: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #dc2626;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+        }
+
+        .attractions-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 1rem;
+        }
+
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .attraction-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 鱼骨图关联标记样式 */
+        .attraction-card.fishbone-1 {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+        }
+        
+        .attraction-card.fishbone-0 {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+            opacity: 0.9;
+        }
+        
+        .fishbone-marker {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        
+        .fishbone-marker-1 {
+            background-color: #dc2626;
+            color: white;
+        }
+        
+        .fishbone-marker-0 {
+            background-color: #ef4444;
+            color: white;
+        }
+        
+        .attraction-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .attraction-card:hover {
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .attraction-card h4 {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .attraction-card p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .attraction-meta {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            color: #9ca3af;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .attraction-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* 详情页面 */
+        .detail-page {
+            display: none;
+            min-height: 100vh;
+            background: #f9fafb;
+        }
+
+        .detail-page.active {
+            display: block;
+        }
+
+        .detail-header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: #b91c1c;
+        }
+
+        .back-btn::before {
+            content: '←';
+            margin-right: 0.5rem;
+        }
+
+        .detail-content {
+            padding: 2rem 0;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .detail-hero {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 2rem;
+        }
+
+        .detail-hero h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-hero p {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .detail-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .detail-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .detail-body {
+            padding: 1.5rem;
+        }
+
+        /* 地址信息 */
+        .location-info {
+            background: #fee2e2;
+            border-left: 4px solid #dc2626;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .location-info h2 {
+            font-size: 1.25rem;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-info h2::before {
+            content: '📍';
+        }
+
+        .location-info p {
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+
+        /* 复制按钮样式 */
+        .copy-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .copy-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background: #b91c1c;
+        }
+        
+        .copy-success {
+            color: #166534;
+            font-size: 0.875rem;
+            display: none;
+        }
+
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .detail-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 1rem;
+        }
+
+        .detail-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-section h3::before {
+            content: '📷';
+            margin-right: 0.5rem;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+
+        .tips-box {
+            background: #fee2e2;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tips-box h3 {
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+        }
+
+        .tips-box ul {
+            color: #991b1b;
+            padding-left: 1rem;
+        }
+
+        .tips-box li {
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-description {
+            line-height: 1.8;
+            color: #374151;
+        }
+
+        .detail-description p {
+            margin-bottom: 1rem;
+        }
+
+        /* 高亮的跳转按钮样式 */
+        .wiki-links {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .wiki-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(153, 27, 27, 0.2);
+        }
+
+        .wiki-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(153, 27, 27, 0.2);
+        }
+
+        .wiki-btn::before {
+            font-size: 1.25rem;
+        }
+
+        .baidu-btn::before {
+            content: '🔍';
+        }
+
+        .wiki-btn::before {
+            content: '📚';
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .date-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .version-buttons {
+                flex-direction: column;
+            }
+            
+            .version-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .fishbone-diagram {
+                height: 220px;
+            }
+            
+            .attractions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .detail-hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .detail-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .wiki-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .wiki-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主页面 -->
+    <div id="mainPage">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="container">
+                <h1>Guangzhou Red Tourism Itinerary Planning</h1>
+                <p>Select different dates to view carefully arranged tourist attractions</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- 日期选择器 -->
+            <div class="date-selector">
+                <h2>Select the tour route</h2>
+                <div class="date-buttons">
+                    <button class="date-btn active" data-day="1">
+                        <div class="day">Modern Resistance and the Xinhai Revolution (1840-1911)</div>
+                        
+                    </button>
+                    <button class="date-btn" data-day="2">
+                        <div class="day">Cooperation between the Kuomintang and the Communist Party and the Wave of Labor Movements (1920-1927).</div>
+                        
+                    </button>
+                    <button class="date-btn" data-day="3">
+                        <div class="day">Revolutionary Uprisings & The Military Cradle (1927-1949)</div>
+                        
+                    </button>
+                    <button class="date-btn" data-day="4">
+                        <div class="day">Colonial History & Religious Architecture</div>
+                        
+                    </button>
+                </div>
+            </div>
+
+            <!-- Current date information -->
+            <div class="current-day">
+                <h3 id="currentTitle">Modern Resistance and the Xinhai Revolution (1840-1911)</h3>
+                <div class="theme">Click on the attraction icons in the fishbone diagram to view detailed introductions</div>
+            </div>
+
+            <!-- 鱼骨图 -->
+            <div class="fishbone-container">
+                <div class="fishbone-diagram">
+                    <svg class="fishbone-svg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
+                        <!-- 主骨干 -->
+                        <line x1="80" y1="150" x2="720" y2="150" stroke="#dc2626" stroke-width="4" />
+                        <!-- 鱼头 -->
+                        <polygon points="720,160 720,140 740,150" fill="#dc2626" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 路线版本选择器 -->
+            <div class="version-selector">
+                <h2>Select route version</h2>
+                <div class="version-buttons">
+                    <button class="version-btn active" data-version="highlight">
+                        <span>⭐</span> Essence Edition
+                    </button>
+                    <button class="version-btn" data-version="full">
+                        <span>📋</span> Full version
+                    </button>
+                </div>
+            </div>
+
+            <!-- 景点概览 -->
+            <div class="attractions-container" id="attractionsContainer">
+                <!-- 精华景点 -->
+                <div class="attractions-section highlight" id="highlightSection">
+                    <h3>Highlights of the attractions</h3>
+                    <div class="attractions-grid" id="highlightAttractionsGrid">
+                        <!-- 精华景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 拓展景点 -->
+                <div class="attractions-section" id="extendedSection">
+                    <h3>Expand attractions</h3>
+                    <div class="attractions-grid" id="extendedAttractionsGrid">
+                        <!-- 拓展景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 完整版景点容器 -->
+                <div class="attractions-section" id="fullSection" style="display: none;">
+                    <h3>Route attraction preview</h3>
+                    <div class="attractions-grid" id="fullAttractionsGrid">
+                        <!-- 完整版景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主页面底部添加跳转按钮 -->
+            <div style="text-align: center; margin: 3rem 0; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+                <button class="wiki-btn" id="transportBtn">
+                    Remarks on transportation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详情页面 -->
+    <div id="detailPage" class="detail-page">
+        <div class="detail-header">
+            <div class="container">
+                <a href="#" class="back-btn" onclick="showMainPage()">back home</a>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="detail-content">
+                <div class="detail-card">
+                    <div class="detail-hero">
+                        <h1 id="detailTitle">Name of the attraction</h1>
+                        <p id="detailDescription">Description of the attraction</p>
+                        <div class="detail-meta">
+                            <span>⭐ <span id="detailRating">4.5</span></span>
+                            <span>🕒 <span id="detailTime">Opening hours</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-body">
+                        <!-- 地址信息放在最前面 -->
+                        <div class="location-info">
+                            <h2>Address information</h2>
+                            <div class="copy-container">
+                                <p id="detailAddress">The address information will be displayed here</p>
+                                <button class="copy-btn" onclick="copyToClipboard('detailAddress')">copy</button>
+                                <span class="copy-success" id="addressSuccess">Copied!</span>
+                            </div>
+                            <div class="copy-container">
+                                <p id="detailTransport">Traffic information will be displayed here</p>
+                                <button class="copy-btn" onclick="copyToClipboard('detailTransport')">copy</button>
+                                <span class="copy-success" id="transportSuccess">Copied!</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 详细介绍 -->
+                        <div class="detail-section">
+                            <h2></h2>
+                            <div class="detail-description" id="detailDetails">
+                                Details of the content
+                            </div>
+                        </div>
+                        
+                        <!-- 精彩图片 -->
+                        <div class="detail-section">
+                            <h2>Wonderful pictures</h2>
+                            <div class="images-grid" id="imagesGrid">
+                                <!-- 图片将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 高亮的跳转按钮 -->
+                        <div class="wiki-links">
+                            <a href="#" class="wiki-btn baidu-btn" id="baiduLink" target="_blank">Check out Baidu Encyclopedia</a>
+                            <a href="#" class="wiki-btn" id="wikiLink" target="_blank">Check out Wikipedia</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+
+    <script>
+        // Attraction data - Separated address information
+        const dayData = {
+            1: {
+                title: " Modern Resistance and the Xinhai Revolution (1840-1911)",
+                attractions: [
+                    {
+                        id: 1,
+                        name: "Sun Yat-sen Memorial Hall",
+                        description: "Witness to the Two Constitutional Protection Movements, an important site in modern Chinese revolutionary history",
+                        address: "299 Dongfengzhong Road, Yuexiu District",
+                        transport: "Metro: Memorial Hall Station (Line 2), Exit C leads directly to the venue",
+                        details: `Related historical event: The Two Constitutional Protection Movements<br><br>1. Background:<br><br>(1) After Yuan Shikai seized the fruits of the revolution, on August 11, 1913, Long Jiguang was appointed Military Governor of Guangdong and acting Civil Administrator. During his rule, uprisings led by revolutionaries such as Deng Keng, Zhu Zhixin, and Zhong Mingguang repeatedly failed. It was not until 1916, under pressure from Guangdong’s public, that the Beijing government was forced to revoke Long Jiguang’s appointment. Lu Rongting entered Guangzhou, marking the end of Long’s rule and the beginning of the Guangxi warlords' occupation of Guangdong.<br><br>(2) After Yuan Shikai’s death in 1916, the "President-Premier Dispute" erupted. In July 1917, Zhang Xun staged a monarchist restoration. On July 6, Duan Qirui "reestablished the republic" but refused to restore the Provisional Constitution of the Republic of China or reconvene the National Assembly.<br><br>2. Process:<br><br>(1) On July 22, 1917, Cheng Biguang led the navy from Shanghai to Guangzhou to uphold the constitution.<br><br>(2) On September 1, Sun Yat-sen was elected Grand Marshal of the Military Government. On September 10, he took the oath of office, formally establishing the Military Government.<br><br>(3) The Guangxi, Zhili, and Yunnan warlords colluded, and under pressure from the southwestern warlords, Sun was forced to resign as Grand Marshal on May 4, 1918, marking the failure of the First Constitutional Protection Movement.<br><br>(4) In 1920, Sun Yat-sen adopted the strategy of "allying with Duan Qirui to eliminate Guangxi warlord rule in Guangdong before pursuing national unification."<br><br>(5) The Extraordinary Parliament was reconvened, the Military Government was dissolved, and a Presidential Office was established, marking the second formation of the Constitutional Protection Government.<br><br>(6) In August 1921, the Guangxi warlords were defeated, unifying Guangdong and Guangxi, and preparations for the Northern Expedition began. However, Chen Jiongming launched an open rebellion, leading to the failure of the Second Constitutional Protection Movement.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 4.8,
+                        images: ["图片/中山纪念堂.jpg"],
+                        baiduUrl: "https://en.wikipedia.org/wiki/Sun_Yat-sen_Memorial_Hall_(Guangzhou)",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Sun_Yat-sen_Memorial_Hall_(Guangzhou)",
+                        fishbone: 1
+                    },
+                    {
+                        id: 2,
+                        name: "March 29th Uprising Headquarters Memorial Site",
+                        description: "Planning headquarters for the 1911 Huanghuagang Uprising, a pivotal prelude to the Xinhai Revolution",
+                        address: "No. 15, Xiaodongying, Yuehua Road, Yuexiu District",
+                        transport: "Metro: Take Metro Line 1 to Nongjiangsuo Station, Exit A, then walk for 10 minutes",
+                        details: `This site served as the planning headquarters for the 1911 Huanghuagang Uprising (also known as the Second Guangzhou Uprising), a pivotal prelude to the Xinhai Revolution that overthrew the Qing Dynasty.<br><br>Related Historical Event: The Huanghuagang Uprising (March 29th Uprising)<br><br>1. Key Events:<br><br>(1) March 1910: Sun Yat-sen proposed to Huang Xing the idea of launching another uprising in Guangzhou.<br><br>(2) November 13, 1910: The Penang Conference was held, where Sun Yat-sen and others decided to raise funds for a major uprising in Guangzhou.<br><br>(3) Late January 1911: The Tongmenghui (Revolutionary Alliance) established a Central Operations Bureau in Hong Kong to plan the uprising. A Military Operations Department was set up in Guangzhou’s Baihua Street, responsible for bomb-making and assassination attempts.<br><br>(4) April 8, 1911: The Central Operations Bureau met in Hong Kong and scheduled the uprising for April 13. (Huang Xing, Lin Juemin, and Fang Shengdong wrote their final testaments.)<br><br>(5) April 27, 1911 (Lunar March 29, hence also called the "March 29th Uprising" or "Huanghuagang Uprising"): The uprising began but ultimately failed. The Qing authorities launched a brutal crackdown, executing and arresting revolutionaries.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 4.7,
+                        images: ["图片/旧址大门.jpg", "图片/精彩照片/三二九起义指挥部旧址/1.jpg", "图片/精彩照片/三二九起义指挥部旧址/2.jpg", "图片/精彩照片/三二九起义指挥部旧址/3.jpg", "图片/精彩照片/三二九起义指挥部旧址/4.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/三二九起义指挥部旧址",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Huanghuagang_Uprising",
+                        fishbone: 0
+                    },
+                    {
+                        id: 3,
+                        name: "Mausoleum of the 72 Martyrs at Huanghuagang",
+                        description: "Commemorates the 72 revolutionaries who sacrificed their lives in the 1911 Huanghuagang Uprising",
+                        address: "No. 79, Xianlie Middle Road, Yuexiu District",
+                        transport: "Metro: Take Metro Line 6 to Huanghuagang Station, Exit B, then walk for 5 minutes",
+                        details: `This mausoleum commemorates the 72 revolutionaries who died in the 1911 Huanghuagang Uprising. Sun Yat-sen praised their sacrifice as "so heroic it could shake heaven and earth and move gods and men to tears."<br><br>Related Historical Event: The Huanghuagang Uprising (March 29th Uprising)<br><br>1. Key Events:<br><br>(1) March 1910: Sun Yat-sen proposed to Huang Xing the idea of launching another uprising in Guangzhou.<br><br>(2) November 13, 1910: The Penang Conference was held, where Sun Yat-sen and others decided to raise funds for a major uprising in Guangzhou.<br><br>(3) Late January 1911: The Tongmenghui (Revolutionary Alliance) established a Central Operations Bureau in Hong Kong to plan the uprising. A Military Operations Department was set up in Guangzhou’s Baihua Street, responsible for bomb-making and assassination attempts.<br><br>(4) April 8, 1911: The Central Operations Bureau met in Hong Kong and scheduled the uprising for April 13. (Huang Xing, Lin Juemin, and Fang Shengdong wrote their final testaments.)<br><br>(5) April 27, 1911 (Lunar March 29, hence also called the "March 29th Uprising" or "Huanghuagang Uprising"): The uprising began but ultimately failed. The Qing authorities launched a brutal crackdown, executing and arresting revolutionaries.<br><br>2. Historical Significance:<br><br>Sun Yat-sen declared: "Their heroism was so immense it could shake heaven and earth and stand immortal alongside the Wuchang Uprising."<br><br>Assassination Campaigns by Revolutionaries: In 1900, Sun Yat-sen sent operatives to Guangzhou to carry out assassinations in support of Zheng Shiliang’s Huizhou Uprising, marking the beginning of revolutionary assassination tactics. Guangzhou became the birthplace of bourgeois-democratic revolution in China, where revolutionaries spread anti-Qing propaganda and organized armed rebellions.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 4.9,
+                        images: ["图片/浩气长存牌坊远景.jpg", "图片/精彩照片/黄花岗烈士墓/1.jpg", "图片/精彩照片/黄花岗烈士墓/2.jpg", "图片/精彩照片/黄花岗烈士墓/3.jpg", "图片/精彩照片/黄花岗烈士墓/4.jpg", "图片/精彩照片/黄花岗烈士墓/5.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/黄花岗七十二烈士墓园",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Huanghuagang_Mausoleum",
+                        fishbone: 1
+                    },
+                    {
+                        id: 4,
+                        name: "Sanyuanli Anti-British Struggle Memorial Hall",
+                        description: "Commemorates China's first large-scale spontaneous victory against foreign aggression in modern history (1841)",
+                        address: "No. 34, Guangyuan Middle Road, Baiyun District",
+                        transport: "Metro: Take Metro Line 2 to Sanyuanli Station, Exit A1, then walk for 10 minutes",
+                        details: `Related Historical Event: The Sanyuanli Anti-British Struggle (1841)<br><br>1. Background:<br><br>Sanyuanli was a village in northern Guangzhou. After British forces occupied forts in the area, they committed atrocities against local civilians. Farmers in Sanyuanli organized resistance, rallying over 10,000 people from 103 neighboring villages under the "Three-Star Flag" (三星旗) at Beidi Temple, forming a spontaneous armed militia.<br><br>2. Key Events:<br><br>(1) A militia detachment feigned an attack on the Sifang Fort while setting an ambush at Niulan Ridge (牛栏冈).<br><br>(2) 12,000–15,000 civilians from villages in Panyu, Nanhai, Huaxian, Zengcheng, and Conghua joined the siege, surrounding British strongholds.<br><br>(3) June 1, 1841: British forces retreated by ship to Humen (虎门).<br><br>3. Significance:<br><br>• This first large-scale spontaneous victory against foreign aggression in modern Chinese history marked a pivotal moment in the anti-colonial movement.<br><br>• The people of Sanyuanli raised the banner of national liberation, earning Guangzhou enduring glory.<br><br>• Local resistance was later formalized through community militias (团练) and neighborhood defense pacts (街约), becoming a model for anti-invasion efforts.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 4.6,
+                        images: ["图片/三元里抗英.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/三元里人民抗英斗争纪念馆",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Sanyuanli_Incident",
+                        fishbone: 0
+                    }
+                ]
+            },
+            2: {
+                title: "Cooperation between the Kuomintang and the Communist Party and the Wave of Labor Movements (1920-1927)",
+                attractions: [
+                    {
+                        id: 5,
+                        name: "The Former Site of the All-China Federation of Trade Unions (ACFTU)",
+                        description: "As the core institution of China’s labor movement, established in 1925, it led the Guangdong-Hong Kong General Strike",
+                        address: "No. 89, Yuexiunan Road, Yuexiu District",
+                        transport: "Subway: Exit A, First National Congress of the Communist Youth League Square Station (Line 6), 3-minute walk",
+                        details: `Relevant Historical Event: The Guangdong-Hong Kong General Strike<br><br>1. Background:<br><br>• After the Shamian Strike, the All-China Federation of Trade Unions was established, marking the revival of China’s labor movement.<br><br>• On May 30, 1925, the May Thirtieth Massacre occurred in Shanghai.<br><br>2. Process:<br><br>• On June 2, 1925, a demonstration in support of Shanghai’s victims was held.<br><br>• In early June, Deng Zhongxia, Yang Gu, and Yang Chian went to Hong Kong to organize strikes, while Feng Jupo, Liu Ersong, and Zhou Wenyong mobilized workers in Guangzhou to form a united front.<br><br>• The Guangdong-Hong Kong General Strike began on June 19.<br><br>• On June 21, workers in Shamian Concession joined the strike under the federation’s leadership.<br><br>• On June 23, a massive anti-imperialist march was held. When the procession reached Shaji Bridge, British army fired, and foreign warships bombarded the crowd, causing the Shaji Massacre.<br><br>• All sectors in Guangdong united to support the strike.<br><br>• On July 3, the Provincial-Hong Kong Strike Committee was founded in Dongyuan.<br><br>• A worker militia of 2,000–5,000 was formed to boycott foreign goods. The strategy shifted to targeting only British interests, yielding rapid results.<br><br>3. Outcome:<br><br>• As the Northern Expedition advanced, the strike’s blockade strategy became incompatible with revolutionary needs. On October 10, 1926, the strike officially ended after 16 months.<br><br>4. Significance:<br><br>• It marked the climax of China’s labor movement during the Great Revolution.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 4.7,
+                        images: ["图片/总工会旧址大门.jpg", "图片/精彩照片/中华全国总工会旧址/1.jpg", "图片/精彩照片/中华全国总工会旧址/2.jpg", "图片/精彩照片/中华全国总工会旧址/3.jpg", "图片/精彩照片/中华全国总工会旧址/4.jpg", "图片/精彩照片/中华全国总工会旧址/5.jpg", "图片/精彩照片/中华全国总工会旧址/6.jpg", "图片/精彩照片/中华全国总工会旧址/7.jpg", "图片/精彩照片/中华全国总工会旧址/8.jpg"],
+                        baiduUrl: "https://en.wikipedia.org/wiki/All-China_Federation_of_Trade_Unions",
+                        wikiUrl: "https://en.wikipedia.org/wiki/All-China_Federation_of_Trade_Unions",
+                        fishbone: 1
+                    },
+                    {
+                        id: 6,
+                        name: "Provincial-Hong Kong Strike Memorial Hall (Dongyuan)",
+                        description: "Served as the headquarters of the Guangdong-Hong Kong General Strike in 1925, a landmark labor movement lasting 16 months",
+                        address: "No. 3, Dongyuanheng Road, Yuexiu District",
+                        transport: "Subway: Exit A, First National Congress of the Communist Youth League Square Station (Line 6), 5-minute walk",
+                        details: `This site served as the headquarters of the Guangdong-Hong Kong General Strike in 1925, a landmark labor movement lasting 16 months.<br><br>Relevant Historical Event: The Guangdong-Hong Kong General Strike<br><br>1. Background:<br><br>• After the Shamian Strike, the All-China Federation of Trade Unions was established, marking the revival of China’s labor movement.<br><br>• On May 30, 1925, the May Thirtieth Massacre occurred in Shanghai.<br><br>2. Process:<br><br>• On June 2, 1925, a demonstration in support of Shanghai’s victims was held.<br><br>• In early June, Deng Zhongxia, Yang Gu, and Yang Chian went to Hong Kong to organize strikes, while Feng Jupo, Liu Ersong, and Zhou Wenyong mobilized workers in Guangzhou to form a united front.<br><br>• The Guangdong-Hong Kong General Strike began on June 19.<br><br>• On June 21, workers in Shamian Concession joined the strike under the federation’s leadership.<br><br>• On June 23, a massive anti-imperialist march was held. When the procession reached Shaji Bridge, British army fired, and foreign warships bombarded the crowd, causing the Shaji Massacre.<br><br>• All sectors in Guangdong united to support the strike.<br><br>• On July 3, the Provincial-Hong Kong Strike Committee was founded in Dongyuan.<br><br>• A worker militia of 2,000–5,000 was formed to boycott foreign goods. The strategy shifted to targeting only British interests, yielding rapid results.<br><br>3. Outcome:<br><br>• As the Northern Expedition advanced, the strike’s blockade strategy became incompatible with revolutionary needs. On October 10, 1926, the strike officially ended after 16 months.<br><br>4. Significance:<br><br>• It marked the climax of China’s labor movement during the Great Revolution.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 4.6,
+                        images: ["图片/省港大罢工纪念馆建筑外观2.jpg", "图片/精彩照片/省港大罢工纪念馆/1.jpg", "图片/精彩照片/省港大罢工纪念馆/2.jpg", "图片/精彩照片/省港大罢工纪念馆/3.jpg", "图片/精彩照片/省港大罢工纪念馆/4.jpg", "图片/精彩照片/省港大罢工纪念馆/5.jpg", "图片/精彩照片/省港大罢工纪念馆/6.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/省港罢工纪念馆",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Guangdong-Hong_Kong_General_Strike",
+                        fishbone: 0
+                    },
+                    {
+                        id: 7,
+                        name: "Memorial Hall of the CPC Guangdong Regional Committee",
+                        description: "Founded in 1922, this site was where Zhou Enlai and Chen Yannian worked",
+                        address: "No. 194-200, Wenming Road, Yuexiu District",
+                        transport: "Subway: Exit A, Peasant Movement Institute Station (Line 1), 5-minute walk",
+                        details: `Founded in 1922, this site was where Zhou Enlai and Chen Yannian worked. It is closely related to the Guangdong-Hong Kong General Strike, a pivotal event in China's labor movement history.<br><br>Relevant Historical Event: The Guangdong-Hong Kong General Strike<br><br>1. Background:<br><br>• After the Shamian Strike, the All-China Federation of Trade Unions was established, marking the revival of China’s labor movement.<br><br>• On May 30, 1925, the May Thirtieth Massacre occurred in Shanghai.<br><br>2. Process:<br><br>• On June 2, 1925, a demonstration in support of Shanghai’s victims was held.<br><br>• In early June, Deng Zhongxia, Yang Gu, and Yang Chian went to Hong Kong to organize strikes, while Feng Jupo, Liu Ersong, and Zhou Wenyong mobilized workers in Guangzhou to form a united front.<br><br>• The Guangdong-Hong Kong General Strike began on June 19.<br><br>• On June 21, workers in Shamian Concession joined the strike under the federation’s leadership.<br><br>• On June 23, a massive anti-imperialist march was held. When the procession reached Shaji Bridge, British army fired, and foreign warships bombarded the crowd, causing the Shaji Massacre.<br><br>• All sectors in Guangdong united to support the strike.<br><br>• On July 3, the Provincial-Hong Kong Strike Committee was founded in Dongyuan.<br><br>• A worker militia of 2,000–5,000 was formed to boycott foreign goods. The strategy shifted to targeting only British interests, yielding rapid results.<br><br>3. Outcome:<br><br>• As the Northern Expedition advanced, the strike’s blockade strategy became incompatible with revolutionary needs. On October 10, 1926, the strike officially ended after 16 months.<br><br>4. Significance:<br><br>• It marked the climax of China’s labor movement during the Great Revolution.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 4.8,
+                        images: ["图片/区委建筑外观.jpg", "图片/精彩照片/中共广东区委旧址/1.jpg", "图片/精彩照片/中共广东区委旧址/2.jpg", "图片/精彩照片/中共广东区委旧址/3.jpg", "图片/精彩照片/中共广东区委旧址/4.jpg", "图片/精彩照片/中共广东区委旧址/5.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/中共广东区委旧址纪念馆",
+                        wikiUrl: "https://en.wikipedia.org/wiki/History_of_the_Communist_Party_of_China",
+                        fishbone: 0
+                    },
+                    {
+                        id: 8,
+                        name: "Yang Pao'an’s Former Residence and Exhibition Hall (Yang’s Ancestral Hall)",
+                        description: "Former residence of Yang Pao'an, a pioneer in spreading Marxism in South China and co-founder of the CPC in Guangdong",
+                        address: "No. 116, Yuehua Road, Yuexiu District",
+                        transport: "Subway: Exit F, Gongyuanqian Station (Lines 1/2), 8-minute walk",
+                        details: `The Former Residence Exhibition Hall of Yang Pao'an (Yang Family Ancestral Hall in Guangzhou) is the former residence and revolutionary activity site of Yang Pao'an, an important revolutionary martyr in the early days of the Communist Party of China. It is also one of the core birthplaces for the dissemination of Marxism in South China.<br><br>Yang Pao'an (1896–1931), a pioneer in spreading Marxism in South China, co-founded the CPC in Guangdong. His ancestral hall served as a revolutionary hub. In 1919, he published Marxism in the Guangdong Zhonghua Xinbao, earning him the title “South Yang” alongside Li Dazhao.<br><br>He led labor movements, participated in the Guangdong-Hong Kong General Strike, and served as Secretary-General of the Kuomintang’s Organization Department during the First United Front. Arrested in 1931, he refused Chiang Kai-shek’s offer to defect and was executed at 35.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 4.9,
+                        images: ["图片/杨家祠.jpg", "图片/精彩照片/杨家祠/1.jpg", "图片/精彩照片/杨家祠/2.jpg", "图片/精彩照片/杨家祠/3.jpg", "图片/精彩照片/杨家祠/4.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/杨匏安旧居陈列馆",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Yang_Pao%27an",
+                        fishbone: 0
+                    },
+                    {
+                        id: 9,
+                        name: "Mao Zedong’s Peasant Movement Training Institute",
+                        description: "In 1926, Mao Zedong established the 6th Peasant Movement Training Institute here, training over 800 cadres",
+                        address: "No. 42, Zhongshan Si Road, Yuexiu District",
+                        transport: "Subway: Exit C, Peasant Movement Institute Station (Line 1), direct access",
+                        details: `In 1926, Mao Zedong established the 6th Peasant Movement Training Institute here, training over 800 cadres. He taught courses like Peasant Issues in China and edited the Peasant Issues Series, including his seminal essay The National Movement and the Peasant Movement.<br><br>Graduates became leaders in peasant associations and revolutionary armed forces nationwide, playing a crucial role in mobilizing rural populations for the revolutionary cause. The institute was instrumental in developing theories and strategies for peasant movements, which became a cornerstone of China's revolutionary path.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 4.7,
+                        images: ["图片/农讲所.jpg", "图片/精彩照片/农讲所.jpg", "图片/精彩照片/农讲所2.jpg", "图片/精彩照片/农讲所3.jpg", "图片/精彩照片/农讲所4.jpg"],
+                        baiduUrl: "https://en.wikipedia.org/wiki/Peasant_Movement_Training_Institute",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Peasant_Movement_Training_Institute",
+                        fishbone: 1
+                    },
+                    {
+                        id: 10,
+                        name: "Memorial Hall of the Third National Congress of the CPC",
+                        description: "Site of the 1923 Third National Congress of the CPC, which formalized the First United Front with the Kuomintang",
+                        address: "No. 3, Xuguyuan Road, Yuexiu District",
+                        transport: "Subway: Exit F, Dongshankou Station (Lines 1/6), 10-minute walk",
+                        details: `Relevant Historical Event: Third National Congress of the CPC (1923)<br><br>1. Background:<br><br>• Sun Yat-sen’s establishment of the Guangzhou revolutionary base provided favorable conditions for the revolution.<br><br>• The Comintern’s directives on anti-imperialist alliances.<br><br>• Between April, May and the end of August in 1922, two important meetings were held in Guangzhou and the West Lake in Hangzhou respectively, which initially set the direction for cooperation between the Communist Party of China and the Kuomintang.<br><br>• On January 1, 1923, the Executive Committee of the Communist International adopted the Resolution on the Question of Relations Between the Communist Party of China and the Kuomintang drafted by Bukharin and others. On May 24, the Communist International also issued a special Instructions to the Third National Congress of the Communist Party of China.<br><br>• The aim was to unify the thinking of the whole Party and determine the principles, policies and strategies for cooperation between the two parties.<br><br>2. Key Decisions:<br><br>• Approved the policy of intra-party cooperation with the Kuomintang.<br><br>• CPC members joined the KMT individually while maintaining independent organizations.<br><br>3. Significance:<br><br>• Formalized the First United Front, paving the way for the Northern Expedition.<br><br>• After that, with the help of the Communist Party of China and the Communist International, the Kuomintang accelerated its pace of reorganization.<br><br>4. Legacy:<br><br>• The KMT’s First National Congress in 1924 solidified cooperation, launching the Great Revolution.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 4.8,
+                        images: ["图片/中共三大会址纪念馆.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/中共三大会址纪念馆",
+                        wikiUrl: "https://en.wikipedia.org/wiki/3rd_National_Congress_of_the_Communist_Party_of_China",
+                        fishbone: 1
+                    }
+                ]
+            },
+             3: {
+                title: "Revolutionary Uprisings & The Military Cradle (1927-1949)",
+                attractions: [
+                    {
+                        id: 11,
+                        name: "Guangzhou Uprising Memorial Hall (Site of the Guangzhou Commune)",
+                        description: "Site where China's first urban Soviet government, the 'Guangzhou Commune,' was established in 1927",
+                        address: "No. 200-1, Qiyi Road, Yuexiu District",
+                        transport: "Metro: 2 min walk from Exit J, Gongyuanqian Station (Lines 1/2)",
+                        details: `Historical Event: The Guangzhou Uprising<br><br>1. Background:<br><br>(1) In 1927, Chiang Kai-shek launched the April 12 Counter-revolutionary Coup in Shanghai, while Li Jishen carried out the April 15 Counter-revolutionary Coup in Guangzhou. Wang Jingwei later initiated the July 15 Incident in Wuhan.<br><br>(2) The August 7th Emergency Conference was held in Hankou.<br><br>2. Process:<br><br>(1) On August 20, 1927, the decision was made to organize the Guangzhou Insurrection Committee and deploy forces.<br><br>(2) Following the Ninghan Coalition (merger of Nanjing and Wuhan factions) in September 1927, Wang Jingwei returned to Guangzhou.<br><br>(3) On October 29, 1927, Wang attempted to regain control of the Kuomintang (KMT) Central Committee, with Zhang Fakui's support.<br><br>(4) On November 17, Li Jishen and others left for Shanghai to attend the KMT's Fourth Plenary Session preparatory meeting.<br><br>(5) In the early hours of November 17, the Zhang-Huang Incident erupted (Zhang Fakui and Huang Qixiang ousted Li Jishen's forces).<br><br>(6) On November 26, the decision was made to launch an armed uprising to seize power in Guangzhou.<br><br>(7) On December 6, Zhang Tailei convened an emergency meeting of the Provincial Party Standing Committee.<br><br>(8) On December 7, Zhang secretly held the Workers', Peasants', and Soldiers' Congress, formally deciding to stage the uprising on December 12.<br><br>(9) By December 10, the situation in Guangzhou was critical. In the early morning of December 11, Zhang Tailei and Ye Ting led the oath-taking ceremony.<br><br>(10) At 8:00 AM on December 12, rebel forces launched assaults from multiple directions.<br><br>3. Outcome:<br><br>By the afternoon of December 12, the headquarters of the Guangzhou Soviet Government and the Workers' and Peasants' Red Army were forced to withdraw, marking the failure of the Guangzhou Uprising.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 5,
+                        images: ["图片/广州起义纪念馆.jpg", "图片/精彩照片/广州起义纪念馆/1.jpg", "图片/精彩照片/广州起义纪念馆/2.jpg", "图片/精彩照片/广州起义纪念馆/3.jpg", "图片/精彩照片/广州起义纪念馆/4.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/广州起义纪念馆",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Guangzhou_Uprising",
+                        fishbone: 0
+                    },
+                    {
+                        id: 12,
+                        name: "Guangzhou Uprising Martyrs' Cemetery",
+                        description: "Commemorates the martyrs who sacrificed their lives in the 1927 Guangzhou Uprising. Houses the Guangdong Museum of Revolutionary History",
+                        address: "No. 92, Zhongshan Er Road, Yuexiu District",
+                        transport: "Direct access from Exit D, Lieshilingyuan Station (Line 1)",
+                        details: `This cemetery commemorates the martyrs who sacrificed their lives in the 1927 Guangzhou Uprising and houses the Guangdong Museum of Revolutionary History.<br><br>Historical Event: The Guangzhou Uprising<br><br>1. Background:<br><br>(1) In 1927, Chiang Kai-shek launched the April 12 Counter-revolutionary Coup in Shanghai, while Li Jishen carried out the April 15 Counter-revolutionary Coup in Guangzhou. Wang Jingwei later initiated the July 15 Incident in Wuhan.<br><br>(2) The August 7th Emergency Conference was held in Hankou.<br><br>2. Process:<br><br>(1) On August 20, 1927, the decision was made to organize the Guangzhou Insurrection Committee and deploy forces.<br><br>(2) Following the Ninghan Coalition (merger of Nanjing and Wuhan factions) in September 1927, Wang Jingwei returned to Guangzhou.<br><br>(3) On October 29, 1927, Wang attempted to regain control of the Kuomintang (KMT) Central Committee, with Zhang Fakui's support.<br><br>(4) On November 17, Li Jishen and others left for Shanghai to attend the KMT's Fourth Plenary Session preparatory meeting.<br><br>(5) In the early hours of November 17, the Zhang-Huang Incident erupted (Zhang Fakui and Huang Qixiang ousted Li Jishen's forces).<br><br>(6) On November 26, the decision was made to launch an armed uprising to seize power in Guangzhou.<br><br>(7) On December 6, Zhang Tailei convened an emergency meeting of the Provincial Party Standing Committee.<br><br>(8) On December 7, Zhang secretly held the Workers', Peasants', and Soldiers' Congress, formally deciding to stage the uprising on December 12.<br><br>(9) By December 10, the situation in Guangzhou was critical. In the early morning of December 11, Zhang Tailei and Ye Ting led the oath-taking ceremony.<br><br>(10) At 8:00 AM on December 12, rebel forces launched assaults from multiple directions.<br><br>3. Outcome:<br><br>By the afternoon of December 12, the headquarters of the Guangzhou Soviet Government and the Workers' and Peasants' Red Army were forced to withdraw, marking the failure of the Guangzhou Uprising.<br><br>The Guangdong Museum of Revolutionary History within the cemetery preserves artifacts and records of revolutionary movements in Guangdong, offering insights into modern China's revolutionary history.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 5,
+                        images: ["图片/广州起义烈士陵园.jpg", "图片/精彩照片/广州起义烈士陵园.jpg", "图片/精彩照片/广州起义烈士陵园1.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/广州起义烈士陵园",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Guangzhou_Uprising_Martyrs%27_Cemetery",
+                        fishbone: 1
+                    },
+                    {
+                        id: 13,
+                        name: "Site Museum of the Whampoa Military Academy",
+                        description: "Military academy founded in 1924 through Kuomintang-Communist cooperation. Trained military leaders like Zhou Enlai and Ye Jianying",
+                        address: "Changzhou Island, Huangpu District",
+                        transport: "Metro Line 5 to Yuzhu Station, then transfer to the public ferry to Changzhou Island",
+                        details: `1. Historical Background:<br><br>In 1924, Sun Yat-sen, with support from the Soviet Union and the Chinese Communist Party (CCP), reorganized the Kuomintang (KMT), adopting the policy of "Alliance with Russia, Admission of Communists." To overthrow the Northern Warlords and unify China, Sun decided to establish a revolutionary army and train its core military personnel.<br><br>2. Process:<br><br>In May 1924, the Whampoa Military Academy was formally established on Changzhou Island, Guangzhou (funded, armed, and advised by the Soviet Union).<br><br>Between 1925 and 1927, the Whampoa student army participated in suppressing the Guangzhou Merchants' Corps Uprising and the two Eastern Expeditions, becoming the core force of the National Revolutionary Army (NRA) (e.g., Ye Ting's Independent Regiment).<br><br>In 1927, Chiang Kai-shek initiated the "Party Purification" (anti-communist purge). The Whampoa Academy became an exclusive KMT institution. Some students defected to the CCP and participated in armed struggles (Nanchang Uprising, Autumn Harvest Uprising).<br><br>During the Anti-Japanese War, Whampoa instructors and students played significant roles in both the frontal battlefields (e.g., Battle of Shanghai, Battle of Taierzhuang) and guerrilla warfare behind enemy lines.<br><br>Guangzhou Period (1924-1927): Founding period. Operations ceased after the KMT-CCP split.<br><br>Nanjing Period (1928-1949): Relocated to Nanjing and renamed the "Central Military Academy." Became the core military training center for the KMT.<br><br>Taiwan Period (1950 - Present): Relocated to Kaohsiung, Taiwan, in 1950 and renamed the "Republic of China Military Academy." Continues the "Whampoa Spirit," though its influence has diminished.<br><br>3. Symbolic Legacy: The "Whampoa Spirit" (Patriotism, Unity, Sacrifice) is regarded as a symbol of the Chinese nation's resistance against foreign aggression.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 5,
+                        images: ["图片/黄埔军校纪念馆.jpg", "图片/精彩照片/黄埔军校1.jpg", "图片/精彩照片/黄埔军校2.jpg", "图片/精彩照片/黄埔军校3.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/黄埔军校旧址纪念馆",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Whampoa_Military_Academy",
+                        fishbone: 1
+                    }
+                ]
+            },
+            4: {
+                title: "Colonial History & Religious Architecture",
+                attractions: [
+                    {
+                        id: 14,
+                        name: "Sacred Heart Cathedral",
+                        description: "Completed in 1863, one of the world’s four entirely stone-structured Gothic cathedrals",
+                        address: "56 Yide Road, Yuexiu District",
+                        transport: "Metro: Yide Road Station (Line 6), Exit A, 5-minute walk",
+                        details: `Completed in 1863, the Sacred Heart Cathedral is one of the world’s four entirely stone-structured Gothic cathedrals. Designed by French architects and built by Chinese artisans, it deviates from traditional Gothic westward orientation, facing the Pearl River to the south.<br><br>It is recommended to visit before 5 PM, with Sunday excluded, as Mass is held on Sundays. The cathedral stands as a remarkable example of中西文化交融 (Sino-Western cultural integration) and is a key landmark in understanding Guangzhou's colonial history and religious architecture.`,
+                        openTime: "Recommended to visit before 5 PM, closed during Sunday Mass",
+                        rating: 5,
+                        images: ["图片/圣心大教堂.jpg", "图片/精彩照片/圣心大教堂1.jpg", "图片/精彩照片/圣心大教堂2.jpg", "图片/精彩照片/圣心大教堂3.jpg",, "图片/精彩照片/圣心大教堂4.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/广州圣心大教堂",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Sacred_Heart_Cathedral_(Guangzhou)",
+                        fishbone: 1
+                    },
+                    {
+                        id: 15,
+                        name: "Shamian Protestant Church",
+                        description: "Built in the late 19th century by the Anglican Church of England, housed Guangzhou's first pipe organ",
+                        address: "Shamian Island, Guangzhou",
+                        transport: "Metro: Huangsha Station (Lines 1/6), Exit B, 5-minute walk",
+                        details: `The Shamian Church was initiated by the Anglican Church of England in 1861 and completed around 1865, located within the British concession in Shamian, Guangzhou at that time. It suffered two major damages in 1931 and 1938 respectively, but after multiple renovations, its main architectural structure, exterior features and overall style have been preserved to this day.<br><br>The complex initially included the main church and a two-story parsonage. In 1904, London’s Walker Organ Company installed Guangzhou’s first pipe organ. Originally named the Church of England in Canton, it served British expatriates and sailors. After 1919, it hosted Protestant denominations and remained Guangzhou’s sole foreign Christian worship venue until WWII.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 5,
+                        images: ["图片/沙面堂.jpg", "图片/精彩照片/沙面堂1.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/沙面堂",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Shamian_Island#Religious_buildings",
+                        fishbone: 1
+                    },
+                    {
+                        id: 16,
+                        name: "Former Tait & Co. Site",
+                        description: "Late 19th-century colonial commercial building with green exterior walls and crimson window frames",
+                        address: "Shamian Island, Guangzhou",
+                        transport: "Within walking distance of Shamian Island attractions",
+                        details: `The Former Tait & Co. Site is characterized by its green exterior walls with crimson window frames, making it a quintessential example of colonial commercial architecture.<br><br>Established in Manchester, England, Tait & Co. expanded to Guangzhou in 1848, trading opium, cotton, and tea under the British East India Company. Post-Opium War, it shifted focus to Shanghai in 1849, with its original Shanghai office at 110 Hankou Road. The building stands as a tangible reminder of 19th-century foreign commercial activities in Guangzhou.`,
+                        openTime: "Exterior view accessible; interior usage information to be supplemented",
+                        rating: 5,
+                        images: ["图片/泰和洋行.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/泰和洋行旧址",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Shamian_Island#Commercial_buildings",
+                        fishbone: 0
+                    },
+                    {
+                        id: 17,
+                        name: "Our Lady of Lourdes Chapel",
+                        description: "Gothic Catholic church built by French missionaries in 1890",
+                        address: "No. 14 Shamian Street, Guangzhou (formerly No. 22 Tongren Road)",
+                        transport: "Within walking distance of Shamian Island attractions",
+                        details: `Our Lady of Lourdes Chapel, a Gothic Catholic church, was built by French missionaries in 1890 (the 16th year of the Guangxu Reign). It covers 839.75 square meters and was originally established for parishioners of the French Consulate in Guangzhou.<br><br>It is named after the Lourdes grotto in its south garden, which houses a statue of Our Lady of Lourdes. Before 1949, most priests were foreign missionaries, with few Chinese serving here. On the eve of the People's Republic of China's founding, Chinese priest Chen Huimin became its parish priest.`,
+                        openTime: "Opening hours information to be supplemented",
+                        rating: 5,
+                        images: ["图片/露德圣母堂.jpg", "图片/精彩照片/露德圣母堂.jpg", "图片/精彩照片/露德圣母堂2.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/沙面露德圣母堂",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Shamian_Island#Religious_buildings",
+                        fishbone: 1
+                    },
+                    {
+                        id: 18,
+                        name: "Former HSBC Building",
+                        description: "1880s Neoclassical architecture symbolizing colonial financial power",
+                        address: "Shamian Island, Guangzhou",
+                        transport: "Within walking distance of Shamian Island attractions",
+                        details: `The Former HSBC Building, constructed in the 1880s, features Neoclassical architecture and stands as a symbol of colonial financial power in Guangzhou during the late 19th century.<br><br>As one of the prominent financial structures on Shamian Island, it reflects the economic influence of foreign powers in southern China during the colonial era, serving as a key institution in facilitating international trade and banking operations.`,
+                        openTime: "Exterior view accessible; interior usage information to be supplemented",
+                        rating: 5,
+                        images: ["图片/汇丰洋行旧址.jpg", "图片/精彩照片/汇丰洋行旧址.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/汇丰银行广州旧址",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Shamian_Island#Financial_buildings",
+                        fishbone: 1
+                    },
+                    {
+                        id: 19,
+                        name: "Former British Consulate",
+                        description: "1910s eclectic style building blending Chinese and Western elements, now the Guangdong Museum of Foreign Affairs",
+                        address: "Shamian Island, Guangzhou",
+                        transport: "Within walking distance of Shamian Island attractions",
+                        details: `The Former British Consulate, built in the 1910s, showcases an eclectic style that blends Chinese and Western architectural elements. This unique fusion reflects the cultural interactions during the colonial period in Guangzhou.<br><br>Today, the building houses the Guangdong Museum of Foreign Affairs, which exhibits artifacts and documents related to Guangdong's diplomatic history, offering insights into the region's international relations over the centuries.`,
+                        openTime: "Opening hours information to be supplemented (aligned with Guangdong Museum of Foreign Affairs)",
+                        rating: 5,
+                        images: ["图片/英国领事馆.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/英国驻广州领事馆旧址",
+                        wikiUrl: "https://en.wikipedia.org/wiki/Shamian_Island#Diplomatic_buildings",
+                        fishbone: 1
+                    }
+                ]
+            }
+        };
+
+
+        let currentDay = 1;
+        let currentVersion = 'highlight'; // 默认是精华版
+        let currentAttraction = null;
+
+        // 初始化页面
+        function init() {
+            updateDay(1);
+            bindEvents();
+            // 监听窗口大小变化，实时调整
+            window.addEventListener('resize', () => {
+                updateFishboneDiagram(currentDay);
+            });
+        }
+
+        // 绑定事件
+        function bindEvents() {
+            // 日期按钮事件
+            document.querySelectorAll('.date-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const day = parseInt(this.dataset.day);
+                    updateDay(day);
+                });
+            });
+            
+            // 版本选择按钮事件
+            document.querySelectorAll('.version-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const version = this.dataset.version;
+                    updateVersion(version);
+                });
+            });
+            
+            // 交通方式按钮点击事件
+            document.getElementById('transportBtn').addEventListener('click', function() {
+                // 根据当前版本跳转到不同页面
+                if (currentVersion === 'highlight') {
+                    window.location.href = '交通方式备注精华版（英）.html';
+                } else {
+                    window.location.href = '交通方式备注（英）.html';
+                }
+            });
+        }
+
+        // 更新日期显示
+        function updateDay(day) {
+            currentDay = day;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.date-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-day="${day}"]`).classList.add('active');
+            
+            // 更新标题
+            document.getElementById('currentTitle').textContent = dayData[day].title;
+            
+            // 更新鱼骨图
+            updateFishboneDiagram(day);
+            
+            // 根据当前版本更新景点列表
+            updateAttractionsByVersion(currentVersion);
+        }
+        
+        // 更新版本显示
+        function updateVersion(version) {
+            currentVersion = version;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.version-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-version="${version}"]`).classList.add('active');
+            
+            // 根据选择的版本更新景点列表
+            updateAttractionsByVersion(version);
+        }
+        
+        // 根据版本更新景点列表
+        function updateAttractionsByVersion(version) {
+            const data = dayData[currentDay];
+            
+            // 显示/隐藏对应板块
+            if (version === 'highlight') {
+                // 精华版 - 显示区分的两个板块
+                document.getElementById('highlightSection').style.display = 'block';
+                document.getElementById('extendedSection').style.display = 'block';
+                document.getElementById('fullSection').style.display = 'none';
+                
+                // 更新精华和拓展景点
+                updateHighlightAttractions(data);
+            } else {
+                // 完整版 - 显示不区分的一个板块
+                document.getElementById('highlightSection').style.display = 'none';
+                document.getElementById('extendedSection').style.display = 'none';
+                document.getElementById('fullSection').style.display = 'block';
+                
+                // 更新完整景点列表
+                updateFullAttractions(data);
+            }
+        }
+
+        // 更新鱼骨图
+        function updateFishboneDiagram(day) {
+            const data = dayData[day];
+            const svg = document.querySelector('.fishbone-svg');
+            
+            // 清除现有的鱼刺和景点
+            svg.querySelectorAll('.fishbone-bone, .fishbone-point, .fishbone-text, .fishbone-clickarea').forEach(el => el.remove());
+            
+            const totalAttractions = data.attractions.length;
+            
+            if (totalAttractions === 0) return;
+            
+            const spacing = (720 - 80) / (totalAttractions + 1);
+            const isMobile = window.innerWidth < 768; // 检测移动设备
+
+            data.attractions.forEach((attraction, index) => {
+                const isUpper = index % 2 === 0;
+                const xPosition = 80 + (index + 1) * spacing;
+
+                const boneLength = isMobile ? 150 : 120;
+                const boneAngle = isUpper ? -45 : 45;
+                const radians = (boneAngle * Math.PI) / 180;
+                const endX = xPosition + Math.cos(radians) * boneLength;
+                const endY = 150 + Math.sin(radians) * boneLength;
+
+                // 创建鱼刺
+                const bone = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                bone.setAttribute('x1', xPosition);
+                bone.setAttribute('y1', 150);
+                bone.setAttribute('x2', endX);
+                bone.setAttribute('y2', endY);
+                bone.setAttribute('stroke', attraction.fishbone === 1 ? '#dc2626' : '#ef4444');
+                bone.setAttribute('stroke-width', attraction.fishbone === 1 ? '3' : '2');
+                bone.classList.add('fishbone-bone');
+                svg.appendChild(bone);
+
+                // 文本换行处理
+                const name = attraction.name;
+                const maxCharsPerLine = isMobile ? 10 : 15;
+                const lines = [];
+                
+                for (let i = 0; i < name.length; i += maxCharsPerLine) {
+                    lines.push(name.substring(i, i + maxCharsPerLine));
+                }
+                
+                // 基础参数设置
+                const baseFontSize = isMobile ? 20 : 12;
+                const fontSize = baseFontSize;
+                const lineHeight = fontSize * 1.1;
+                const padding = 5;
+                
+                // 计算圆的半径
+                const maxLineLength = Math.max(...lines.map(line => line.length));
+                const textWidth = maxLineLength * fontSize * 0.6;
+                const textHeight = lines.length * lineHeight;
+                const radius = isMobile ?1.2*Math.ceil(Math.max(textWidth, textHeight) / 2 + padding):1*Math.ceil(Math.max(textWidth, textHeight) / 2 + padding);
+                
+                // 创建景点圆圈
+                const point = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                point.setAttribute('cx', endX);
+                point.setAttribute('cy', endY);
+                point.setAttribute('r', radius);
+                point.setAttribute('stroke-width', '2');
+                point.classList.add('fishbone-point', `fishbone-${attraction.fishbone}`);
+                point.addEventListener('click', () => showAttractionDetail(attraction));
+                svg.appendChild(point);
+
+                // 创建景点标签
+                const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                label.setAttribute('x', endX);
+                label.setAttribute('y', endY);
+                label.setAttribute('fill', 'white');
+                label.setAttribute('font-size', fontSize);
+                label.setAttribute('class', 'fishbone-text');
+                
+                // 计算第一行的垂直偏移量
+                const firstLineOffset = -(lines.length - 1) * lineHeight / 2;
+                
+                lines.forEach((line, lineIndex) => {
+                    const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+                    tspan.setAttribute('x', endX);
+                    tspan.setAttribute('dy', lineIndex === 0 ? firstLineOffset : lineHeight);
+                    tspan.textContent = line;
+                    label.appendChild(tspan);
+                });
+                
+                svg.appendChild(label);
+
+                // 创建点击区域
+                const clickArea = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                clickArea.setAttribute('cx', endX);
+                clickArea.setAttribute('cy', endY);
+                clickArea.setAttribute('r', radius);
+                clickArea.setAttribute('fill', 'transparent');
+                clickArea.classList.add('fishbone-clickarea');
+                clickArea.addEventListener('click', () => showAttractionDetail(attraction));
+                svg.appendChild(clickArea);
+            });
+        }
+
+        // 更新精华和拓展景点列表
+        function updateHighlightAttractions(data) {
+            const highlightGrid = document.getElementById('highlightAttractionsGrid');
+            const extendedGrid = document.getElementById('extendedAttractionsGrid');
+            
+            // 清空现有内容
+            highlightGrid.innerHTML = '';
+            extendedGrid.innerHTML = '';
+            
+            data.attractions.forEach(attraction => {
+                // 创建景点卡片
+                const card = document.createElement('div');
+                card.className = `attraction-card fishbone-${attraction.fishbone}`;
+                
+                // 获取景点的第一张图片
+                const firstImage = attraction.images && attraction.images.length > 0 ? attraction.images[0] : '';
+                
+                card.innerHTML = `
+                    <img src="${firstImage}" alt="${attraction.name}" class="attraction-image">
+                    <h4>
+                        <span class="fishbone-marker fishbone-marker-${attraction.fishbone}">
+                            ${attraction.fishbone === 1 ? 'Highlight Attractions' : 'Expansion Attractions'}
+                        </span>
+                        ${attraction.name}
+                    </h4>
+                    <p>${attraction.description}</p>
+                    <div class="attraction-meta">
+                        <span>⭐ ${attraction.rating}</span>
+                        <span>🕒 ${attraction.openTime}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => showAttractionDetail(attraction));
+                
+                // 根据类型添加到不同的网格
+                if (attraction.fishbone === 1) {
+                    highlightGrid.appendChild(card);
+                } else {
+                    extendedGrid.appendChild(card);
+                }
+            });
+        }
+        
+        // 更新完整版景点列表（不区分精华和拓展）
+        function updateFullAttractions(data) {
+            const fullGrid = document.getElementById('fullAttractionsGrid');
+            
+            // 清空现有内容
+            fullGrid.innerHTML = '';
+            
+            data.attractions.forEach(attraction => {
+                // 创建景点卡片（不显示精华/拓展标记）
+                const card = document.createElement('div');
+                card.className = `attraction-card`;
+                
+                // 获取景点的第一张图片
+                const firstImage = attraction.images && attraction.images.length > 0 ? attraction.images[0] : '';
+                
+                card.innerHTML = `
+                    <img src="${firstImage}" alt="${attraction.name}" class="attraction-image">
+                    <h4>${attraction.name}</h4>
+                    <p>${attraction.description}</p>
+                    <div class="attraction-meta">
+                        <span>⭐ ${attraction.rating}</span>
+                        <span>🕒 ${attraction.openTime}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => showAttractionDetail(attraction));
+                
+                fullGrid.appendChild(card);
+            });
+        }
+
+        // 显示景点详情
+        function showAttractionDetail(attraction) {
+            currentAttraction = attraction;
+            
+            // 更新详情页内容
+            document.getElementById('detailTitle').textContent = attraction.name;
+            document.getElementById('detailDescription').textContent = attraction.description;
+            document.getElementById('detailRating').textContent = attraction.rating;
+            document.getElementById('detailTime').textContent = attraction.openTime;
+            
+            // 地址信息单独提取并显示在最前面
+            document.getElementById('detailAddress').textContent = attraction.address;
+            document.getElementById('detailTransport').textContent = "交通：" + attraction.transport;
+            
+            // 重置复制成功提示
+            document.getElementById('addressSuccess').style.display = 'none';
+            document.getElementById('transportSuccess').style.display = 'none';
+            
+            // 详细介绍使用HTML格式显示
+            document.getElementById('detailDetails').innerHTML = attraction.details;
+            
+            // 更新图片
+            const imagesGrid = document.getElementById('imagesGrid');
+            imagesGrid.innerHTML = ''; // 清空现有内容
+            
+            attraction.images.forEach(imgFileName => {
+                const imgContainer = document.createElement('div');
+                imgContainer.innerHTML = `<img src="${imgFileName}" alt="${imgFileName}" style="width:100%; height:100%; object-fit:cover; border-radius:0.5rem;">`;
+                imagesGrid.appendChild(imgContainer);
+            });
+
+            // 更新跳转链接
+            document.getElementById('baiduLink').href = attraction.baiduUrl;
+            document.getElementById('wikiLink').href = attraction.wikiUrl;
+            
+            // 显示详情页
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('detailPage').classList.add('active');
+        }
+
+        // 显示主页面
+        function showMainPage() {
+            document.getElementById('detailPage').classList.remove('active');
+            document.getElementById('mainPage').style.display = 'block';
+        }
+
+        // 复制到剪贴板功能
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.textContent;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // 显示复制成功提示
+                const successElement = document.getElementById(
+                    elementId === 'detailAddress' ? 'addressSuccess' : 'transportSuccess'
+                );
+                successElement.style.display = 'inline';
+                
+                // 3秒后隐藏提示
+                setTimeout(() => {
+                    successElement.style.display = 'none';
+                }, 3000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+            });
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+    
