@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州创新文化主题旅游路线</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /* 新增语言切换按钮容器样式 */
+      .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100; /* 确保在导航栏上方显示 */
+        }
+        /* 返回链接样式 */
+       .back-link {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 100;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+       .back-link:hover {
+            color: #45a049;
+            text-decoration: underline;
+        }
+        /* 返回链接图标样式 */
+       .back-link::before {
+            content: "←";
+            margin-right: 5px;
+            font-size: 18px;
+        }
+      .lang-btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+      .lang-btn:hover {
+            background-color: #f0f0f0;
+            border-color: #999;
+        }
+      .nav-tabs {
+            display: flex;
+            background-color: #333;
+            padding: 10px;
+            gap: 5px;
+            overflow-x: auto;
+            white-space: nowrap;
+            /* 为语言按钮和返回链接留出空间 */
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+      .nav-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+      .nav-tab:hover {
+            background-color: #ff4d4d;
+        }
+      .nav-tab.active {
+            background-color: #ff0000;
+        }
+      .content-area {
+            flex-grow: 1;
+            margin: 10px;
+            padding: 0;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 60px); 
+            border: none;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+          .nav-tabs {
+                padding: 5px;
+                gap: 2px;
+                padding-left: 70px;
+                padding-right: 70px;
+            }
+          .nav-tab {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+          .content-area {
+                margin: 5px;
+            }
+            iframe {
+                height: calc(100vh - 40px); 
+            }
+        }
+        
+      .route-button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        /* 新增板块卡片样式 */
+      .section-card {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+      .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #ff0000; /* 悬停时边框变红 */
+        }
+    </style>
+</head>
+<body>
+    <a href="../hahaha.html" class="back-link">返回</a>
+
+    <div class="language-switch">
+        <button class="lang-btn" onclick="window.location.href='点这个（英）.html'">English</button>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="nav-tab active" data-tab="home">首页</div>
+        <div class="nav-tab" data-tab="routes">旅游路径</div>
+        <div class="nav-tab" data-tab="buildings">建筑介绍</div>
+    </div>
+    
+    <div class="content-area">
+        <div id="home-content" style="padding: 20px; display: block;">
+            <h1>广州创新文化主题旅游路线</h1>
+            <p>广州作为改革开放的前沿阵地，在制度创新、城市建设、文化传承等领域孕育了丰富的创新成果。本路线将带您在一天内领略广州从改革开放初期到现代的创新足迹，感受这座城市的活力与创造力。</p>
+            
+            <div class="featured-content" style="margin: 20px 0; padding: 15px; background-color: #ffe6e6; border-radius: 5px;">
+                <h2>核心游览推荐</h2>
+                <p>一天时间串联起广州创新文化的关键地标，涵盖制度破冰、产业转型、城市建设、文化传承等多个维度，点击下方按钮查看详细行程</p>
+                <button class="route-button" onclick="loadIframe('routes')">
+                    查看完整路线
+                </button>
+            </div>
+            
+            <div class="site-sections" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <!-- 创新建筑巡礼 -->
+                <div class="section-card" data-target="buildings">
+                    <h3>创新建筑巡礼</h3>
+                    <p>· 白天鹅宾馆：中国第一家中外合作五星级酒店，首创"敞开式大堂"和"中庭山水"景观，打破高档酒店接待惯例<br>
+                       · 广州塔（小蛮腰）：融入岭南美学的现代高塔，以"纤腰"曲线攻克超高层抗风难题，拥有全球最高摩天轮<br>
+                       · 海心桥：世界最宽曲梁斜拱人行桥，采用三维成像和BIM技术实现毫米级质量管控，桥身如粤剧水袖舞动珠江</p>
+                </div>
+                
+                <!-- 创新文化路线 -->
+                <div class="section-card" data-target="routes">
+                    <h3>广州创新文化一日游路线</h3>
+                    <p>· <strong>上午：制度与产业创新</strong>：白天鹅宾馆（中外合资制度破冰）→开发区“开拓者”雕像（产业转型广州模式）<br>
+                       · <strong>下午：城市建设创新</strong>：天河CBD双子塔（垂直城市典范）→广州塔（高层建筑攻坚）→海心桥（桥梁技术突破）<br>
+                       · <strong>傍晚至夜间：文化传承创新</strong>：永庆坊骑楼街（古代建筑现代化改造）→北京路步行街（老城焕新标杆）→广州大学城（教育模式变革）</p>
+                </div>
+                
+                <!-- 创新亮点速览 -->
+                <div class="section-card" data-target="buildings">
+                    <h3>创新亮点速览</h3>
+                    <p>· 白天鹅宾馆：1983年成为中国第一家中外合作五星级酒店，首创对普通市民开放的先例<br>
+                       · 广州经济技术开发区：1984年成为首批国家级经开区，"开拓者"雕像象征产业与科技双轨创新<br>
+                       · 永庆坊：采用"微改造"理念对骑楼建筑进行修复活化，实现传统与现代的融合<br>
+                       · 海心桥：2021年开通的智慧桥梁，结合信息化、5G技术，成为展示广州风貌的新名片</p>
+                </div>
+            </div>
+        </div>
+
+        <iframe id="content-iframe" style="display: none;"></iframe>
+    </div>
+
+    <script>
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const contentIframe = document.getElementById('content-iframe');
+        const homeContent = document.getElementById('home-content');
+        const sectionCards = document.querySelectorAll('.section-card');
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                navTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const tabId = tab.getAttribute('data-tab');
+                loadContent(tabId);
+            });
+        });
+
+        function loadIframe(tabId) {
+            navTabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.classList.add('active');
+                    loadContent(tabId);
+                }
+            });
+        }
+
+        sectionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const target = card.getAttribute('data-target');
+                loadIframe(target);
+            });
+        });
+
+        function loadContent(tabId) {
+            homeContent.style.display = 'none';
+            contentIframe.style.display = 'block';
+            
+            switch(tabId) {
+                case 'routes':
+                    contentIframe.src = "新旅游路径.html";
+                    break;
+                case 'buildings':
+                    contentIframe.src = "建筑介绍（中）.html";
+                    break;
+                default:
+                    contentIframe.src = "";
+                    homeContent.style.display = 'block';
+            }
+        }
+
+        loadContent('home');
+
+        window.addEventListener('resize', () => {
+            contentIframe.style.height = `calc(100vh - ${document.querySelector('.nav-tabs').offsetHeight + 20}px)`;
+        });
+    </script>
+    
+</body>
+</html>
