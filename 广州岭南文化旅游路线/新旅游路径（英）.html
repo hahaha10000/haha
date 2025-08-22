@@ -1,0 +1,1625 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guangzhou Lingnan Culture Themed Tourism Itinerary Planning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f9fafb;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* 头部样式 */
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        /* 日期选择器 */
+        .date-selector {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .date-selector h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .date-selector h2::before {
+            content: '🛣️';
+            margin-right: 0.5rem;
+        }
+
+        .date-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .date-btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #f3f4f6;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .date-btn.active {
+            background: #dc2626;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3);
+        }
+
+        .date-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .date-btn.active:hover {
+            background: #b91c1c;
+        }
+
+        .date-btn .day {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .date-btn .theme {
+            font-size: 1.2rem;
+            opacity: 1;
+            margin-top: 0.5rem;
+        }
+
+        /* 当前日期信息 */
+        .current-day {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-day h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+        }
+
+        .current-day p {
+            color: #6b7280;
+        }
+
+        /* 路线版本选择器 */
+        .version-selector {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .version-selector h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .version-selector h2::before {
+            content: '🗺️';
+            margin-right: 0.5rem;
+        }
+
+        .version-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .version-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #f3f4f6;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .version-btn.active {
+            background: #dc2626;
+            color: white;
+            box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3);
+        }
+
+        .version-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .version-btn.active:hover {
+            background: #b91c1c;
+        }
+
+        /* 鱼骨图容器 */
+        .fishbone-container {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .fishbone-diagram {
+            position: relative;
+            width: 100%;
+            min-height: 280px;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .fishbone-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .fishbone-point {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .fishbone-point:hover {
+            stroke: #b91c1c;
+            stroke-width: 3;
+            transform: scale(1.05);
+        }
+        
+        /* 鱼骨图上的点 */
+        .fishbone-point.fishbone-1 {
+            fill: #dc2626;
+            stroke: #b91c1c;
+        }
+        
+        .fishbone-point.fishbone-0 {
+            fill: #ef4444;
+            stroke: #dc2626;
+            opacity: 0.7;
+        }
+
+        .fishbone-text {
+            font-weight: 500;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            pointer-events: none;
+        }
+
+        /* 景点列表容器 */
+        .attractions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 景点列表 - 精华和拓展分开的框 */
+        .attractions-section {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+        }
+        
+        /* 精华景点标题带有特殊标记 */
+        .attractions-section.highlight h3 {
+            display: flex;
+            align-items: center;
+        }
+        
+        .attractions-section.highlight h3::after {
+            content: "★ Recommended experience";
+            margin-left: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #dc2626;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+        }
+
+        .attractions-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 1rem;
+        }
+
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .attraction-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 鱼骨图关联标记样式 */
+        .attraction-card.fishbone-1 {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+        }
+        
+        .attraction-card.fishbone-0 {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+            opacity: 0.9;
+        }
+        
+        .fishbone-marker {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        
+        .fishbone-marker-1 {
+            background-color: #dc2626;
+            color: white;
+        }
+        
+        .fishbone-marker-0 {
+            background-color: #ef4444;
+            color: white;
+        }
+        
+        .attraction-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .attraction-card:hover {
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .attraction-card h4 {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .attraction-card p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .attraction-meta {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            color: #9ca3af;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .attraction-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* 详情页面 */
+        .detail-page {
+            display: none;
+            min-height: 100vh;
+            background: #f9fafb;
+        }
+
+        .detail-page.active {
+            display: block;
+        }
+
+        .detail-header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: #b91c1c;
+        }
+
+        .back-btn::before {
+            content: '←';
+            margin-right: 0.5rem;
+        }
+
+        .detail-content {
+            padding: 2rem 0;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .detail-hero {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 2rem;
+        }
+
+        .detail-hero h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-hero p {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .detail-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .detail-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .detail-body {
+            padding: 1.5rem;
+        }
+
+        /* 地址信息 */
+        .location-info {
+            background: #fee2e2;
+            border-left: 4px solid #dc2626;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .location-info h2 {
+            font-size: 1.25rem;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-info h2::before {
+            content: '📍';
+        }
+
+        .location-info p {
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+
+        /* 复制按钮样式 */
+        .copy-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .copy-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background: #b91c1c;
+        }
+        
+        .copy-success {
+            color: #166534;
+            font-size: 0.875rem;
+            display: none;
+        }
+
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .detail-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 1rem;
+        }
+
+        .detail-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-section h3::before {
+            content: '📷';
+            margin-right: 0.5rem;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+
+        .tips-box {
+            background: #fee2e2;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tips-box h3 {
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+        }
+
+        .tips-box ul {
+            color: #991b1b;
+            padding-left: 1rem;
+        }
+
+        .tips-box li {
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-description {
+            line-height: 1.8;
+            color: #374151;
+        }
+
+        .detail-description p {
+            margin-bottom: 1rem;
+        }
+
+        /* 高亮的跳转按钮样式 */
+        .wiki-links {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .wiki-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(153, 27, 27, 0.2);
+        }
+
+        .wiki-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(153, 27, 27, 0.2);
+        }
+
+        .wiki-btn::before {
+            font-size: 1.25rem;
+        }
+
+        .baidu-btn::before {
+            content: '🔍';
+        }
+
+        .wiki-btn::before {
+            content: '📚';
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .date-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .version-buttons {
+                flex-direction: column;
+            }
+            
+            .version-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .fishbone-diagram {
+                height: 220px;
+            }
+            
+            .attractions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .detail-hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .detail-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .wiki-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .wiki-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主页面 -->
+    <div id="mainPage">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="container">
+                <h1>Guangzhou Lingnan Culture Themed Tourism Itinerary Planning</h1>
+                <p>Select different dates to view the carefully arranged tourist attractions</p>
+            </div>
+        </div>
+        <div class="container">
+            <!-- 日期选择器 -->
+            <div class="date-selector">
+                <h2>Select the tour route</h2>
+                <div class="date-buttons">
+                    <button class="date-btn active" data-day="1">
+                        <div class="day">Lingnan Architecture and Garden Art</div>
+                        
+                    </button>
+                    <button class="date-btn" data-day="2">
+                        <div class="day">Folk Culture & Traditional Arts</div>
+                        
+                    </button>
+                    <button class="date-btn" data-day="3">
+                        <div class="day">Modern Lingnan and Cultural Fusion</div>
+                        
+                    </button>
+                    <button class="date-btn" data-day="4">
+                        <div class="day">Baiyun Mountain</div>
+                        
+                    </button>
+                </div>
+            </div>
+            <!-- 当前日期信息 -->
+            <div class="current-day">
+                <h3 id="currentTitle">Lingnan Architecture and Garden Art</h3>
+                <div class="theme">Click on the attraction icons in the fishbone diagram to view detailed introductions</div>
+            </div>
+            <!-- 鱼骨图 -->
+            <div class="fishbone-container">
+                <div class="fishbone-diagram">
+                    <svg class="fishbone-svg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
+                        <!-- 主骨干 -->
+                        <line x1="80" y1="150" x2="720" y2="150" stroke="#dc2626" stroke-width="4" />
+                        <!-- 鱼头 -->
+                        <polygon points="720,160 720,140 740,150" fill="#dc2626" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 路线版本选择器 -->
+            <div class="version-selector">
+                <h2>Select route version</h2>
+                <div class="version-buttons">
+                    <button class="version-btn active" data-version="highlight">
+                        <span>⭐</span> Essence Edition
+                    </button>
+                    <button class="version-btn" data-version="full">
+                        <span>📋</span> Full version
+                    </button>
+                </div>
+            </div>
+
+            <!-- 景点概览 -->
+            <div class="attractions-container" id="attractionsContainer">
+                <!-- 精华景点 -->
+                <div class="attractions-section highlight" id="highlightSection">
+                    <h3>Highlights of the attractions</h3>
+                    <div class="attractions-grid" id="highlightAttractionsGrid">
+                        <!-- 精华景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 拓展景点 -->
+                <div class="attractions-section" id="extendedSection">
+                    <h3>Expand attractions</h3>
+                    <div class="attractions-grid" id="extendedAttractionsGrid">
+                        <!-- 拓展景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 完整版景点容器 -->
+                <div class="attractions-section" id="fullSection" style="display: none;">
+                    <h3>Route attraction preview</h3>
+                    <div class="attractions-grid" id="fullAttractionsGrid">
+                        <!-- 完整版景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+            <!-- 主页面底部添加跳转按钮 -->
+            <div style="text-align: center; margin: 3rem 0; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+                <button class="wiki-btn" onclick="window.location.href='交通方式备注（英）.html'">
+                    Remarks on transportation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详情页面 -->
+    <div id="detailPage" class="detail-page">
+        <div class="detail-header">
+            <div class="container">
+                <a href="#" class="back-btn" onclick="showMainPage()">back home</a>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="detail-content">
+                <div class="detail-card">
+                    <div class="detail-hero">
+                        <h1 id="detailTitle">Name of the attraction</h1>
+                        <p id="detailDescription">Description of the attraction</p>
+                        <div class="detail-meta">
+                            <span>⭐ <span id="detailRating">4.5</span></span>
+                            <span>🕒 <span id="detailTime">Opening hours</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-body">
+                        <!-- 地址信息放在最前面 -->
+                        <div class="location-info">
+                            <h2>Address information</h2>
+                            <div class="copy-container">
+                                <p id="detailAddress">The address information will be displayed here</p>
+                                <button class="copy-btn" onclick="copyToClipboard('detailAddress')">copy</button>
+                                <span class="copy-success" id="addressSuccess">Copied!</span>
+                            </div>
+                            <div class="copy-container">
+                                <p id="detailTransport">Traffic information will be displayed here</p>
+                                <button class="copy-btn" onclick="copyToClipboard('detailTransport')">copy</button>
+                                <span class="copy-success" id="transportSuccess">Copied!</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 详细介绍 -->
+                        <div class="detail-section">
+                            <h2></h2>
+                            <div class="detail-description" id="detailDetails">
+                                Details of the content
+                            </div>
+                        </div>
+                        
+                        <!-- 精彩图片 -->
+                        <div class="detail-section">
+                            <h2>Wonderful pictures</h2>
+                            <div class="images-grid" id="imagesGrid">
+                                <!-- 图片将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 高亮的跳转按钮 -->
+                        <div class="wiki-links">
+                            <a href="#" class="wiki-btn baidu-btn" id="baiduLink" target="_blank">Check out Baidu Encyclopedia</a>
+                            <a href="#" class="wiki-btn" id="wikiLink" target="_blank">Check out Wikipedia</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 景点数据 - 基于广州岭南文化主题旅游路线
+        const dayData = {
+            1: {
+                title: "Lingnan Architecture and Garden Art",
+                attractions: [
+                    {
+                        id: 1,
+                        name: " Nanyue King Museum (The Site of Palace and Garden)）",
+                        description: "Located next to Beijing Road Pedestrian Street, this site preserves the ruins of the Nanyue Kingdom' s palace complex, where visitors can see remnants of palaces and water channels dating back over 2,000 years. It stands as a testament to Guangzhou' s origins as the political and cultural center of Lingnan.  ",
+                        address: "No. 316, Zhongshan 4th Road, Yuexiu District",
+                        transport: "Take Exit E of Gongyuanqian Station (Lines 1/2) and walk for about 5 minutes.  ",
+                        details: `1.Overview:Located next to Beijing Road Pedestrian Street, this site preserves the ruins of the Nanyue Kingdom' s palace complex, where visitors can see remnants of palaces and water channels dating back over 2,000 years. It stands as a testament to Guangzhou' s origins as the political and cultural center of Lingnan. <br><br>
+2. Details: 
+        (1) Background: The Nanyue Kingdom, also known as the Southern Yue Kingdom, was a regime established in the Lingnan region during the late Qin to early Western Han period. At the fall of the Qin Dynasty, Zhao Tuo, the military commander of Nanhai Commandery, sealed off the borders and annexed the neighboring Guilin and Xiang Commanderies. In 204 BCE, he officially founded the Nanyue Kingdom, with Panyu (modern Guangzhou) as its capital. In 196 BCE, the kingdom became a vassal state of the Han Dynasty. In 113 BCE, Lü Jia, the kingdom's chancellor, staged a rebellion, killing King Zhao Xing and installing Zhao Jiande as the new ruler. In the autumn of 112 BCE, Emperor Wu of Han launched a military campaign against Nanyue, leading to its conquest in the winter of 111 BCE. The kingdom lasted 93 years under five successive rulers.<br><br>  
+        (2) Features: The site has revealed large-scale palace foundations, brick-paved pathways, wells, and other structures. Among them, the curved stone waterway (an artificial garden water system) is the earliest known example of imperial garden hydraulics in China, demonstrating the Nanyue Kingdom's adoption of Central Plains–style construction practices.
+`,
+                        openTime: "9:00-17:30（Closed on Mondays, except for legal holidays.）",
+                        rating: 4.7,
+                        images: ["图片/南越王宫.jpg", "图片/精彩照片/南越王宫/1.jpg", "图片/精彩照片/南越王宫/2.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/南越王博物院",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/西漢南越國宮署遺址",
+                        fishbone: 1
+                    },
+                    {
+                        id: 2,
+                        name: "Five Immortals Temple (Wuxianguan)",
+                        description: "The origin of Guangzhou's nicknames \"City of Rams\" (Yangcheng) and \"City of Grain (Suicheng).\" The temple houses the \"First Tower of Lingnan\" (Bell Tower), a Ming Dynasty structure",
+                        address: "No. 233, Huifu West Road, Yuexiu District",
+                        transport: "Approximately 10-15 minutes' walk from Gongyuanqian Station (Lines 1/2) or Ximenkou Station (Line 1).",
+                        details: `1. Overview:  
+   Legend has it that this is where five immortals descended on five rams, bringing ears of grain—the origin of Guangzhou's nicknames "City of Rams" (Yangcheng) and "City of Grain (Suicheng)." The temple houses the "First Tower of Lingnan" (Bell Tower), a Ming Dynasty structure, and is deeply rooted in Guangzhou's cultural heritage.  
+<br><br>
+2.Details:
+(1) The Legend:  
+     During the reign of King Yi of Zhou (9th century BCE), five celestial beings riding five-colored rams descended upon Guangzhou (then called "Chuting"), offering sheaves of grain to the people and blessing the land with everlasting abundance. After the immortals departed, the rams turned to stone, giving rise to Guangzhou's iconic names.  <br><br>
+
+(2) Historical Development:  
+    Pre-Song Dynasty: The earliest worship site for the Five Immortals was likely near modern Xihu Road (ancient "Poshan"), but due to shifts in the Pearl River's coastline, it was later relocated.  
+     - Northern Song (11th century): A temple dedicated to the Five Immortals existed in Guangzhou, though its exact location is unclear.  
+     - Ming Dynasty (1377): The temple was officially moved to its current site (Huifu West Road) and expanded under government patronage, becoming a key Taoist center.  
+     - 1465–1487 (Chenghua Era): The temple was renovated, adding structures like the Bell Tower and ceremonial gates.  
+     - 1573–1620 (Wanli Era): Further expansions made it one of Guangzhou' s primary Taoist hubs.  
+     - Qing Dynasty (1723): Another major restoration gave the temple its current Qing-era architectural style.  
+     -Late Qing–Republic of China: Wars and social changes led to decline, with parts of the temple damaged or repurposed.  
+     - 1980s: Listed as a Guangzhou Cultural Heritage Site, restoration began.  
+     - 2005: Recognized as a Guangdong Provincial Protected Heritage Site, including the First Tower of Lingnan (Bell Tower).  
+     - Post-2010: Opened as a historical attraction, featuring the "Traces of Ancient Guangzhou" exhibition.  <br><br>
+ 
+(3) Architecture & Relics: 
+     <1> Mountain Gate (Shanmen): Ming-style entrance with a plaque reading "Five Immortals Ancient Temple."  
+     <2> Rear Hall (Five Immortals Shrine): Houses statues of the immortals and a Ming Dynasty stone carving of a "celestial footprint" (said to be left by the immortals).  
+     <3> First Tower of Lingnan (Bell Tower): Built in 1374 (Ming Hongwu Era), it holds a massive Ming bronze bell—the oldest surviving bell tower in Guangzhou.  
+     <4> "Forbidden Bell Tower": The bell was banned during the Qing Dynasty due to beliefs that its sound disrupted imperial examination feng shui.  
+     <5> Ancient Tablets & Inscriptions: Includes Ming-Qing stele like the "Record of Rebuilding Five Immortals Temple."  <br><br>
+  
+ (4) Significance:  
+     The legend reflects Lingnan' s agricultural origins, and the temple is regarded as Guangzhou's "historical core." 
+`,
+                        openTime: "9:00-17:00（周一闭馆）",
+                        rating: 4.6,
+                        images: ["图片/五仙古观.jpg", "图片/精彩照片/五仙古观/1.jpg", "图片/精彩照片/五仙古观/2.jpg", "图片/精彩照片/五仙古观/3.jpg", "图片/精彩照片/五仙古观/4.jpg", "图片/精彩照片/五仙古观/5.jpg", "图片/精彩照片/五仙古观/6.jpg", "图片/精彩照片/五仙古观/7.jpg", "图片/精彩照片/五仙古观/8.jpg", "图片/精彩照片/五仙古观/9.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/五仙观",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/五仙觀",
+                        fishbone: 1
+                    },
+                    {
+                        id: 3,
+                        name: "Chen Clan Ancestral Hall (Chen Clan Academy)",
+                        description: "A masterpiece of Lingnan architectural art from the Qing Dynasty, renowned for its intricate wood carvings, brick carvings, and lime sculptures. ",
+                        address: "No. 34, Enlong Li, Zhongshan 7th Road, Liwan District ",
+                        transport: "Direct access from Exit D of Chen Clan Ancestral Hall Station (Line 1). ",
+                        details: `1. Overview:  
+    A masterpiece of Lingnan architectural art from the Qing Dynasty, renowned for its intricate wood carvings, brick carvings, and lime sculptures. Hailed as the "Pearl of Lingnan Architecture".  
+<br><br>
+2. Details: 
+  (1) Significance:  
+     The largest and best-preserved ancestral hall complex in Guangdong, representing the pinnacle of traditional Lingnan architecture.  
+     Also known as Chen Clan Academy, it served both as a Confucian school and a communal ancestral temple for the Chen lineage.  
+
+  (2) Historical Development:  
+     -Qing Dynasty (1890s): Built with funds pooled by Chen clansmen from 72 counties in Guangdong.  
+     -Post-1905 (Abolition of Imperial Exams): Transitioned to a clan activity center after losing its educational function.  
+     -Republic of China Era: Repurposed as a school and factory.  
+     -1957: Converted into the Guangdong Folk Art Museum by the Guangzhou government.  
+     -1988: Listed as a National Key Cultural Heritage Site.  
+     - 2002: Named "Ancient Temple's Lasting Fragrance" in Guangzhou's "Eight New Scenic Spots of the 21st Century".  
+     - Post-2010: Restored as a cultural tourism landmark.  
+(3) Architectural Highlights: 
+   <1> Ornate Facades: Over 10,000 carvings depicting legends, flora, and fauna.  
+   <2> Ceremonial Halls: Housing ancestral tablets and exquisite lime sculpture murals.  
+   <3> Symbolism: Designs reflect Confucian values and clan unity. 
+`,
+                        openTime: "9:00-17:30（Closed on Mondays, except for legal holidays.）",
+                        rating: 4.9,
+                        images: ["图片/陈家祠.jpg", "图片/精彩照片/陈家祠/1.jpg", "图片/精彩照片/陈家祠/2.jpg", "图片/精彩照片/陈家祠/3.jpg", "图片/精彩照片/陈家祠/4.jpg", "图片/精彩照片/陈家祠/5.jpg", "图片/精彩照片/陈家祠/6.jpg", "图片/精彩照片/陈家祠/7.jpg", "图片/精彩照片/陈家祠/8.jpg", "图片/精彩照片/陈家祠/9.jpg", "图片/精彩照片/陈家祠/10.jpg", "图片/精彩照片/陈家祠/11.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/陈家祠",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/陳氏書院",
+                        fishbone: 1
+                    },
+                    {
+                        id: 4,
+                        name: "Lizhiwan Canal (Lychee Bay)",
+                        description: "明清时期广州富商聚居地，展现“一湾溪水绿，两岸荔枝红”的岭南水乡风貌",
+                        address: "Near No. 94, Longjin West Road, Liwan District",
+                        transport: "10-minute walk from Exit B of Changshou Road Station (Line 1). ",
+                        details: `1.  Overview:   
+   A historic canal district lined with Xiguan mansions and arcades, famed for its "Green Stream and Red Lychees" scenery.  Once the residential hub of Ming-Qing merchants, dubbed "Little Qinhuai" (after Nanjing's Qinhuai River).  
+<br><br>
+2.  Details:   
+  (1) Significance:   
+   Named for its lychee trees planted along the banks during the Southern Han Dynasty (917–971 CE) .  A cultural symbol of Guangzhou's water town heritage , featured in the "Eight Scenes of Yangcheng" as "Liwuan Fishing Songs" .  
+
+  (2) Historical Development:   
+     - Southern Han Dynasty: Royal garden "Changhua Yuan" hosted "Red Cloud Banquets"  during lychee seasons.  
+     - Ming-Qing Period: Wealthy merchants built private gardens(e.g.,  Haishan Xianguan ), fostering a boat-culture with lychee-picking and lotus-viewing.  
+     - 1940s–1992: Industrial pollution led to canal burial ; lychee trees were felled.  
+     - 2010: Restored for the Asian Games , reviving the waterway and linking to Yongqing Fang and Cantonese Opera Art Museum .  
+`,
+                        openTime: "Open all day (operating hours of cruise ships and surrounding shops vary)",
+                        rating: 4.7,
+                        images: ["荔枝湾涌全景.jpg", "西关大屋.jpg", "游船景观.jpg", "两岸荔枝树.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/荔枝湾涌",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/荔枝灣",
+                        fishbone: 0
+                    },
+                    {
+                        id: 5,
+                        name: "Huangpu Ancient Port (Whampoa Old Port) ",
+                        description: "The core port for foreign trade in Guangzhou during the Ming and Qing dynasties. Under the Qing government's \"Single Port Trade Policy\" (1757) , it became the only designated port for foreign merchant ships, including famous vessels like the \"Götheborg\" .  A key origin point of the ancient Maritime Silk Road . ",
+                        address: " Shiji Village, Pazhou Street, Haizhu District",
+                        transport: "Take Metro Line 4/8 to Wanshengwei Station, then transfer to Bus 229 or Tourist Bus Line 3 to Huangpu Ancient Port Station. ",
+                        details: `1. Overview:    
+ The core port for foreign trade in Guangzhou during the Ming and Qing dynasties. Under the Qing government's "Single Port Trade Policy" (1757) , it became the only designated port for foreign merchant ships, including famous vessels like the "Götheborg" .  A key origin point of the ancient Maritime Silk Road .  
+<br><br>
+2. Details:    
+(1) Significance:    
+   Located in Huangpu Village, Haizhu District , it was a vital hub for Guangzhou's foreign trade and the Maritime Silk Road. Known as the "Millennium-Old Port, Century-Old Trading Post" , symbolizing Guangzhou's prosperity during the Single Port Trade era .  
+
+   (2) Historical Development:    
+     - Southern Song Dynasty (1127–1279):  Already served as an anchorage for sea vessels.  
+     - Ming Dynasty (1368–1644):  The port relocated here due to silt buildup at Fuxu Port  , growing into a major trade center  .  
+     - Qing Dynasty (1757):  The Single Port Trade Policy made Huangpu the sole legal port   for foreign trade in China. The Canton Customs established its Huangpu Registration Office   here to oversee trade.  
+     - Mid-19th Century: Port functions gradually moved to Changzhou Island due to sedimentation.  
+     - 2006:  Added to the "Maritime Silk Road" UNESCO World Heritage Tentative List  .  
+     - Post-2010:  Restored as a cultural tourism site , showcasing its historical legacy.  
+
+    (3) Architectural Heritage:    
+     <1> Ancestral Hall of the Hu Clan:  A Qing-era Lingnan-style ancestral hall  .  
+     <2> Beidi Temple (Northern Emperor Temple):  Dedicated to Beidi , the Taoist god of the sea  , reflecting maritime beliefs.  
+     <3> Japanese Mansion:  A Western-style building  constructed by Japanese merchants in the Republic of China period .  
+
+    (4) Features:    
+     - Explore port ruins, ancestral halls, and traditional houses .  
+     - Sample local snacks like "Tingzai Porridge" (boat congee) . 
+`,
+                        openTime: "9:00-17:00（Opening hours of the First Pass of the Guangdong Sea Memorial Hall）",
+                        rating: 4.8,
+                        images: ["黄埔古港码头.jpg", "粤海第一关纪念馆.jpg", "胡氏大宗祠.jpg", "古港风情街.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/黄埔古港",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/黃埔古港",
+                        fishbone: 0
+                    },
+                    {
+                        id: 6,
+                        name: "Yuyin Garden (Yuyin Shanfang)",
+                        description: "One of the \"Four Famous Gardens of Guangdong\" from the Qing Dynasty.  Renowned for its \"condensed landscape\" technique, featuring pavilions, corridors, and floral walls in perfect harmony.  Hailed as the \"Gem of Lingnan Gardens\".  ",
+                        address: "North Street, Nancun Town, Panyu District, Guangzhou",
+                        transport: "Take Metro Line 7 to Banqiao Station, then transfer to Bus Panyu 30 to Yuyin Garden Station.",
+                        details: `1. Overview:  
+   One of the "Four Famous Gardens of Guangdong" from the Qing Dynasty.  Renowned for its "condensed landscape" technique, featuring pavilions, corridors, and floral walls in perfect harmony.  Hailed as the "Gem of Lingnan Gardens". 
+<br><br>
+2. Details:  
+   (1) Significance:  
+     Also called Yuyin Shanfang, it ranks among the Four Great Gardens of Guangdong (alongside Foshan's Liang Garden, Dongguan's Keyuan Garden, and Shunde's Qinghui Garden).  Celebrated for its intricate layout and Lingnan architectural artistry.  <br><br>
+
+   (2) Historical Development:  
+     - Qing Dynasty (1867): Built by Ju Ren Wu Bin, a former official of the Ministry of Justice, after retiring to his hometown.  
+     - 1867–1870: Constructed over three years as a family retreat and to honor ancestral blessings (hence the name "Yuyin", meaning "ancestral shade").  
+     - Late Qing–Republic of China: Occupied by the Wu family; partially damaged.  
+     - 1950s: Restored by the government and listed as a cultural heritage site.  
+     - 2001: Designated a National Key Cultural Heritage Site by the State Council.  
+     - Post-2010: Further renovations established it as a classical garden attraction.  
+
+   (3) Architectural Highlights:  
+     <1> Miniaturized Landscapes: "Shrinking dragons into inches" design philosophy.  
+     <2> Pavilions & Corridors: Interwoven with carved floral walls and water features.  
+     <3> Symbolism: Reflects Confucian ideals of harmony between man and nature.
+`,
+                        openTime: "8:30-17:30",
+                        rating: 4.7,
+                        images: ["余荫山房全景.jpg", "亭台楼阁.jpg", "回廊花墙.jpg", "园林水景.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/余荫山房",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/餘蔭山房",
+                        fishbone: 0
+                    }
+                ]
+            },
+            2: {
+                title: "Folk Culture & Traditional Arts",
+                attractions: [
+                    {
+                        id: 7,
+                        name: "Cantonese Opera Art Museum",
+                        description: "This museum showcases the history of Cantonese Opera, featuring artifacts like costumes and props. Its architecture blends classical Lingnan garden styles, with daily performances of opera highlights.",
+                        address: "127 Enning Road, Liwan District",
+                        transport: "8-minute walk from Exit B, Changshou Road Station (Line 1)",
+                        details: `1. Overview: This museum showcases the history of Cantonese Opera, featuring artifacts like costumes and props. Its architecture blends classical Lingnan garden styles, with daily performances of opera highlights.<br><br>
+2. Details:
+（1）Significance: A Lingnan-style museum dedicated to preserving and promoting Cantonese Opera art.<br><br>
+（2）History: Awarded China's Luban Prize for Architecture (2017) and designated a National Second-Class Museum (2020).<br><br>
+（3）Cultural Value: As the core exhibition platform for Cantonese Opera (UNESCO Intangible Cultural Heritage, 2009), it recreates the historical "Red Boat" touring era. Combining traditional craftsmanship with modern technology, it exemplifies Guangzhou's successful integration of culture, business, and tourism.
+<br><br>`,
+                        openTime: "9:00-17:00(Closed on Mondays. The schedule of Cantonese opera performances is subject to the announcement on the day.)",
+                        rating: 4.8,
+                        images: ["图片/粤剧艺术博物馆.jpg", "图片/精彩照片/粤剧艺术博物馆/1.jpg", "图片/精彩照片/粤剧艺术博物馆/2.jpg", "图片/精彩照片/粤剧艺术博物馆/3.jpg", "图片/精彩照片/粤剧艺术博物馆/4.jpg", "图片/精彩照片/粤剧艺术博物馆/5.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/粤剧艺术博物馆",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/粵劇藝術博物館",
+                        fishbone: 1
+                    },
+                    {
+                        id: 8,
+                        name: "Guangzhou Cloisonné Factory (Traditional Craft Experience)",
+                        description: "Experience century-old Guangzhou cloisonné (Guang Falang) craftsmanship. Observe the production process and try enamel painting DIY.",
+                        address: "42 Xihua Road, Liwan District",
+                        transport: "15-minute walk from Exit C, Ximenkou Station (Line 1)",
+                        details: `1. Overview: Experience century-old Guangzhou cloisonné (Guang Falang) craftsmanship. Observe the production process and try enamel painting DIY.<br><br>
+2. Details:
+（1）Significance: Southern China's leading cloisonné production base, specializing in the renowned "Guang Falang". This is one of Guangzhou's "Three Carvings, One Color, One Embroidery, One Enamel" master crafts (ivory/jade/wood carving, painted porcelain, Cantonese embroidery, cloisonné), famed for its brilliant colors and exquisite technique.<br><br>
+History:
+（2）Craft Origins: Enamelwork arrived from Europe during Emperor Kangxi's reign (late 17th C). Guangzhou became a major center due to foreign trade. It peaked under Emperor Qianlong (18th C), exporting widely to Europe and America.<br><br>
+（3）Factory History: Founded in 1958 to revive the craft by gathering master artisans. From the 1960s-80s, its jewelry boxes, vases, and ornaments dominated exports. Since the 2000s, it focuses on art collectibles, luxury gifts, and intangible cultural heritage preservation.
+Cultural Value: A guardian of Guang Falang techniques and a witness to Maritime Silk Road trade. Its historic export wares are now treasured symbols of Lingnan artistry, making it a must-visit for art lovers.
+`,
+                        openTime: "9:00-17:30(Craft experience requires advance reservation)",
+                        rating: 4.6,
+                        images: ["图片/广州珐琅.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/广州珐琅厂",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/廣州琺琅",
+                        fishbone: 1
+                    },
+                    {
+                        id: 9,
+                        name: "Shixiang Garden (Ten Fragrances Garden)",
+                        description: " Former residence and studio of late Qing painters Ju Chao and Ju Lian, founders of the Lingnan School of Painting. A compact, elegant garden radiating scholarly charm. (Can complement Day 2 Folk Art or Day 1 Garden Art.)",
+                        address: "3 Huaide Street, Haizhu District",
+                        transport: "15-min walk from Exit A, Jiangnanxi Station (Line 2) or 10-min walk from Exit D, Baogang Avenue Station (Line 8).",
+                        details: `Overview: Former residence and studio of late Qing painters Ju Chao and Ju Lian, founders of the Lingnan School of Painting. A compact, elegant garden radiating scholarly charm. (Can complement Day 2 Folk Art or Day 1 Garden Art.)<br><br>
+2. Details:
+（1）Significance: Birthplace of the Lingnan School of Painting.
+<br><br>
+（2）History: Built between 1856-1864, originally named "Geshan Thatched Cottage". Renamed "Shixiang Garden" for its ten fragrant flowers (jasmine, tuberose, etc.). Ju Chao and Ju Lian ("Two Jus") lived, painted, and taught here, pioneering the innovative "Water-Splashing & Powder-Sprinkling" technique that revolutionized flower-and-bird painting. Bombed during WWII, only Zilihuaguan (Ju Lian's studio) survived. The garden deteriorated post-1949, with parts occupied by housing. Restored by Guangzhou government in 2006, rebuilding key structures based on historical records. Opened as Shixiang Garden Memorial Hall (Municipal Heritage Site) in 2010. Expanded in 2024 with the Geshan Academy, adding digital exhibits and art education spaces.<br><br>
+（2）History: Built between 1856-1864, originally named "Geshan Thatched Cottage". Renamed "Shixiang Garden" for its ten fragrant flowers (jasmine, tuberose, etc.). Ju Chao and Ju Lian ("Two Jus") lived, painted, and taught here, pioneering the innovative "Water-Splashing & Powder-Sprinkling" technique that revolutionized flower-and-bird painting. Bombed during WWII, only Zilihuaguan (Ju Lian's studio) survived. The garden deteriorated post-1949, with parts occupied by housing. Restored by Guangzhou government in 2006, rebuilding key structures based on historical records. Opened as Shixiang Garden Memorial Hall (Municipal Heritage Site) in 2010. Expanded in 2024 with the Geshan Academy, adding digital exhibits and art education spaces.
+（3）Cultural Value: The most important art education center in South China during the late Qing/Republic era, training Lingnan School founders like Gao Jianfu. It embodies the transition from traditional to modern art, continuing its legacy of "learning from nature and blending East-West styles" through exhibitions and education. A vital artistic and cultural landmark.
+
+`,
+                        openTime: "9:00-17:00（周一闭馆）",
+                        rating: 4.5,
+                        images: ["十香园全景.jpg", "居廉画室.jpg", "园林景致.jpg", "画作展品.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/十香园",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/十香園",
+                        fishbone: 0
+                    },
+                    {
+                        id: 10,
+                        name: " Shawan Ancient Town",
+                        description: " An 800-year-old Lingnan cultural town, famed for its preserved \"wok-ear\" houses (Diu Ngo Lou) and ancestral temples.",
+                        address: "10 Shawan Daxiangchong Road, Panyu District",
+                        transport: "Take Metro Line 3 to Shiqiao Station, transfer to Bus Panyu No. 67 to Shawan Ancient Town South Gate.",
+                        details: ` An 800-year-old Lingnan cultural town, famed for its preserved "wok-ear" houses (Diu Ngo Lou) and ancestral temples. Experience vibrant folk parades ("Piaose") and the origins of Guangdong Music (hometown of the "Three Masters of the He Family").<br><br>
+2. Details:
+History: Founded in 1233 as a sandbank settlement in the Pearl River estuary. In 1275, the He family clan, led by ancestor He Deming, settled here and built the Liugengtang (He Clan Ancestral Hall), establishing Shawan's clan-based society. Became the seat of the "Shawan Si" administrative district during the Yuan Dynasty. During the Ming Dynasty, governed parts of modern Panyu, Nansha, and Shunde. The He clan prospered through imperial exams (producing 12 Jinshi scholars), building numerous Diu Ngo Lou houses and temples. The Beidi Deity Parade ritual evolved into the Shawan Piaose tradition. Commerce thrived in the Qing Dynasty, forming four major markets. Guangdong Music originated here in the 18th century; the He family built the Sanren Hall as a music hub. Overseas Chinese funded modern schools like Yucai Primary. After the Opium War, it became a cultural crossroads. Traditional crafts (brick carving, lime sculpture) continued into the Republic era, with composers like He Liutang creating classics like "Scrambling for the Dragon Pearl". Core structures survived WWII damage.
+`,
+                        openTime: "Open all day (operating hours of attractions and shops vary)",
+                        rating: 4.7,
+                        images: ["沙湾古镇街景.jpg", "镬耳屋建筑.jpg", "留耕堂.jpg", "飘色表演.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/沙湾古镇",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/沙湾鎮",
+                        fishbone: 0
+                    }
+                ]
+            },
+            3: {
+                title: "Modern Lingnan and Cultural Fusion",
+                attractions: [
+                    {
+                        id: 11,
+                        name: "Lingnan Impression Park",
+                        description: "A cultural complex integrating Lingnan’s traditional architecture, folk customs, and handicrafts.",
+                        address: "Waihuan West Road, Higher Education Mega Center, Panyu District",
+                        transport: "Take Metro Line 4 to Higher Education Mega Center South Station (Exit B), transfer to bus Fan 201 to Lingnan Impression Park Station.",
+                        details: `Features: A cultural complex integrating Lingnan’s traditional architecture, folk customs, and handicrafts. Visitors can watch shadow puppetry, lion dances, and experience Hakka folk songs .<br><br>
+1. Overview: 
+A large-scale folk culture theme park focusing on Lingnan culture, showcasing architectural displays, intangible cultural heritage (ICH) experiences, and folk performances to restore the traditional Lingnan water townscape .
+<br><br>
+2. 分述：（1）Development: Originally part of Xiaoguwei Island and Lianxi Village. During the Ming and Qing dynasties, Lianxi Village was a traditional water town where residents engaged in fishing and farming. In 2003, due to the Guangzhou Higher Education Mega Center project, Xiaoguwei Island was redeveloped, and Lianxi Village was preserved and transformed into a cultural scenic spot. In 2008, the Guangzhou Municipal Government established Lingnan Impression Park to promote Lingnan culture .<br><br>
+（2）Design Philosophy: Adhering to the principle of "restoring the old as old", the park reconstructs Lingnan-style dwellings, ancestral halls, and shops, combining ICH exhibitions and folk performances for immersive cultural experiences .`,
+                        openTime: "9:30-17:30",
+                        rating: 4.6,
+                        images: ["图片/岭南印象园.jpg", "图片/精彩照片/岭南印象园/1.jpg", "图片/精彩照片/岭南印象园/2.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/岭南印象园",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/嶺南印象園",
+                        fishbone: 1
+                    },
+                    {
+                        id: 12,
+                        name: "Canton Tower (Xiaomanyao)",
+                        description: "A modern landmark of Guangzhou, the tower’s design incorporates the \"slender waist\" aesthetic of Lingnan.",
+                        address: "222 Yuejiang West Road, Haizhu District",
+                        transport: "Direct access via Exit B of Canton Tower Station (Line 3).",
+                        details: `1. Overview: 
+A modern landmark of Guangzhou, the tower’s design incorporates the "slender waist" aesthetic of Lingnan. Ascending to its top offers a panoramic view of the blend of old and new urban areas along both banks of the Pearl River.<br><br>
+2. Details:(1) Process: Also known as the "Canton Tower" (nicknamed "The Slim Waist"), it is a landmark building in Guangzhou, adjacent to Zhujiang New Town. On November 25, 2005, the Canton Tower officially broke ground. On April 25, 2006, the main pile foundation construction of the Canton Tower began. On August 27, 2008, the 454-meter main tower of the Canton Tower was capped, surpassing the CITIC Plaza to become the tallest building in Guangzhou. On September 16, 2009, a global naming campaign for the new Guangzhou TV Tower was launched. On September 28, 2010, the new Guangzhou TV Tower was officially named the Canton Tower. It was officially opened to the public on September 30, 2010, and started selling tickets to receive tourists from October 1, while also undertaking the broadcasting task of the Guangzhou Asian Games.<br><br>
+(2) Significance: As the tallest tower in China and the fourth tallest tower in the world (as of 2024), the Canton Tower is not only a miracle of modern architectural engineering but also an important symbol of Guangzhou's urban image.`,
+                        openTime: "9:30-22:30（具体时间以景区公告为准）",
+                        rating: 4.8,
+                        images: ["图片/广州塔.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/广州塔",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/廣州塔",
+                        fishbone: 1
+                    },
+                    {
+                        id: 13,
+                        name: "Pearl River Night Cruise (Lingnan Night Rhythm)",
+                        description: "Take a cruise along the two banks of the Pearl River and feel the charm of the Lingnan urban night view.",
+                        address: "Tianzi Wharf, Yuexiu District",
+                        transport: "Walk 10 minutes from Exit B of Beijing Road Station (Line 6).",
+                        details: `Route: Depart from Tianzi Wharf, passing through White Swan Pond (Bai’e Tan) and Haixinsha. The illuminated arcade buildings, modern skyscrapers, and Pearl River create a stunning urban night view .<br><br>
+1. 总述：The Pearl River Night Cruise is one of Guangzhou's most iconic urban tourism attractions. Visitors can take a boat tour to explore the modern urban landscapes and historical buildings along both banks of the Pearl River, experiencing the beauty of the transition between day and night in "the City of Rams". <br><br>
+2. 分述：In the early 1980s, Guangzhou began to experiment with organizing Pearl River cruise activities, initially focusing on daytime sightseeing with relatively short routes. In 1987, the Guangzhou Port Authority officially launched the "Pearl River Night Cruise" project, which became one of the earliest urban night cruise sightseeing projects in China. 
+
+Since the 1990s, it has entered a period of development and prosperity. The lighting project on both sides of the Pearl River was launched, and the night cruise route was extended to the section from White Goose Pool to Canton Tower. 
+
+After 2000, private capital entered the market, launching luxury cruise ships (such as "Information Times" and "Pearl River Princess"), and adding services such as catering and performances. 
+
+During the 2010 Asian Games, the Pearl River Night Cruise was listed as an officially recommended tourist project, and the light shows and fireworks performances attracted tourists from all over the world. 
+
+In 2015, new energy electric cruise ships were introduced to reduce noise and pollution. 
+
+In 2020, themed routes such as "Water Tea House" were launched, combining with the Cantonese morning tea culture. 
+
+In 2024, AR technology was applied, allowing tourists to obtain real-time historical explanations of buildings on both banks through smart devices.`,
+                        openTime: "19:00-22:00(Specific schedules are subject to the daily arrangement)",
+                        rating: 4.7,
+                        images: ["图片/珠江夜游.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/珠江夜游",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/珠江",
+                        fishbone: 1
+                    }
+                ]
+            },
+            4: {
+                title: "Baiyun Mountain",
+                attractions: [
+                    {
+                        id: 14,
+                        name: "Baiyun Mountain",
+                        description: "Baiyun Mountain, a national AAAAA-level site in Guangzhou, is known as \"Yangcheng's Top Beauty\" and \"South Guangdong's Famous Mountain\". Its main peak, Moxing Ridge , has over 30 peaks, with over 95% forest cover—earning it \"Guangzhou's Urban Lung\".",
+                        address: "801 Guangyuan Zhong Road, Tonghe Subdistrict, Baiyun District",
+                        transport: "Nearest metro stations are Shaheding (Line 6) and Yantang (Line 3 North Extension), with transfers to buses or taxis required to reach entrances (e.g., South Gate, West Gate) .",
+                        details: `Known as Guangzhou’s "urban lung", it offers panoramic city views from peaks like Moxing Summit (Star-Gazing Peak), the aviary Mingchun Valley (Birdsong Valley), and Nengren Temple. Yuntai Garden at the foot is a large garden blending Chinese and Western styles .<br><br>
+1. Overview：Baiyun Mountain, a national AAAAA-level site in Guangzhou, is known as "Yangcheng's Top Beauty" and "South Guangdong's Famous Mountain". Its main peak, Moxing Ridge , has over 30 peaks, with over 95% forest cover—earning it "Guangzhou's Urban Lung".<br><br>
+2. 分述：Since late Qin times, hermit Zheng Anqi was said to gather herbs here to heal. In the Jin Dynasty, Ge Hong practiced alchemy, leaving Taoist tales. By Ming-Qing dynasties, it became a Buddhist-Taoist hub with temples like Baiyun Temple and Nengren Temple. Scenic spots Pujian Lianquan  and Jingtai Senggui  were in the ancient "Eight Sights of Yangcheng". Scholars Su Shi and Han Yu wrote poems here; modern figures Zhu De and Guo Moruo left calligraphy, mixing nature and culture.`,
+                        openTime: "6:00-22:00 The opening hours of various attractions vary.",
+                        rating: 4.8,
+                        images: ["图片/白云山.jpg", "图片/精彩照片/白云山/1.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/白云山",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/白雲山_(廣州)",
+                        fishbone: 1
+                    },
+                    {
+                        id: 15,
+                        name: "Shangxiajiu Pedestrian Street",
+                        description: "A hundred-year-old arcade-style commercial street, and a home to time-honored brands like Lianxianglou and Taotaoju. ",
+                        address: "Shangxiajiu Road, Liwan District",
+                        transport: "Exit D of Changshou Road Station (Metro Line 1)",
+                        details: `Features: A hundred-year-old arcade-style commercial street, and a home to time-honored brands like Lianxianglou and Taotaoju. It’s also a great spot to try local street food such as shrimp wonton noodles and radish beef offal.<br><br>
+1. .Overview: As one of Guangzhou’s three traditional commercial hubs, Shangxiajiu is a pedestrian street showcasing a unique blend of Western and local Xiguan charm.<br><br>
+2.Details:
+(1) Development: As early as the 520s AD, this area emerged as a commercial cluster. It was once called "Xilai Chudi" ("the first landing place of the West") because of Bodhidharma, an Indian monk, landed here to spread Buddhism. During the Song Dynasty, the lower section (Xiajiu Road) was known as Xiuyifang, forming Xiguan’s earliest commercial settlement. In the Ming and Qing dynasties, with the establishment of Huaiyuan Post , the opening of Daguan River, and the rise of the thirteen-hongs in Canton as a key foreign trade port, wealthy merchants-built residences in Xiguan, followed by shops selling Suzhou-Hangzhou goods, foreign products, and teahouses. By this time, Shangxiajiu was already a bustling business area. In 1937, the thirteen-hongs in Canton were destroyed by a fire spreading from nearby houses, and businesses gradually shifted to Shangxiajiu.
+<br><br>
+(2) Architecture: Stretching over 1,000 meters long, the arcade buildings of Shangxiajiu date back to the Qing Dynasty. They combine Southern European architectural features, Manchurian decorations from northern China, and traditional Xiguan styles. And they were designed to cope with Guangzhou’s rainy climate.`,
+                        openTime: "Open all day (shops are generally open from 10:00 to 22:00)",
+                        rating: 4.6,
+                        images: ["图片/上下九.jpg", "图片/精彩照片/上下九/1.jpg", "图片/精彩照片/上下九/2.jpg", "图片/精彩照片/上下九/3.jpg", "图片/精彩照片/上下九/4.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/上下九步行街",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/上下九步行街",
+                        fishbone: 1
+                    },
+                    {
+                        id: 16,
+                        name: "Yongqing Fang",
+                        description: "A renovated Xiguan historical and cultural block preserving wok-ear houses (traditional Cantonese residences with curved gables) and arcades. ",
+                        address: "Yongqing Fang, Enning Road, Liwan District",
+                        transport: "A 5-minute walk from Exit B of Huangsha Station (Metro Lines 1/6)",
+                        details: `Features: A renovated Xiguan historical and cultural block preserving wok-ear houses (traditional Cantonese residences with curved gables) and arcades. Visitors can try intangible cultural heritages like Cantonese porcelain painting and olive carving, or visit Bruce Lee’s ancestral home.<br><br>
+1.Overview: It’s a national AAAA-level tourist attraction integrating tourism, culture, entertainment, and social activities. It’s also a core historical and cultural block in Guangzhou that blends ancient architecture, traditional arts, international leisure, and modern trends.<br><br>
+2.Details: Xiguan was formed by the gradual expansion of land into the Pearl River’s north bank. Over 2,000 years ago, areas west of today’s Guangfu Middle Road to Huangsha Road and Huagui Road were still underwater. More than a thousand years later, most of Xiguan became land, expanding further southward. Yongqing Fang, located in southwest Guangzhou, was once the most prosperous core of the city. However, as the city center shifted east, its buildings fell into disrepair. Thus, two renovation projects were carried out in 2016 and 2018.`,
+                        openTime: "Open all day (operating hours of shops and experience halls vary)",
+                        rating: 4.7,
+                        images: ["图片/永庆坊.jpg", "图片/精彩照片/永庆坊/1.jpg", "图片/精彩照片/永庆坊/2.jpg", "图片/精彩照片/永庆坊/3.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/永庆坊",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/永慶坊",
+                        fishbone: 1
+                    },
+                    {
+                        id: 17,
+                        name: "Panxi Restaurant (Xiguan Cuisine Experience)",
+                        description: " Founded in 1947, this Lingnan garden-style restaurant ranks among Guangzhou’s \"Three Great Garden Restaurants\".",
+                        address: "No. 151, Longjin West Road, Liwan District",
+                        transport: "A 10-minute walk from Exit A of Zhongshanba Station (Metro Line 5)",
+                        details: `1.Overview: Founded in 1947, this Lingnan garden-style restaurant ranks among Guangzhou’s "Three Great Garden Restaurants" alongside Beiyuan and Nanyuan. It is listed in the "First Batch of 20th-Century Chinese Architectural Heritage".<br><br>
+2.Details:
+(1) Development: Established by Li Wenlun, the restaurant takes its name from "Panxi", a nearby stream. In 1958, it was renovated with state investment, designed by renowned garden architect Mo Bozhi, and reopened in 1960. During the 1970s–1980s, it became a national training base for Cantonese cuisine and dim sum. In 1982, it partnered with Shenzhen Friendship Company to open Shenzhen Panxi Restaurant, pioneering cross-city catering collaboration. In 1989, its frozen dim sum was exported to Japan. (2) Recommended Dim Sum: "Pan Tang Five Treasures" (including lotus roots and arrowheads) and Cantonese morning tea.`,
+
+                        openTime: "7:30-21:00(Morning tea, lunch, and dinner hours)",
+                        rating: 4.8,
+                        images: ["图片/泮溪酒家.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/泮溪酒家",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/泮溪酒家",
+                        fishbone: 1
+                    },
+                    {
+                        id: 18,
+                        name: "Xihua Road Food Street",
+                        description: "A local-favorite food hub more beloved by residents than Shangxiajiu, packed with authentic snacks. ",
+                        address: "Xihua Road, Liwan District",
+                        transport: " Exit C of Ximenkou Station (Metro Line 1) or Exit F of Chen Clan Ancestral Hall Station (Metro Lines 1/8)",
+                        details: `Features: A local-favorite food hub more beloved by residents than Shangxiajiu, packed with authentic snacks. Popular spots included Tengyuan Pan-Fried Buns, Shiying Bowl of Shark Fin Soup, Fangji Snack Shop, and Sesame Paste Family.`,
+                        openTime: "各店铺营业时间各异，一般为10:00-22:00",
+                        rating: 4.7,
+                        images: ["图片/西华路美食街.jpg", "图片/精彩照片/西华路美食街/1.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/西华路",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/西华路_(廣州)",
+                        fishbone: 1
+                    },
+                    {
+                        id: 19,
+                        name: "Beijing Road Pedestrian Street & Millennium Ancient Road Ruins",
+                        description: "Guangzhou’s historically busiest commercial hub, where 11 layers of road surfaces from the Tang Dynasty to the Republic of China are visible underground (displayed under glass covers). ",
+                        address: "Beijing Road, Yuexiu District",
+                        transport: "Gongyuanqian Station (Metro Lines 1/2) or Beijing Road Station (Metro Line 6)",
+                        details: `1.Overview: Guangzhou’s historically busiest commercial hub, where 11 layers of road surfaces from the Tang Dynasty to the Republic of China are visible underground (displayed under glass covers). It hosts numerous time-honored brands and trendy shops.<br><br>
+2.Details: In 214 BC, Ren Xiao, the governor of Nanhai Commandery, built Panyu City near today’s Caidingqian (north section of Beijing Road). Before the Tang Dynasty, the area was mostly river channels and low-lying land. Beijing Road was founded in the Tang Dynasty, when brick-making techniques from central China spread to Guangzhou. The Tang-era road at the ancient ruins has 3 layers: two brick layers on top and a gravel layer below, confirming its role as a main artery. From the Tang to the Southern Han, a city layout with Beijing Road as the axis took shape. In the Yuan Dynasty, the Guangdong Administrative Province was located east of Beijing Road. During the Ming and Qing dynasties, the chief secretary (administrative office) stood at the T-junction of Beijing Road and Zhongshan Fifth Road. After the 1911 Revolution, Yongqing Avenue was renamed Yonghan Street. In 1936, it became Hanmin Road, then reverted to Yonghan Road in the early 1950s, and finally took its current name, Beijing Road, on August 25, 1966.`,
+                        openTime: "Open all day (shops are generally open from 10:00 to 22:00)",
+                        rating: 4.6,
+                        images: ["图片/北京路.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/北京路步行街",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/北京路步行街",
+                        fishbone: 1
+                    }
+                ]
+            }
+        };
+        
+        let currentDay = 1;
+        let currentVersion = 'highlight'; // 默认是精华版
+        let currentAttraction = null;
+
+        // 初始化页面
+        function init() {
+            updateDay(1);
+            bindEvents();
+            // 监听窗口大小变化，实时调整
+            window.addEventListener('resize', () => {
+                updateFishboneDiagram(currentDay);
+            });
+        }
+
+        // 绑定事件
+        function bindEvents() {
+            // 日期按钮事件
+            document.querySelectorAll('.date-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const day = parseInt(this.dataset.day);
+                    updateDay(day);
+                });
+            });
+            
+            // 版本选择按钮事件
+            document.querySelectorAll('.version-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const version = this.dataset.version;
+                    updateVersion(version);
+                });
+            });
+            
+            // 交通方式按钮点击事件
+            document.getElementById('transportBtn').addEventListener('click', function() {
+                // 根据当前版本跳转到不同页面
+                if (currentVersion === 'highlight') {
+                    window.location.href = '交通方式备注精华版（英）.html';
+                } else {
+                    window.location.href = '交通方式备注（英）.html';
+                }
+            });
+        }
+
+        // 更新日期显示
+        function updateDay(day) {
+            currentDay = day;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.date-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-day="${day}"]`).classList.add('active');
+            
+            // 更新标题
+            document.getElementById('currentTitle').textContent = dayData[day].title;
+            
+            // 更新鱼骨图
+            updateFishboneDiagram(day);
+            
+            // 根据当前版本更新景点列表
+            updateAttractionsByVersion(currentVersion);
+        }
+        
+        // 更新版本显示
+        function updateVersion(version) {
+            currentVersion = version;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.version-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-version="${version}"]`).classList.add('active');
+            
+            // 根据选择的版本更新景点列表
+            updateAttractionsByVersion(version);
+        }
+        
+        // 根据版本更新景点列表
+        function updateAttractionsByVersion(version) {
+            const data = dayData[currentDay];
+            
+            // 显示/隐藏对应板块
+            if (version === 'highlight') {
+                // 精华版 - 显示区分的两个板块
+                document.getElementById('highlightSection').style.display = 'block';
+                document.getElementById('extendedSection').style.display = 'block';
+                document.getElementById('fullSection').style.display = 'none';
+                
+                // 更新精华和拓展景点
+                updateHighlightAttractions(data);
+            } else {
+                // 完整版 - 显示不区分的一个板块
+                document.getElementById('highlightSection').style.display = 'none';
+                document.getElementById('extendedSection').style.display = 'none';
+                document.getElementById('fullSection').style.display = 'block';
+                
+                // 更新完整景点列表
+                updateFullAttractions(data);
+            }
+        }
+
+        // 更新鱼骨图
+        function updateFishboneDiagram(day) {
+            const data = dayData[day];
+            const svg = document.querySelector('.fishbone-svg');
+            
+            // 清除现有的鱼刺和景点
+            svg.querySelectorAll('.fishbone-bone, .fishbone-point, .fishbone-text, .fishbone-clickarea').forEach(el => el.remove());
+            
+            const totalAttractions = data.attractions.length;
+            
+            if (totalAttractions === 0) return;
+            
+            const spacing = (720 - 80) / (totalAttractions + 1);
+            const isMobile = window.innerWidth < 768; // 检测移动设备
+
+            data.attractions.forEach((attraction, index) => {
+                const isUpper = index % 2 === 0;
+                const xPosition = 80 + (index + 1) * spacing;
+
+                const boneLength = isMobile ? 150 : 120;
+                const boneAngle = isUpper ? -45 : 45;
+                const radians = (boneAngle * Math.PI) / 180;
+                const endX = xPosition + Math.cos(radians) * boneLength;
+                const endY = 150 + Math.sin(radians) * boneLength;
+
+                // 创建鱼刺
+                const bone = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                bone.setAttribute('x1', xPosition);
+                bone.setAttribute('y1', 150);
+                bone.setAttribute('x2', endX);
+                bone.setAttribute('y2', endY);
+                bone.setAttribute('stroke', attraction.fishbone === 1 ? '#dc2626' : '#ef4444');
+                bone.setAttribute('stroke-width', attraction.fishbone === 1 ? '3' : '2');
+                bone.classList.add('fishbone-bone');
+                svg.appendChild(bone);
+
+                // 文本换行处理
+                const name = attraction.name;
+                const maxCharsPerLine = isMobile ? 10 : 15;
+                const lines = [];
+                
+                for (let i = 0; i < name.length; i += maxCharsPerLine) {
+                    lines.push(name.substring(i, i + maxCharsPerLine));
+                }
+                
+                // 基础参数设置
+                const baseFontSize = isMobile ? 20 : 12;
+                const fontSize = baseFontSize;
+                const lineHeight = fontSize * 1.1;
+                const padding = 5;
+                
+                // 计算圆的半径
+                const maxLineLength = Math.max(...lines.map(line => line.length));
+                const textWidth = maxLineLength * fontSize * 0.6;
+                const textHeight = lines.length * lineHeight;
+                const radius = isMobile ?1.2*Math.ceil(Math.max(textWidth, textHeight) / 2 + padding):1*Math.ceil(Math.max(textWidth, textHeight) / 2 + padding);
+                
+                // 创建景点圆圈
+                const point = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                point.setAttribute('cx', endX);
+                point.setAttribute('cy', endY);
+                point.setAttribute('r', radius);
+                point.setAttribute('stroke-width', '2');
+                point.classList.add('fishbone-point', `fishbone-${attraction.fishbone}`);
+                point.addEventListener('click', () => showAttractionDetail(attraction));
+                svg.appendChild(point);
+
+                // 创建景点标签
+                const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                label.setAttribute('x', endX);
+                label.setAttribute('y', endY);
+                label.setAttribute('fill', 'white');
+                label.setAttribute('font-size', fontSize);
+                label.setAttribute('class', 'fishbone-text');
+                
+                // 计算第一行的垂直偏移量
+                const firstLineOffset = -(lines.length - 1) * lineHeight / 2;
+                
+                lines.forEach((line, lineIndex) => {
+                    const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+                    tspan.setAttribute('x', endX);
+                    tspan.setAttribute('dy', lineIndex === 0 ? firstLineOffset : lineHeight);
+                    tspan.textContent = line;
+                    label.appendChild(tspan);
+                });
+                
+                svg.appendChild(label);
+
+                // 创建点击区域
+                const clickArea = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                clickArea.setAttribute('cx', endX);
+                clickArea.setAttribute('cy', endY);
+                clickArea.setAttribute('r', radius);
+                clickArea.setAttribute('fill', 'transparent');
+                clickArea.classList.add('fishbone-clickarea');
+                clickArea.addEventListener('click', () => showAttractionDetail(attraction));
+                svg.appendChild(clickArea);
+            });
+        }
+
+        // 更新精华和拓展景点列表
+        function updateHighlightAttractions(data) {
+            const highlightGrid = document.getElementById('highlightAttractionsGrid');
+            const extendedGrid = document.getElementById('extendedAttractionsGrid');
+            
+            // 清空现有内容
+            highlightGrid.innerHTML = '';
+            extendedGrid.innerHTML = '';
+            
+            data.attractions.forEach(attraction => {
+                // 创建景点卡片
+                const card = document.createElement('div');
+                card.className = `attraction-card fishbone-${attraction.fishbone}`;
+                
+                // 获取景点的第一张图片
+                const firstImage = attraction.images && attraction.images.length > 0 ? attraction.images[0] : '';
+                
+                card.innerHTML = `
+                    <img src="${firstImage}" alt="${attraction.name}" class="attraction-image">
+                    <h4>
+                        <span class="fishbone-marker fishbone-marker-${attraction.fishbone}">
+                            ${attraction.fishbone === 1 ? 'Highlight Attractions' : 'Expansion Attractions'}
+                        </span>
+                        ${attraction.name}
+                    </h4>
+                    <p>${attraction.description}</p>
+                    <div class="attraction-meta">
+                        <span>⭐ ${attraction.rating}</span>
+                        <span>🕒 ${attraction.openTime}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => showAttractionDetail(attraction));
+                
+                // 根据类型添加到不同的网格
+                if (attraction.fishbone === 1) {
+                    highlightGrid.appendChild(card);
+                } else {
+                    extendedGrid.appendChild(card);
+                }
+            });
+        }
+        
+        // 更新完整版景点列表（不区分精华和拓展）
+        function updateFullAttractions(data) {
+            const fullGrid = document.getElementById('fullAttractionsGrid');
+            
+            // 清空现有内容
+            fullGrid.innerHTML = '';
+            
+            data.attractions.forEach(attraction => {
+                // 创建景点卡片（不显示精华/拓展标记）
+                const card = document.createElement('div');
+                card.className = `attraction-card`;
+                
+                // 获取景点的第一张图片
+                const firstImage = attraction.images && attraction.images.length > 0 ? attraction.images[0] : '';
+                
+                card.innerHTML = `
+                    <img src="${firstImage}" alt="${attraction.name}" class="attraction-image">
+                    <h4>${attraction.name}</h4>
+                    <p>${attraction.description}</p>
+                    <div class="attraction-meta">
+                        <span>⭐ ${attraction.rating}</span>
+                        <span>🕒 ${attraction.openTime}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => showAttractionDetail(attraction));
+                
+                fullGrid.appendChild(card);
+            });
+        }
+
+        // 显示景点详情
+        function showAttractionDetail(attraction) {
+            currentAttraction = attraction;
+            
+            // 更新详情页内容
+            document.getElementById('detailTitle').textContent = attraction.name;
+            document.getElementById('detailDescription').textContent = attraction.description;
+            document.getElementById('detailRating').textContent = attraction.rating;
+            document.getElementById('detailTime').textContent = attraction.openTime;
+            
+            // 地址信息单独提取并显示在最前面
+            document.getElementById('detailAddress').textContent = attraction.address;
+            document.getElementById('detailTransport').textContent = "交通：" + attraction.transport;
+            
+            // 重置复制成功提示
+            document.getElementById('addressSuccess').style.display = 'none';
+            document.getElementById('transportSuccess').style.display = 'none';
+            
+            // 详细介绍使用HTML格式显示
+            document.getElementById('detailDetails').innerHTML = attraction.details;
+            
+            // 更新图片
+            const imagesGrid = document.getElementById('imagesGrid');
+            imagesGrid.innerHTML = ''; // 清空现有内容
+            
+            attraction.images.forEach(imgFileName => {
+                const imgContainer = document.createElement('div');
+                imgContainer.innerHTML = `<img src="${imgFileName}" alt="${imgFileName}" style="width:100%; height:100%; object-fit:cover; border-radius:0.5rem;">`;
+                imagesGrid.appendChild(imgContainer);
+            });
+
+            // 更新跳转链接
+            document.getElementById('baiduLink').href = attraction.baiduUrl;
+            document.getElementById('wikiLink').href = attraction.wikiUrl;
+            
+            // 显示详情页
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('detailPage').classList.add('active');
+        }
+
+        // 显示主页面
+        function showMainPage() {
+            document.getElementById('detailPage').classList.remove('active');
+            document.getElementById('mainPage').style.display = 'block';
+        }
+
+        // 复制到剪贴板功能
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.textContent;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // 显示复制成功提示
+                const successElement = document.getElementById(
+                    elementId === 'detailAddress' ? 'addressSuccess' : 'transportSuccess'
+                );
+                successElement.style.display = 'inline';
+                
+                // 3秒后隐藏提示
+                setTimeout(() => {
+                    successElement.style.display = 'none';
+                }, 3000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+            });
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+    

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>岭南文化旅游交通规划</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        header {
+            background-color: #c41e3a;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section-title {
+            color: #c41e3a;
+            border-bottom: 2px solid #c41e3a;
+            padding-bottom: 10px;
+            margin: 30px 0 20px;
+        }
+        .note-box {
+            background-color: #fff5f5;
+            border-left: 4px solid #c41e3a;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .route-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .route-title {
+            color: #c41e3a;
+            margin-top: 0;
+            border-bottom: 1px dashed #c41e3a;
+            padding-bottom: 8px;
+        }
+        .route-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .route-item:last-child {
+            border-bottom: none;
+        }
+        .transport {
+            color: #c41e3a;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+        }
+        .map-link {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .map-button {
+            background-color: #c41e3a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .map-button:hover {
+            background-color: #a31a31;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="新旅游路径.html" class="back-button">返回首页</a>
+        <h1>岭南文化旅游交通规划</h1>
+    </header>
+    
+    <div class="container">
+        <h2 class="section-title">出行交通规划</h2>
+        
+        <div class="route-card">
+            <h3 class="route-title">DAY1</h3>
+            <div class="route-item">
+                1. 南越王博物馆（王宫展区）——五仙古观 <span class="transport">（骑行10分钟）</span>
+            </div>
+            <div class="route-item">
+                2. 五仙古观——陈家祠 <span class="transport">（打车15分钟）</span>
+            </div>
+        </div>
+        
+        <div class="route-card">
+            <h3 class="route-title">DAY2</h3>
+            <div class="route-item">
+                1. 粤剧艺术博物馆——广州珐琅厂 <span class="transport">（步行2分钟）</span>
+            </div>
+        </div>
+        
+        <div class="route-card">
+            <h3 class="route-title">DAY3</h3>
+            <div class="route-item">
+                1. 岭南印象园——广州塔 <span class="transport">（打车26分钟）</span>
+            </div>
+            <div class="route-item">
+                2. 广州塔——珠江夜游 <span class="transport">（打车19分钟）</span>
+            </div>
+        </div>
+        
+        <div class="route-card">
+            <h3 class="route-title">DAY4</h3>
+            <div class="route-item">
+                1. 白云山 <span class="transport">（建议乘坐地铁2号线至白云公园站，换乘公交或打车前往）</span>
+            </div>
+        </div>
+
+        <div class="map-link">
+            <p>参考路线导航地图：圆周游记</p>
+            <a href="https://www.pitravel.cn/web/journey/detail/5296231?source=copyLink" target="_blank" class="map-button">查看导航地图</a>
+        </div>
+    </div>
+    
+    <footer>
+        岭南文化旅游交通规划 &copy; 2025
+    </footer>
+</body>
+</html>
