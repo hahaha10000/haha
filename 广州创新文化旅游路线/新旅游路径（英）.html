@@ -1,0 +1,1327 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guangzhou Innovative Cultural Theme Travel Itinerary Planning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f9fafb;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* 头部样式 */
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        /* 日期选择器 */
+        .date-selector {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .date-selector h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .date-selector h2::before {
+            content: '🛣️';
+            margin-right: 0.5rem;
+        }
+
+        .date-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .date-btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #f3f4f6;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .date-btn.active {
+            background: #dc2626;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3);
+        }
+
+        .date-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .date-btn.active:hover {
+            background: #b91c1c;
+        }
+
+        .date-btn .day {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .date-btn .theme {
+            font-size: 1.2rem;
+            opacity: 1;
+            margin-top: 0.5rem;
+        }
+
+        /* 当前日期信息 */
+        .current-day {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-day h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+        }
+
+        .current-day p {
+            color: #6b7280;
+        }
+
+        /* 路线版本选择器 */
+        .version-selector {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .version-selector h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .version-selector h2::before {
+            content: '🗺️';
+            margin-right: 0.5rem;
+        }
+
+        .version-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .version-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #f3f4f6;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .version-btn.active {
+            background: #dc2626;
+            color: white;
+            box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3);
+        }
+
+        .version-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .version-btn.active:hover {
+            background: #b91c1c;
+        }
+
+        /* 鱼骨图容器 */
+        .fishbone-container {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .fishbone-diagram {
+            position: relative;
+            width: 100%;
+            min-height: 280px;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .fishbone-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .fishbone-point {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .fishbone-point:hover {
+            stroke: #b91c1c;
+            stroke-width: 3;
+            transform: scale(1.05);
+        }
+        
+        /* 鱼骨图上的点 */
+        .fishbone-point.fishbone-1 {
+            fill: #dc2626;
+            stroke: #b91c1c;
+        }
+        
+        .fishbone-point.fishbone-0 {
+            fill: #ef4444;
+            stroke: #dc2626;
+            opacity: 0.7;
+        }
+
+        .fishbone-text {
+            font-weight: 500;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            pointer-events: none;
+        }
+
+        /* 景点列表容器 */
+        .attractions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 景点列表 - 精华和拓展分开的框 */
+        .attractions-section {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+        }
+        
+        /* 精华景点标题带有特殊标记 */
+        .attractions-section.highlight h3 {
+            display: flex;
+            align-items: center;
+        }
+        
+        .attractions-section.highlight h3::after {
+            content: "★ Recommended experience";
+            margin-left: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #dc2626;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+        }
+
+        .attractions-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 1rem;
+        }
+
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .attraction-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 鱼骨图关联标记样式 */
+        .attraction-card.fishbone-1 {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+        }
+        
+        .attraction-card.fishbone-0 {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+            opacity: 0.9;
+        }
+        
+        .fishbone-marker {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        
+        .fishbone-marker-1 {
+            background-color: #dc2626;
+            color: white;
+        }
+        
+        .fishbone-marker-0 {
+            background-color: #ef4444;
+            color: white;
+        }
+        
+        .attraction-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .attraction-card:hover {
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .attraction-card h4 {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .attraction-card p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .attraction-meta {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            color: #9ca3af;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .attraction-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* 详情页面 */
+        .detail-page {
+            display: none;
+            min-height: 100vh;
+            background: #f9fafb;
+        }
+
+        .detail-page.active {
+            display: block;
+        }
+
+        .detail-header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: #b91c1c;
+        }
+
+        .back-btn::before {
+            content: '←';
+            margin-right: 0.5rem;
+        }
+
+        .detail-content {
+            padding: 2rem 0;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .detail-hero {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 2rem;
+        }
+
+        .detail-hero h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-hero p {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .detail-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .detail-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .detail-body {
+            padding: 1.5rem;
+        }
+
+        /* 地址信息 */
+        .location-info {
+            background: #fee2e2;
+            border-left: 4px solid #dc2626;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .location-info h2 {
+            font-size: 1.25rem;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-info h2::before {
+            content: '📍';
+        }
+
+        .location-info p {
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+
+        /* 复制按钮样式 */
+        .copy-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .copy-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background: #b91c1c;
+        }
+        
+        .copy-success {
+            color: #166534;
+            font-size: 0.875rem;
+            display: none;
+        }
+
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .detail-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 1rem;
+        }
+
+        .detail-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-section h3::before {
+            content: '📷';
+            margin-right: 0.5rem;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+
+        .tips-box {
+            background: #fee2e2;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tips-box h3 {
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+        }
+
+        .tips-box ul {
+            color: #991b1b;
+            padding-left: 1rem;
+        }
+
+        .tips-box li {
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-description {
+            line-height: 1.8;
+            color: #374151;
+        }
+
+        .detail-description p {
+            margin-bottom: 1rem;
+        }
+
+        /* 高亮的跳转按钮样式 */
+        .wiki-links {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .wiki-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(153, 27, 27, 0.2);
+        }
+
+        .wiki-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(153, 27, 27, 0.2);
+        }
+
+        .wiki-btn::before {
+            font-size: 1.25rem;
+        }
+
+        .baidu-btn::before {
+            content: '🔍';
+        }
+
+        .wiki-btn::before {
+            content: '📚';
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .date-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .version-buttons {
+                flex-direction: column;
+            }
+            
+            .version-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .fishbone-diagram {
+                height: 220px;
+            }
+            
+            .attractions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .detail-hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .detail-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .wiki-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .wiki-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主页面 -->
+    <div id="mainPage">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="container">
+                <h1>Guangzhou Innovative Cultural Theme Travel Itinerary Planning</h1>
+                
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- 日期选择器 -->
+            <div class="date-selector">
+                
+                <div class="date-buttons">
+                    <button class="date-btn active" data-day="1">
+                        <div class="day">Innovative Culture Theme Tour</div>
+                        <!--  <div class="theme"></div> -->
+                    </button>
+                    
+                </div>
+            </div>
+
+            <!-- 当前日期信息 -->
+            <div class="current-day">
+                <h3 id="currentTitle">Innovative Culture Theme Tour</h3>
+                <div class="theme">Click on the attraction icons in the fishbone diagram to view detailed introductions</div>
+            </div>
+
+ <!-- 鱼骨图 -->
+            <div class="fishbone-container">
+                <div class="fishbone-diagram">
+                    <svg class="fishbone-svg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
+                        <!-- 主骨干 -->
+                        <line x1="80" y1="150" x2="720" y2="150" stroke="#dc2626" stroke-width="4" />
+                        <!-- 鱼头 -->
+                        <polygon points="720,160 720,140 740,150" fill="#dc2626" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 路线版本选择器 -->
+            <div class="version-selector">
+                <h2>Select route version</h2>
+                <div class="version-buttons">
+                    <button class="version-btn active" data-version="highlight">
+                        <span>⭐</span> Essence Edition
+                    </button>
+                    <button class="version-btn" data-version="full">
+                        <span>📋</span> Full version
+                    </button>
+                </div>
+            </div>
+
+            <!-- 景点概览 -->
+            <div class="attractions-container" id="attractionsContainer">
+                <!-- 精华景点 -->
+                <div class="attractions-section highlight" id="highlightSection">
+                    <h3>Highlights of the attractions</h3>
+                    <div class="attractions-grid" id="highlightAttractionsGrid">
+                        <!-- 精华景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 拓展景点 -->
+                <div class="attractions-section" id="extendedSection">
+                    <h3>Expand attractions</h3>
+                    <div class="attractions-grid" id="extendedAttractionsGrid">
+                        <!-- 拓展景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 完整版景点容器 -->
+                <div class="attractions-section" id="fullSection" style="display: none;">
+                    <h3>Route attraction preview</h3>
+                    <div class="attractions-grid" id="fullAttractionsGrid">
+                        <!-- 完整版景点卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主页面底部添加跳转按钮 -->
+            <div style="text-align: center; margin: 3rem 0; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+                <button class="wiki-btn" id="transportBtn">
+                    Remarks on transportation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详情页面 -->
+    <div id="detailPage" class="detail-page">
+        <div class="detail-header">
+            <div class="container">
+                <a href="#" class="back-btn" onclick="showMainPage()">back home</a>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="detail-content">
+                <div class="detail-card">
+                    <div class="detail-hero">
+                        <h1 id="detailTitle">Name of the attraction</h1>
+                        <p id="detailDescription">Description of the attraction</p>
+                        <div class="detail-meta">
+                            <span>⭐ <span id="detailRating">4.5</span></span>
+                            <span>🕒 <span id="detailTime">Opening hours</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-body">
+                        <!-- 地址信息放在最前面 -->
+                        <div class="location-info">
+                            <h2>Address information</h2>
+                            <div class="copy-container">
+                                <p id="detailAddress">The address information will be displayed here</p>
+                                <button class="copy-btn" onclick="copyToClipboard('detailAddress')">copy</button>
+                                <span class="copy-success" id="addressSuccess">Copied!</span>
+                            </div>
+                            <div class="copy-container">
+                                <p id="detailTransport">Traffic information will be displayed here</p>
+                                <button class="copy-btn" onclick="copyToClipboard('detailTransport')">copy</button>
+                                <span class="copy-success" id="transportSuccess">Copied!</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 详细介绍 -->
+                        <div class="detail-section">
+                            <h2></h2>
+                            <div class="detail-description" id="detailDetails">
+                                Details of the content
+                            </div>
+                        </div>
+                        
+                        <!-- 精彩图片 -->
+                        <div class="detail-section">
+                            <h2>Wonderful pictures</h2>
+                            <div class="images-grid" id="imagesGrid">
+                                <!-- 图片将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 高亮的跳转按钮 -->
+                        <div class="wiki-links">
+                            <a href="#" class="wiki-btn baidu-btn" id="baiduLink" target="_blank">Check out Baidu Encyclopedia</a>
+                            <a href="#" class="wiki-btn" id="wikiLink" target="_blank">Check out Wikipedia</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // 景点数据 - 基于广州创新文化主题旅游路线
+        const dayData = {
+            1: {
+                title: " One - day Tour of Innovative Culture Theme",
+                attractions: [
+                    {
+                        id: 1,
+                        name: "White Swan Hotel (Institutional Break - through, Sino - foreign Joint Venture)",
+                        description: "It is China's first five - star hotel in Sino - foreign cooperation (established in 1983), and the first five - star hotel designed, built and managed by China itself. It symbolizes the institutional break - through of foreign capital introduction in the early days of reform and opening up. ",
+                        address: " No.1 South Shamian Street, Liwan District",
+                        transport: "Exit F of Huangsha Station (Lines 1/6), about 8 - minute walk to Shamian Island",
+                        details: `1.Overview: It is China's first five - star hotel in Sino - foreign cooperation (established in 1983), and the first five - star hotel designed, built and managed by China itself. It symbolizes the institutional break - through of foreign capital introduction in the early days of reform and opening up. The hotel has Cantonese - style morning tea, which is an excellent place for dining and accommodation.<br><br>
+2. Preparation Background: 
+After the reform and opening up in 1978, Guangdong Province took the lead in introducing foreign capital. Hong Kong and Macao merchants such as Henry Fok responded to the national call and cooperated with the Guangdong Provincial Government to invest in the hotel industry.
+<br><br>
+3. Construction Process: 
+It is located at Baietan, Shamian, Guangzhou, and was designed by architects such as Mo Bozhi, integrating modern architecture with Lingnan garden characteristics. It officially opened for business on February 6, 1983. Deng Xiaoping, Henry Fok and others attended the opening ceremony. In 1984, Deng Xiaoping visited the hotel during his inspection of Guangzhou and overlooked the urban landscape on the 28th floor, affirming the achievements of reform and opening up. In 1985, it became one of the first three five - star hotels in China (the other two are Jianguo Hotel in Beijing and Jinling Hotel in Nanjing). In 1990, it underwent its first large - scale renovation and upgrading. Since 2000, as a landmark of Guangzhou, it has received a large number of international political and business figures. In 2012, it closed down due to aging facilities and started a comprehensive renovation. In 2015, while retaining the classic design, it upgraded the scientific and technological and environmental - friendly facilities. In 2018, it was included in the "China 20th - Century Architectural Heritage" list. In 2023, it held a 40 - year anniversary celebration and was known as the "living fossil of reform and opening up".
+<br><br>
+4. Innovative Measures: 
+It pioneered the design of the "open - style lobby" and the landscape of "mountain and water in the atrium", creating a new paradigm of Chinese hotel space design. It is the first five - star hotel in China to be open to ordinary citizens, breaking the convention that high - end hotels only received foreign guests at that time. It introduced international standard management and became a benchmark for the modernization of China's hotel industry.
+<br><br>
+5. Significance: 
+The hotel has a "Reform and Opening - up Exhibition Hall" inside, showing its history as a model of Sino - foreign cooperation.`,
+                        openTime: "Open all day (opening hours for catering and exhibition halls are subject to the hotel's announcement)",
+                        rating: 4.8,
+                        images: ["图片/白天鹅公馆.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/白天鹅宾馆",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/白天鵝賓館",
+                        fishbone: 1
+                    },
+                    {
+                        id: 2,
+                        name: "2. The \"Pioneer\" Statue in the Development Zone (Industrial Transformation, Guangzhou Model)",
+                        description: "Located in the Guangzhou Economic and Technological Development Zone (one of China’s first national-level development zones established in 1984), the statue depicts a worker holding up a molecular structure, symbolizing the \"Guangzhou Model\" of dual-track innovation in industry and technology.",
+                        address: "Intersection of Kaifa Avenue and Zhicheng Avenue, Huangpu District",
+                        transport: "Take Metro Line 5 or 6, then transfer to a bus and alight at the Development Zone Administrative Committee Station.",
+                        details: `1. 1. Overview:
+ Located in the Guangzhou Economic and Technological Development Zone (one of China's first national-level development zones established in 1984), the statue depicts a worker holding up a molecular structure, symbolizing the "Guangzhou Model" of dual-track innovation in industry and technology.   <br><br>
+2.Details: 
+Erected in 1985 near the Administrative Committee of Guangzhou Development Zone (Xiagang Subdistrict), it became the spiritual emblem of the zone. After 2000, due to the expansion of the development zone, the statue was relocated multiple times but remained a cultural landmark. In the 2010s, for the 30th anniversary of the zone, the "Pioneer" statue was restored, and replicas were installed in key locations across the development zone, reinforcing its symbolic significance.  
+`,
+                        openTime: "Open all day (outdoor statues)",
+                        rating: 4.5,
+                        images: ["开拓者雕像全景.jpg", "雕像细节.jpg", "开发区环境.jpg", "雕像历史照片.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/广州经济技术开发区",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/廣州經濟技術開發區",
+                        fishbone: 0
+                    },
+                    {
+                        id: 3,
+                        name: "Tianhe CBD Twin Towers (West Tower + East Tower) (Urban Transformation & Development Model)",
+                        description: "The \"vertical city\" concept, concentrating financial HQs and premium commerce.",
+                        address: "5 Zhujiang West Road (West Tower), 6 Zhujiang East Road (East Tower), Tianhe District）",
+                        transport: "Exit A, Zhujiang New Town Station (Lines 3/5), direct access to Huacheng Square",
+                        details: `1. Overview: The West Tower (Guangzhou International Finance Centre) and East Tower (CTF Finance Centre) exemplify the "vertical city" concept, concentrating financial HQs and premium commerce.<br><br>
+2. Background & Planning:<br>
+   <1>West Tower: Commissioned in 2005 during the acceleration of Tianhe CBD development. Designed to be a supertall landmark symbolizing Guangzhou's financial ambitions. British architects WilkinsonEyre won the design competition with their "Crystal" concept, inspired by the flowing Pearl River and city vitality.<br>
+   <2>East Tower: Commissioned in 2008 as the crowning project of Zhujiang New Town, forming a "twin towers" complex with the West Tower. Designed by US firm Kohn Pedersen Fox (KPF) with a "Transparent Crystal" theme, complementing its counterpart.<br><br>
+3. Construction:<br>
+   (1)West Tower: Groundbreaking Dec 2005. Main structure used a pioneering "steel tube-reinforced concrete mega frame + core tube" system, setting national construction records. Topped out at 440.75m in Dec 2009 (then China's 2nd tallest). Opened Sept 2010, housing Four Seasons Hotel, Grade-A offices, and luxury retail.<br>
+   (2)East Tower: Groundbreaking Sept 2009. Main structure featured an advanced "mega frame + core tube + outriggers" system for enhanced seismic resistance. Topped out at 530m in Oct 2014 (then China's 3rd tallest). Opened Oct 2016, housing K11 Art Mall, Rosewood Hotel, and premium offices.<br><br>
+4. Features: Grade-A offices, luxury hotels (Four Seasons, Rosewood), high-end shopping (Friendship Store, K11).`,
+                        openTime: "The exterior is open all day, while the internal shopping mall and office buildings are open in accordance with their respective regulations.",
+                        rating: 4.7,
+                        images: ["图片/天河双子塔.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/广州国际金融中心",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/廣州國際金融中心",
+                        fishbone: 0
+                    },
+                    {
+                        id: 4,
+                        name: "Canton Tower (\"Xiaomanyao\" - Slim Waist) (Skyscraper Engineering Feat)",
+                        description: "The iconic symbol of modern Guangzhou. Its design integrates the Lingnan aesthetic of a \"slender waist.\"",
+                        address: "222 Yuejiang West Road, Haizhu District",
+                        transport: "Exit A, Canton Tower Station (Line 3 / APM Line)",
+                        details: `1. Overview: The iconic symbol of modern Guangzhou. Its design integrates the Lingnan aesthetic of a "slender waist." Ascend for panoramic views blending the historic and modern cityscapes along the Pearl River.<br><br>
+2. Construction Process: Also known as "the Slim Waist", it is adjacent to Zhujiang New Town. The construction officially started on November 25, 2005. The main pile foundation construction began on April 25, 2006. On August 27, 2008, the 454-meter main tower was capped (surpassing CITIC Plaza to become the tallest building in Guangzhou). A global naming campaign was launched on September 16, 2009. It was officially named Canton Tower on September 28, 2010, and opened to the public on September 30. Ticket sales to receive visitors started on October 1, and it also undertook the broadcasting task of the Guangzhou Asian Games.<br><br>
+3. Innovation Points: It overcomes the wind resistance challenge of super high-rises with its "slim waist" curve and integrates Lingnan paper-cutting art. At the top of the tower, there is the world's highest Ferris wheel (450 meters) and the "Extreme Sky" drop project. It is linked with the newly opened Canton Tower Plaza in 2024 to present the "water tower shadow" landscape.<br><br>
+4. Significance: As China's tallest tower and the world's fourth tallest tower (as of 2024), it is not only a miracle of modern architectural engineering but also an important symbol of Guangzhou's urban image.`,
+                        openTime: "9:30-22:30(Specific times are subject to the announcement of the scenic spot)",
+                        rating: 4.9,
+                        images: ["图片/广州塔.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/广州塔",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/廣州塔",
+                        fishbone: 1
+                    },
+                    {
+                        id: 5,
+                        name: "Haixin Bridge (Bridge Technology Breakthroughs)",
+                        description: "The world's widest curved-beam inclined-arch pedestrian bridge, opened in 2021. It connects Canton Tower and Ersha Island, forming part of Guangzhou’s central axis pedestrian system.",
+                        address: "10-minute walk from Exit A of Canton Tower Station (Metro Line 3/APM Line)",
+                        transport: "10-minute walk from Exit A of Canton Tower Station (Metro Line 3/APM Line)",
+                        details: `1.Overview: The world's widest curved-beam inclined-arch pedestrian bridge, opened in 2021. It connects Canton Tower and Ersha Island, forming part of Guangzhou’s central axis pedestrian system.<br><br>
+2. Construction Process: Designed by He Jingtang, academician of the Chinese Academy of Engineering and chief architect of South China University of Technology’s Architectural Design and Research Institute, the bridge was built from May 15, 2020, with its main structure completed in April 2021. A global naming campaign was launched on May 13, and it was officially named "Haixin Bridge" upon opening on June 25, 2021.<br><br>
+3. Innovations: Its design posed three major challenges: a 3D curved main beam, high precision requirements for beam-arch fabrication and installation, and strict alignment control. Advanced technologies like 3D imaging and BIM (Building Information Modeling) were used to ensure precise steel component connections, achieving millimeter-level quality control. As Guangzhou’s first "smart bridge," it integrates informatization, 5G, and BIM to monitor crowds, issue alerts, and provide real-time guides, offering a unique crossing and viewing experience. Its shape resembles the flowing sleeves of Cantonese opera, with night lighting creating a "light corridor" alongside riverside landmarks.<br><br>
+4. Significance: It serves as a new link for economic, business, and tourism development on both sides of the Pearl River, a new public space for viewing, walking, and leisure, and a new symbol of Lingnan culture, Guangzhou’s charm, and the Greater Bay Area’s growth.`,
+                        openTime: "7:00-23:00(Specific times are subject to the official announcement)",
+                        rating: 4.8,
+                        images: ["图片/海心桥.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/海心桥",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/海心橋",
+                        fishbone: 1
+                    },
+                    {
+                        id: 6,
+                        name: "Yongqing Fang Arcade Street (Modern Renovation of Ancient Architecture)",
+                        description: "Guangzhou's best-preserved arcade complex, featuring early 20th-century Sino-Western architecture. It stands as a model for the \"micro-renovation\" of Xiguan arcades.",
+                        address: " No. 99, Enning Road, Liwan District",
+                        transport: " 5-minute walk from Exit B of Huangsha Station (Metro Lines 1/6)",
+                        details: `1. .Overview: Guangzhou's best-preserved arcade complex, featuring early 20th-century Sino-Western architecture. It stands as a model for the "micro-renovation" of Xiguan arcades.<br><br>
+2.  Renovation Process: In 2016, the local government introduced a "micro-renovation" concept for Phase 1, avoiding large-scale demolition and focusing on delicate restoration of old buildings. Phase 1 was completed in 2016. Phase II, covering 10 times the area of Phase 1, began in late 2018 and opened gradually over a year. Its eight sections were completed by 2021, with the Jinsheng section finished in June 2022.<br><br>
+3.  Innovations: The micro-renovation integrates the Cantonese Opera Museum, intangible cultural heritage workshops, and trendy businesses while preserving traditional elements like Manchurian windows and gray-brick walls. Nightly Cantonese opera performances are held.<br><br>
+4.  Significance: It has boosted visitor numbers (135,000 daily during the 2024 National Day holiday) and successfully merged tradition with modernity.`,
+                        openTime: "Open all day (business hours of shops vary)",
+                        rating: 4.7,
+                        images: ["图片/永庆坊.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/永庆坊",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/永慶坊",
+                        fishbone: 1
+                    },
+                    {
+                        id: 7,
+                        name: "Beijing Road Pedestrian Street (Benchmark of Urban Renewal)",
+                        description: "The most prosperous commercial hub in Guangzhou's history. Beneath its glass-covered walkways, 11 layers of road ruins from the Tang Dynasty to the Republican Era are displayed, alongside time-honored brands and trendy shops 168.",
+                        address: "Beijing Road Cultural and Tourism Zone, Yuexiu District (North: Guangwei Road; South: Yanjiang Middle Road) 17",
+                        transport: "North Section:Exit E of Gongyuanqian Station (Lines 1/2) South Section: Exit B of Beijing Road Station (Line 6) 19",
+                        details: `1. Overview: The most prosperous commercial hub in Guangzhou's history. Beneath its glass-covered walkways, 11 layers of road ruins from the Tang Dynasty to the Republican Era are displayed, alongside time-honored brands and trendy shops 168.<br><br>
+2. Reconstruction process:Beijing Road has been revitalized through multiple renovations, growing ever more charming. Its transformation began in 1985 with the introduction of trendy commerce. From 1997, it gradually evolved into a pedestrian street for weekends and holidays, achieving full-time pedestrianization in 2001 to enhance the shopping experience. In 2002, ancient road ruins were unearthed, and the "Millennium Ancient Road" opened to the public the following year, offering a tangible link to history. It forged a friendship with Paris’ Champs-Élysées in 2006, gaining an international vibe. A street of time-honored brands launched in 2013, featuring 16 old shops to evoke nostalgia, and a second-phase renovation kicked off in 2021 to keep injecting vitality.<br><br>
+3. 创新点：<br>
+                    (1) Cultural activation:873 restored arcade buildings showcase Lingnan style, with glass-protected layered ancient roads (from the Tang to the Republic of China) visible beneath—creating a "step through millennia" wonder.<br>
+                    (2)Format innovation:31 time-honored brands meet 65 international first stores, where window theaters, ICH markets, and modern performances beside cultural relics blend history and trends.<br>
+                    (3)Technology empowerment:The pioneering "culture + commerce + technology" model (AI guides, ICH workshops) revives traditional craftsmanship in the modern market.<br>
+                    (4)Space innovation:The pedestrian zone extends southward by 260 meters to Taikang Road (with a long-term plan to reach Tianzi Wharf), connecting scenic spots such as the Grand Buddha Temple and the Nanyue Royal Palace. Back streets and alleys like Changxing Street have been transformed into youth makerspaces, forming a three-dimensional block featuring "main street commerce + alley cultural and creative industries".`,
+                        openTime: "Open all day (business hours of shops vary)",
+                        rating: 4.6,
+                        images: ["图片/北京路图.jpg", "图片/精彩照片/北京路/1.jpg", "图片/精彩照片/北京路/2.jpg", "图片/精彩照片/北京路/3.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/北京路步行街",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/北京路步行街",
+                        fishbone: 0
+                    },
+                    {
+                        id: 8,
+                        name: "Guangzhou Higher Education Mega Center  (Education Reform Model)",
+                        description: " South China's hub for higher education, R&D, and academic exchange—a \"national first-class university town\" integrating learning, research, and production. Dubbed the region's \"Info-Port and Brain-Core\"",
+                        address: "Xiaoguwei Subdistrict, Panyu District (Main campus on Xiaoguwei Island; southern expansion in Xinzao Town) 8",
+                        transport: " Higher Education Mega Center North Station (Line 4) / South Station (Lines 4/7), directly accessing core zones.",
+                        details: `1. South China's hub for higher education, R&D, and academic exchange—a "national first-class university town" integrating learning, research, and production. Dubbed the region's "Info-Port and Brain-Core"<br><br>
+2. Construction process:Guangzhou University Town launched construction in January 2003, with a dedicated headquarters overseeing the project. By August-September 2004, nearly 47,000 teachers and students had settled in, enabling the successful start of classes.<br><br>
+3. Innovation points:Its innovations include a three-level "city-cluster-campus" spatial structure and a pioneering cross-university resource-sharing model (e.g., shared courses, labs). It preserves historical relics from the Southern Han to Qing dynasties and water town features, integrating attractions to offer "history + technology + ecology" experiences.<br><br>
+4. Significant:As one of China's largest new university towns, it hosts 12 universities, boosting Guangdong’s higher education gross enrollment rate to national leading levels. Home to the National Supercomputing Center and 4 national incubators, it has fostered over 1,200 enterprises (including 2 unicorns), with 2023 output reaching 2.5 billion yuan, earning it the title of the Guangdong-Hong Kong-Macau Greater Bay Area’s "intellectual core."`,
+                        openTime: "Open all day (opening hours of various universities and venues vary)",
+                        rating: 4.6,
+                        images: ["广州大学城全景.jpg", "高校集群.jpg", "广东科学中心.jpg", "产学研基地.jpg"],
+                        baiduUrl: "https://baike.baidu.com/item/广州大学城",
+                        wikiUrl: "https://zh.wikipedia.org/wiki/廣州大學城",
+                        fishbone: 1
+                    }
+                ]
+            },
+            
+        };
+ 
+        let currentDay = 1;
+        let currentVersion = 'highlight'; // 默认是精华版
+        let currentAttraction = null;
+
+        // 初始化页面
+        function init() {
+            updateDay(1);
+            bindEvents();
+            // 监听窗口大小变化，实时调整
+            window.addEventListener('resize', () => {
+                updateFishboneDiagram(currentDay);
+            });
+        }
+
+        // 绑定事件
+        function bindEvents() {
+            // 日期按钮事件
+            document.querySelectorAll('.date-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const day = parseInt(this.dataset.day);
+                    updateDay(day);
+                });
+            });
+            
+            // 版本选择按钮事件
+            document.querySelectorAll('.version-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const version = this.dataset.version;
+                    updateVersion(version);
+                });
+            });
+            
+            // 交通方式按钮点击事件
+            document.getElementById('transportBtn').addEventListener('click', function() {
+                // 根据当前版本跳转到不同页面
+                if (currentVersion === 'highlight') {
+                    window.location.href = '交通方式备注精华版（英）.html';
+                } else {
+                    window.location.href = '交通方式备注（英）.html';
+                }
+            });
+        }
+
+        // 更新日期显示
+        function updateDay(day) {
+            currentDay = day;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.date-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-day="${day}"]`).classList.add('active');
+            
+            // 更新标题
+            document.getElementById('currentTitle').textContent = dayData[day].title;
+            
+            // 更新鱼骨图
+            updateFishboneDiagram(day);
+            
+            // 根据当前版本更新景点列表
+            updateAttractionsByVersion(currentVersion);
+        }
+        
+        // 更新版本显示
+        function updateVersion(version) {
+            currentVersion = version;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.version-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-version="${version}"]`).classList.add('active');
+            
+            // 根据选择的版本更新景点列表
+            updateAttractionsByVersion(version);
+        }
+        
+        // 根据版本更新景点列表
+        function updateAttractionsByVersion(version) {
+            const data = dayData[currentDay];
+            
+            // 显示/隐藏对应板块
+            if (version === 'highlight') {
+                // 精华版 - 显示区分的两个板块
+                document.getElementById('highlightSection').style.display = 'block';
+                document.getElementById('extendedSection').style.display = 'block';
+                document.getElementById('fullSection').style.display = 'none';
+                
+                // 更新精华和拓展景点
+                updateHighlightAttractions(data);
+            } else {
+                // 完整版 - 显示不区分的一个板块
+                document.getElementById('highlightSection').style.display = 'none';
+                document.getElementById('extendedSection').style.display = 'none';
+                document.getElementById('fullSection').style.display = 'block';
+                
+                // 更新完整景点列表
+                updateFullAttractions(data);
+            }
+        }
+
+        // 更新鱼骨图
+        function updateFishboneDiagram(day) {
+            const data = dayData[day];
+            const svg = document.querySelector('.fishbone-svg');
+            
+            // 清除现有的鱼刺和景点
+            svg.querySelectorAll('.fishbone-bone, .fishbone-point, .fishbone-text, .fishbone-clickarea').forEach(el => el.remove());
+            
+            const totalAttractions = data.attractions.length;
+            
+            if (totalAttractions === 0) return;
+            
+            const spacing = (720 - 80) / (totalAttractions + 1);
+            const isMobile = window.innerWidth < 768; // 检测移动设备
+
+            data.attractions.forEach((attraction, index) => {
+                const isUpper = index % 2 === 0;
+                const xPosition = 40 + (index + 1) * spacing;
+
+                const boneLength = isMobile ? 150 : 120;
+                const boneAngle = isUpper ? -45 : 45;
+                const radians = (boneAngle * Math.PI) / 180;
+                const endX = xPosition + Math.cos(radians) * boneLength;
+                const endY = 150 + Math.sin(radians) * boneLength;
+
+                // 创建鱼刺
+                const bone = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                bone.setAttribute('x1', xPosition);
+                bone.setAttribute('y1', 150);
+                bone.setAttribute('x2', endX);
+                bone.setAttribute('y2', endY);
+                bone.setAttribute('stroke', attraction.fishbone === 1 ? '#dc2626' : '#ef4444');
+                bone.setAttribute('stroke-width', attraction.fishbone === 1 ? '3' : '2');
+                bone.classList.add('fishbone-bone');
+                svg.appendChild(bone);
+
+                // 文本换行处理
+                const name = attraction.name;
+                const maxCharsPerLine = isMobile ? 15 : 15;
+                const lines = [];
+                
+                for (let i = 0; i < name.length; i += maxCharsPerLine) {
+                    lines.push(name.substring(i, i + maxCharsPerLine));
+                }
+                
+                // 基础参数设置
+                const baseFontSize = isMobile ? 15 : 12;
+                const fontSize = baseFontSize;
+                const lineHeight = fontSize * 1.1;
+                const padding = 5;
+                
+                // 计算圆的半径
+                const maxLineLength = Math.max(...lines.map(line => line.length));
+                const textWidth = maxLineLength * fontSize * 0.6;
+                const textHeight = lines.length * lineHeight;
+                const radius = isMobile ?1.1*Math.ceil(Math.max(textWidth, textHeight) / 2 + padding):1*Math.ceil(Math.max(textWidth, textHeight) / 2 + padding);
+                
+                // 创建景点圆圈
+                const point = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                point.setAttribute('cx', endX);
+                point.setAttribute('cy', endY);
+                point.setAttribute('r', radius);
+                point.setAttribute('stroke-width', '2');
+                point.classList.add('fishbone-point', `fishbone-${attraction.fishbone}`);
+                point.addEventListener('click', () => showAttractionDetail(attraction));
+                svg.appendChild(point);
+
+                // 创建景点标签
+                const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                label.setAttribute('x', endX);
+                label.setAttribute('y', endY);
+                label.setAttribute('fill', 'white');
+                label.setAttribute('font-size', fontSize);
+                label.setAttribute('class', 'fishbone-text');
+                
+                // 计算第一行的垂直偏移量
+                const firstLineOffset = -(lines.length - 1) * lineHeight / 2;
+                
+                lines.forEach((line, lineIndex) => {
+                    const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+                    tspan.setAttribute('x', endX);
+                    tspan.setAttribute('dy', lineIndex === 0 ? firstLineOffset : lineHeight);
+                    tspan.textContent = line;
+                    label.appendChild(tspan);
+                });
+                
+                svg.appendChild(label);
+
+                // 创建点击区域
+                const clickArea = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                clickArea.setAttribute('cx', endX);
+                clickArea.setAttribute('cy', endY);
+                clickArea.setAttribute('r', radius);
+                clickArea.setAttribute('fill', 'transparent');
+                clickArea.classList.add('fishbone-clickarea');
+                clickArea.addEventListener('click', () => showAttractionDetail(attraction));
+                svg.appendChild(clickArea);
+            });
+        }
+
+        // 更新精华和拓展景点列表
+        function updateHighlightAttractions(data) {
+            const highlightGrid = document.getElementById('highlightAttractionsGrid');
+            const extendedGrid = document.getElementById('extendedAttractionsGrid');
+            
+            // 清空现有内容
+            highlightGrid.innerHTML = '';
+            extendedGrid.innerHTML = '';
+            
+            data.attractions.forEach(attraction => {
+                // 创建景点卡片
+                const card = document.createElement('div');
+                card.className = `attraction-card fishbone-${attraction.fishbone}`;
+                
+                // 获取景点的第一张图片
+                const firstImage = attraction.images && attraction.images.length > 0 ? attraction.images[0] : '';
+                
+                card.innerHTML = `
+                    <img src="${firstImage}" alt="${attraction.name}" class="attraction-image">
+                    <h4>
+                        <span class="fishbone-marker fishbone-marker-${attraction.fishbone}">
+                            ${attraction.fishbone === 1 ? 'Highlight Attractions' : 'Expansion Attractions'}
+                        </span>
+                        ${attraction.name}
+                    </h4>
+                    <p>${attraction.description}</p>
+                    <div class="attraction-meta">
+                        <span>⭐ ${attraction.rating}</span>
+                        <span>🕒 ${attraction.openTime}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => showAttractionDetail(attraction));
+                
+                // 根据类型添加到不同的网格
+                if (attraction.fishbone === 1) {
+                    highlightGrid.appendChild(card);
+                } else {
+                    extendedGrid.appendChild(card);
+                }
+            });
+        }
+        
+        // 更新完整版景点列表（不区分精华和拓展）
+        function updateFullAttractions(data) {
+            const fullGrid = document.getElementById('fullAttractionsGrid');
+            
+            // 清空现有内容
+            fullGrid.innerHTML = '';
+            
+            data.attractions.forEach(attraction => {
+                // 创建景点卡片（不显示精华/拓展标记）
+                const card = document.createElement('div');
+                card.className = `attraction-card`;
+                
+                // 获取景点的第一张图片
+                const firstImage = attraction.images && attraction.images.length > 0 ? attraction.images[0] : '';
+                
+                card.innerHTML = `
+                    <img src="${firstImage}" alt="${attraction.name}" class="attraction-image">
+                    <h4>${attraction.name}</h4>
+                    <p>${attraction.description}</p>
+                    <div class="attraction-meta">
+                        <span>⭐ ${attraction.rating}</span>
+                        <span>🕒 ${attraction.openTime}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => showAttractionDetail(attraction));
+                
+                fullGrid.appendChild(card);
+            });
+        }
+
+        // 显示景点详情
+        function showAttractionDetail(attraction) {
+            currentAttraction = attraction;
+            
+            // 更新详情页内容
+            document.getElementById('detailTitle').textContent = attraction.name;
+            document.getElementById('detailDescription').textContent = attraction.description;
+            document.getElementById('detailRating').textContent = attraction.rating;
+            document.getElementById('detailTime').textContent = attraction.openTime;
+            
+            // 地址信息单独提取并显示在最前面
+            document.getElementById('detailAddress').textContent = attraction.address;
+            document.getElementById('detailTransport').textContent = "交通：" + attraction.transport;
+            
+            // 重置复制成功提示
+            document.getElementById('addressSuccess').style.display = 'none';
+            document.getElementById('transportSuccess').style.display = 'none';
+            
+            // 详细介绍使用HTML格式显示
+            document.getElementById('detailDetails').innerHTML = attraction.details;
+            
+            // 更新图片
+            const imagesGrid = document.getElementById('imagesGrid');
+            imagesGrid.innerHTML = ''; // 清空现有内容
+            
+            attraction.images.forEach(imgFileName => {
+                const imgContainer = document.createElement('div');
+                imgContainer.innerHTML = `<img src="${imgFileName}" alt="${imgFileName}" style="width:100%; height:100%; object-fit:cover; border-radius:0.5rem;">`;
+                imagesGrid.appendChild(imgContainer);
+            });
+
+            // 更新跳转链接
+            document.getElementById('baiduLink').href = attraction.baiduUrl;
+            document.getElementById('wikiLink').href = attraction.wikiUrl;
+            
+            // 显示详情页
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('detailPage').classList.add('active');
+        }
+
+        // 显示主页面
+        function showMainPage() {
+            document.getElementById('detailPage').classList.remove('active');
+            document.getElementById('mainPage').style.display = 'block';
+        }
+
+        // 复制到剪贴板功能
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.textContent;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // 显示复制成功提示
+                const successElement = document.getElementById(
+                    elementId === 'detailAddress' ? 'addressSuccess' : 'transportSuccess'
+                );
+                successElement.style.display = 'inline';
+                
+                // 3秒后隐藏提示
+                setTimeout(() => {
+                    successElement.style.display = 'none';
+                }, 3000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+            });
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+    
