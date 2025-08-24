@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州海上丝绸之路历史文化之旅</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /* 新增语言切换按钮容器样式 */
+      .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100; /* 确保在导航栏上方显示 */
+        }
+        /* 返回链接样式 */
+       .back-link {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 100;
+            color: #1a73e8; /* 原#4CAF50（绿色），改为蓝色主色 */
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+       .back-link:hover {
+            color: #0d5bcd; /* 原#45a049（深绿），改为蓝色hover色 */
+            text-decoration: underline;
+        }
+        /* 返回链接图标样式 */
+       .back-link::before {
+            content: "←";
+            margin-right: 5px;
+            font-size: 18px;
+        }
+      .lang-btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+      .lang-btn:hover {
+            background-color: #f0f0f0;
+            border-color: #999;
+        }
+      .nav-tabs {
+            display: flex;
+            background-color: #333;
+            padding: 10px;
+            gap: 5px;
+            overflow-x: auto;
+            white-space: nowrap;
+            /* 为语言按钮和返回链接留出空间 */
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+      .nav-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+      .nav-tab:hover {
+            background-color: #4285f4; /* 原#ff4d4d（浅红），改为浅蓝色hover */
+        }
+      .nav-tab.active {
+            background-color: #1a73e8; /* 原#ff0000（红色），改为蓝色主色 */
+        }
+      .content-area {
+            flex-grow: 1;
+            margin: 10px;
+            padding: 0;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 60px); 
+            border: none;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+          .nav-tabs {
+                padding: 5px;
+                gap: 2px;
+                padding-left: 70px;
+                padding-right: 70px;
+            }
+          .nav-tab {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+          .content-area {
+                margin: 5px;
+            }
+            iframe {
+                height: calc(100vh - 40px); 
+            }
+        }
+        
+      .route-button {
+            background-color: #1a73e8; /* 原#ff0000（红色），改为蓝色主色 */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        /* 新增板块卡片样式 */
+      .section-card {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+      .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #1a73e8; /* 原#ff0000（红色），改为蓝色主色 */
+        }
+        /* 核心游览推荐背景色 */
+      .featured-content {
+            background-color: #e8f0fe; /* 原#ffe6e6（浅红），改为浅蓝色背景 */
+        }
+    </style>
+</head>
+<body>
+    <a href="../hahaha.html" class="back-link">返回</a>
+
+    <!-- 语言切换按钮 -->
+    <div class="language-switch">
+        <button class="lang-btn" onclick="window.location.href='点这个（英）.html'">English</button>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="nav-tab active" data-tab="home">首页</div>
+        <div class="nav-tab" data-tab="routes">旅游路径</div>
+        <div class="nav-tab" data-tab="buildings">建筑介绍</div>
+    </div>
+    
+    <div class="content-area">
+        <!-- 首页内容 -->
+        <div id="home-content" style="padding: 20px; display: block;">
+            <h1>广州海上丝绸之路历史文化之旅</h1>
+            <p>广州作为海上丝绸之路的重要节点，拥有丰富的历史文化遗产。本页面将带您领略广州在海上丝绸之路发展历程中的辉煌，探索沿线的历史建筑、文化遗迹和重要历史事件。</p>
+            
+            <div class="featured-content" style="margin: 20px 0; padding: 15px; border-radius: 5px;">
+                <h2>核心游览推荐</h2>
+                <p>四条主题路线串联起广州海上丝绸之路的历史轨迹，从秦汉起源到现代航运，点击下方按钮查看详细行程</p>
+                <button class="route-button" onclick="loadIframe('routes')">
+                    查看完整路线
+                </button>
+            </div>
+            
+            <div class="site-sections" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <!-- 历史建筑巡礼 -->
+                <div class="section-card" data-target="buildings">
+                    <h3>历史建筑巡礼</h3>
+                    <p>· 南海神庙：中国四大海神庙中唯一完整保存的官方祭海神庙，有“南方碑林”之称，见证古代海上贸易盛况<br>
+                       · 光孝寺：广州现存最古老的佛教寺庙之一，见证佛教经海路传入中国的历程<br>
+                       · 六榕寺塔：塔身造型融合中外建筑风格，曾是商船进入广州的地标性建筑</p>
+                </div>
+                
+                <!-- 红色旅游路线 -->
+                <div class="section-card" data-target="routes">
+                    <h3>海上丝绸之路旅游路线</h3>
+                    <p>· <strong>秦汉起源与古代港口路线</strong>：南海神庙（祭祀海神场所）→黄埔古港遗址（明清外贸核心港口）<br>
+                       · <strong>唐宋繁盛与市舶司文化路线</strong>：光塔寺（唐代阿拉伯商人所建清真寺）→六榕寺塔（融合中外风格的古塔）<br>
+                       · <strong>明清贸易与十三行时代路线</strong>：锦纶会馆（丝织行业会馆）→沙面岛（见证殖民贸易）<br>
+                       · <strong>现代航运与海丝文化传承路线</strong>：广东省博物馆（藏有大量海丝相关文物）→南沙国际邮轮母港（现代海上交通枢纽）</p>
+                </div>
+                
+                <!-- 历史事件速览 -->
+                <div class="section-card" data-target="buildings">
+                    <h3>历史事件速览</h3>
+                    <p>· 汉武帝时期：开辟海上贸易航线，促进与东南亚、南亚等地的交流<br>
+                       · 唐代：设置市舶使管理海外贸易，广州成为重要的贸易港口<br>
+                       · 清代：实施“一口通商”政策，广州十三行成为中外贸易的重要窗口</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- iframe容器 -->
+        <iframe id="content-iframe" style="display: none;"></iframe>
+    </div>
+
+    <script>
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const contentIframe = document.getElementById('content-iframe');
+        const homeContent = document.getElementById('home-content');
+        const sectionCards = document.querySelectorAll('.section-card');
+
+        // 选项卡点击事件
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                navTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const tabId = tab.getAttribute('data-tab');
+                loadContent(tabId);
+            });
+        });
+
+        // 按钮点击事件处理函数
+        function loadIframe(tabId) {
+            navTabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.classList.add('active');
+                    loadContent(tabId);
+                }
+            });
+        }
+
+        // 板块卡片点击事件
+        sectionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const target = card.getAttribute('data-target');
+                loadIframe(target);
+            });
+        });
+
+        // 加载内容函数
+        function loadContent(tabId) {
+            homeContent.style.display = 'none';
+            contentIframe.style.display = 'block';
+            
+            switch(tabId) {
+                case 'routes':
+                    contentIframe.src = "新旅游路径.html";
+                    break;
+                case 'buildings':
+                    contentIframe.src = "建筑介绍（中）.html";
+                    break;
+                default:
+                    contentIframe.src = "";
+                    homeContent.style.display = 'block';
+            }
+        }
+
+        // 初始化显示首页
+        loadContent('home');
+
+        // 窗口Resize时调整iframe高度
+        window.addEventListener('resize', () => {
+            contentIframe.style.height = `calc(100vh - ${document.querySelector('.nav-tabs').offsetHeight + 20}px)`;
+        });
+    </script>
+    
+</body>
+</html>

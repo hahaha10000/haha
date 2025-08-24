@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guangzhou Maritime Silk Road Tour</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /* 新增语言切换按钮容器样式 */
+      .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100; /* 确保在导航栏上方显示 */
+        }
+        /* 返回链接样式 */
+       .back-link {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 100;
+            color: #1a73e8; /* 原#4CAF50（绿色）→ 蓝色主色 */
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+       .back-link:hover {
+            color: #0d5bcd; /* 原#45a049（深绿）→ 蓝色hover色 */
+            text-decoration: underline;
+        }
+        /* 返回链接图标样式 */
+       .back-link::before {
+            content: "←";
+            margin-right: 5px;
+            font-size: 18px;
+        }
+      .lang-btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+      .lang-btn:hover {
+            background-color: #f0f0f0;
+            border-color: #999;
+        }
+      .nav-tabs {
+            display: flex;
+            background-color: #333;
+            padding: 10px;
+            gap: 5px;
+            overflow-x: auto;
+            white-space: nowrap;
+            /* 为语言按钮和返回链接留出空间 */
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+      .nav-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+      .nav-tab:hover {
+            background-color: #4285f4; /* 原#ff4d4d（浅红）→ 浅蓝色hover */
+        }
+      .nav-tab.active {
+            background-color: #1a73e8; /* 原#ff0000（红色）→ 蓝色主色 */
+        }
+      .content-area {
+            flex-grow: 1;
+            margin: 10px;
+            padding: 0;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 60px); 
+            border: none;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+          .nav-tabs {
+                padding: 5px;
+                gap: 2px;
+                padding-left: 70px;
+                padding-right: 70px;
+            }
+          .nav-tab {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+          .content-area {
+                margin: 5px;
+            }
+            iframe {
+                height: calc(100vh - 40px); 
+            }
+        }
+        
+      .route-button {
+            background-color: #1a73e8; /* 原#ff0000（红色）→ 蓝色主色 */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        /* 新增板块卡片样式 */
+      .section-card {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+      .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #1a73e8; /* 原#ff0000（红色）→ 蓝色主色 */
+        }
+    </style>
+</head>
+<body>
+    <a href="../hahaha（英）.html" class="back-link">Back</a>
+
+    <div class="language-switch">
+        <button class="lang-btn" onclick="window.location.href='haha.html'">中文</button>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="nav-tab active" data-tab="home">Home</div>
+        <div class="nav-tab" data-tab="routes">Tour Routes</div>
+        <div class="nav-tab" data-tab="buildings">Architecture Introduction</div>
+    </div>
+    
+    <div class="content-area">
+        <div id="home-content" style="padding: 20px; display: block;">
+            <h1>Guangzhou Maritime Silk Road Tour</h1>
+            <p>Guangzhou, a pivotal node on the ancient Maritime Silk Road, boasts a rich heritage of maritime trade spanning over two millennia. From Qin-Han origins to modern shipping, this route traces the city's evolution as a global trading hub, showcasing temples, ports, relics, and museums that tell the story of cultural exchange and commercial prosperity.</p>
+            
+            <div class="featured-content" style="margin: 20px 0; padding: 15px; background-color: #e8f0fe; border-radius: 5px;">
+                <!-- 原background-color: #ffe6e6（浅红）→ 浅蓝色背景#e8f0fe -->
+                <h2>Featured Attractions</h2>
+                <p>A 4-day journey covering Qin-Han origins, Tang-Song prosperity, Ming-Qing trade, and modern maritime heritage. Click below to explore detailed itineraries.</p>
+                <button class="route-button" onclick="loadIframe('routes')">
+                    View Full Route
+                </button>
+            </div>
+            
+            <div class="site-sections" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <!-- Maritime Heritage Sites -->
+                <div class="section-card" data-target="buildings">
+                    <h3>Maritime Heritage Sites</h3>
+                    <p>· Temple of the South Sea God: China's only intact ancient official sea temple, known as the "Forest of Steles of the South" with 1,400+ years of history<br>
+                       · Huangpu Ancient Port: Qing Dynasty's sole foreign trade port under the "Single Port Policy,"见证ing ships like the "Götheborg"<br>
+                       · Huaisheng Mosque: Tang-era mosque with the iconic Light Tower, a navigational beacon for Arab traders</p>
+                </div>
+                
+                <!-- Maritime Silk Road Routes -->
+                <div class="section-card" data-target="routes">
+                    <h3>Maritime Silk Road Itinerary</h3>
+                    <p>· <strong>Day 1: Qin-Han Origins & Ancient Ports</strong>: Temple of the South Sea God → Huangpu Ancient Port → Guangxiao Temple → Nanyue Kingdom Palace Museum<br>
+                       · <strong>Day 2: Tang-Song Prosperity</strong>: Huaisheng Mosque → Liurong Temple Pagoda → Guangzhou Museum → Islamic Sage Tomb<br>
+                       · <strong>Day 3: Ming-Qing Trade</strong>: Jinlun Guild Hall → Hualin Temple → Shamian Island → Thirteen-Hongs Museum<br>
+                       · <strong>Day 4: Modern Maritime Heritage</strong>: Guangdong Museum → Guangzhou Maritime Museum → Nansha Cruise Homeport</p>
+                </div>
+                
+                <!-- Key Historical Highlights -->
+                <div class="section-card" data-target="buildings">
+                    <h3>Key Historical Highlights</h3>
+                    <p>· 594 CE: Temple of the South Sea God established, becoming a ritual hub for maritime trade<br>
+                       · 1757: Huangpu Port becomes China's sole foreign trade port under the "Single Port Policy"<br>
+                       · 19th Century: Shamian Island emerges as a colonial trade enclave, reflecting Western influence<br>
+                       · 2019: Nansha Cruise Homeport opens, linking modern Guangzhou to global maritime networks</p>
+                </div>
+            </div>
+        </div>
+
+        <iframe id="content-iframe" style="display: none;"></iframe>
+    </div>
+
+    <script>
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const contentIframe = document.getElementById('content-iframe');
+        const homeContent = document.getElementById('home-content');
+        const sectionCards = document.querySelectorAll('.section-card');
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                navTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const tabId = tab.getAttribute('data-tab');
+                loadContent(tabId);
+            });
+        });
+
+        function loadIframe(tabId) {
+            navTabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.classList.add('active');
+                    loadContent(tabId);
+                }
+            });
+        }
+
+        sectionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const target = card.getAttribute('data-target');
+                loadIframe(target);
+            });
+        });
+
+        function loadContent(tabId) {
+            homeContent.style.display = 'none';
+            contentIframe.style.display = 'block';
+            
+            switch(tabId) {
+                case 'routes':
+                    contentIframe.src = "新旅游路径（英）.html";
+                    break;
+                case 'buildings':
+                    contentIframe.src = "建筑介绍（英）.html";
+                    break;
+                default:
+                    contentIframe.src = "";
+                    homeContent.style.display = 'block';
+            }
+        }
+
+        loadContent('home');
+
+        window.addEventListener('resize', () => {
+            contentIframe.style.height = `calc(100vh - ${document.querySelector('.nav-tabs').offsetHeight + 20}px)`;
+        });
+    </script>
+    
+</body>
+</html>
